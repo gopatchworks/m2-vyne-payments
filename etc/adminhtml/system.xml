@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<section id="payment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1000" translate="label">
+			<group id="vyne" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+                <comment><![CDATA[<div class="vyne-payment-logo"></div><div class="vyne-payment-text">Vyne Payment integration.<br/>Vyne is the safest and most secure Payment approach for your Magento Store.</div>]]></comment>
+                <fieldset_css>complex vyne-section</fieldset_css>
+                <frontend_model>Vyne\Magento\Block\Adminhtml\System\Config\Fieldset\Payment</frontend_model>
+				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Enabled</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="environment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="25" translate="label" type="select">
+					<label>Environment</label>
+                    <source_model>Vyne\Magento\Model\Source\Environment</source_model>
+				</field>
+				<field id="debug" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
+					<label>Enable Debug</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+                <field id="payment_action" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="35" translate="label" type="select">
+                    <label>Payment Action</label>
+                    <source_model>Vyne\Magento\Model\Source\PaymentAction</source_model>
+                </field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="text">
+					<label>Title</label>
+				</field>
+				<field id="instructions" type="textarea" sortOrder="45" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Instructions</label>
+				</field>
+				<field id="order_status" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="50" translate="label" type="select">
+					<label>New Order Status</label>
+					<source_model>Magento\Sales\Model\Config\Source\Order\Status\Newprocessing</source_model>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60" translate="label" type="allowspecific">
+					<label>Payment from Applicable Countries</label>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="65" translate="label" type="multiselect">
+					<label>Payment from Applicable Countries</label>
+					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="text">
+					<label>Sort Order</label>
+				</field>
+			</group>
+		</section>
+	</system>
+</config>

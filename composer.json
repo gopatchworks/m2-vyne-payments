@@ -1,0 +1,37 @@
+{
+    "name": "vyne/magento",
+    "description": "Magento 2 Payment Integration with Vyne",
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "authors": [
+        {
+            "email": "nd.thanh@outlook.com",
+            "name": "Thanh, Nguyen Duy"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.3.0",
+        "ext-hash": "*",
+        "ext-json": "*",
+        "magento/framework": ">=101 <104",
+        "magento/module-backend": ">=100 <103",
+        "magento/module-catalog": ">=101 <105",
+        "magento/module-checkout": "100.*",
+        "magento/module-config": ">=100 <103",
+        "magento/module-payment": "100.*",
+        "psr/log": "^1.1"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Vyne\\Magento\\": ""
+        }
+    }
+}

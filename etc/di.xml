@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<preference for="Vyne\Magento\Api\TransactionRepositoryInterface" type="Vyne\Magento\Model\TransactionRepository"/>
+	<preference for="Vyne\Magento\Api\Data\TransactionInterface" type="Vyne\Magento\Model\Data\Transaction"/>
+	<preference for="Vyne\Magento\Api\Data\TransactionSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+
+    <!--override quote data model-->
+
+    <!--plugins-->
+	<type name="Magento\Quote\Api\CartRepositoryInterface">
+		<plugin name="Vyne_Magento_Plugin_Magento_Quote_Api_CartRepositoryInterface" type="Vyne\Magento\Plugin\Magento\Quote\Api\CartRepositoryInterface" sortOrder="10" disabled="false"/>
+	</type>
+	<type name="Magento\Quote\Api\PaymentMethodManagementInterface">
+		<plugin name="Vyne_Magento_Plugin_Magento_Quote_Api_PaymentMethodManagementInterface" type="Vyne\Magento\Plugin\Magento\Quote\Api\PaymentMethodManagementInterface" sortOrder="10" disabled="false"/>
+	</type>
+
+    <!--logger-->
+    <virtualType name="Vyne\Magento\Logger\Handler" type="Magento\Framework\Logger\Handler\Base">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+            <argument name="fileName" xsi:type="string">/var/log/vine_debug.log</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Vyne\Magento\Logger\Logger" type="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="name" xsi:type="string">Vyne Payment Logger</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">Vyne\Magento\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Vyne\Magento\Helper\Logger">
+        <arguments>
+            <argument name="logger" xsi:type="object">Vyne\Magento\Logger\Logger</argument>
+        </arguments>
+    </type>
+</config>

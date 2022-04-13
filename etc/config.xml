@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<payment>
+			<vyne>
+				<active>1</active>
+				<environment>development</environment>
+				<model>Vyne\Magento\Model\Payment\Vyne</model>
+				<order_status>processing</order_status>
+				<title>Vyne</title>
+				<allowspecific>0</allowspecific>
+			</vyne>
+		</payment>
+	</default>
+</config>
