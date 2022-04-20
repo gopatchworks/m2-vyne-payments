@@ -101,11 +101,6 @@ class Vyne extends \Magento\Payment\Model\Method\AbstractMethod
     protected $VyneLogger;
 
     /**
-     * @var TransactionApi
-     */
-    protected $transactionApi;
-
-    /**
      * @param \Magento\Framework\Model\Context $context
      * @param \Magento\Framework\Registry $registry
      * @param \Magento\Framework\Api\ExtensionAttributesFactory $extensionFactory
@@ -119,7 +114,6 @@ class Vyne extends \Magento\Payment\Model\Method\AbstractMethod
      * @param DirectoryHelper $directory
      * @param VyneHelper $vyneHelper
      * @param VyneLogger $vyneLogger
-     * @param TransactionApi $transactionApi
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -135,7 +129,6 @@ class Vyne extends \Magento\Payment\Model\Method\AbstractMethod
         DirectoryHelper $directory = null,
         VyneHelper $vyneHelper,
         VyneLogger $vyneLogger,
-        TransactionApi $transactionApi,
         array $data = []
     ) {
         parent::__construct(
