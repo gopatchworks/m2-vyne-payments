@@ -145,7 +145,6 @@ class Vyne extends \Magento\Payment\Model\Method\AbstractMethod
         );
         $this->vyneHelper = $vyneHelper;
         $this->vyneLogger = $vyneLogger;
-        $this->transactionApi = $transactionApi;
     }
 
     public function isAvailable(

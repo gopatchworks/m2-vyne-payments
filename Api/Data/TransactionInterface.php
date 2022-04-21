@@ -21,7 +21,7 @@ interface TransactionInterface extends \Magento\Framework\Api\ExtensibleDataInte
     const CURRENCY = 'currency';
     const EXTERNAL_IDENTIFIER = 'external_identifier';
     const ENVIRONMENT = 'environment';
-    const vyne_TRANSACTION_ID = 'vyne_transaction_id';
+    const VYNE_TRANSACTION_ID = 'vyne_transaction_id';
 
     /**
      * Get transaction_id

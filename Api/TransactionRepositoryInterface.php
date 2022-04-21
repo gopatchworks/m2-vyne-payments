@@ -43,8 +43,6 @@ interface TransactionRepositoryInterface
     public function setPaymentInformation(
         $cartId,
         \Magento\Quote\Api\Data\PaymentInterface $paymentMethod,
-        \Vyne\Magento\Api\Data\MethodInterface $methodData,
-        \Vyne\Magento\Api\Data\ServiceInterface $serviceData,
         \Vyne\Magento\Api\Data\TransactionInterface $transactionData
     );
 
