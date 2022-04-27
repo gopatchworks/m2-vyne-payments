@@ -21,6 +21,24 @@
             <column name="status"/>
         </index>
     </table>
+    <table name="vyne_tokens">
+        <column xsi:type="int" name="id" nullable="false" identity="true" padding="10" unsigned="true" comment="The unique identifier for this transaction."/>
+        <column xsi:type="varchar" name="access_token" length="600" nullable="false" comment="The unique Vyne Access Token"/>
+        <column xsi:type="varchar" name="token_type" nullable="false" length="50" comment="Vyne Access Token Type"/>
+        <column xsi:type="int" name="expires_in" unsigned="false" nullable="false" comment="Time before token is expired"/>
+        <column xsi:type="varchar" name="scope" length="50" nullable="false" omment="Scope of payment request"/>
+        <column xsi:type="varchar" name="merchant_id" length="50" nullable="false" comment="Vyne merchant id"/>
+        <column xsi:type="boolean" name="mfa_required" nullable="false" length="20" comment="Is Multi factors authentication required ?"/>
+        <column xsi:type="varchar" name="iss" nullable="false" length="255" comment="Vyne ISS"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"/>
+        <column xsi:type="timestamp" name="updated_at" nullable="false" on_update="true" default="CURRENT_TIMESTAMP" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <index referenceId="VYNE_ACCESS_TOKEN" indexType="btree">
+            <column name="access_token"/>
+        </index>
+    </table>
     <table name="quote_payment" resource="checkout" engine="innodb" comment="Sales Flat Quote Payment">
         <column xsi:type="varchar" name="vyne_transaction_id" length="50" nullable="false" comment="The unique Vyne Transaction ID for this quote payment."/>
         <index referenceId="VYNE_TRANSACTION_ID" indexType="btree">
