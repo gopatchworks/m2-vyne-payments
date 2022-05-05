@@ -16,6 +16,7 @@ define(
     function (Component, quote, urlBuilder, storage, url, $t, errorProcessor, customer, customerData, globalMessageList, fullScreenLoader, alertModal) {
         'use strict';
         return Component.extend({
+            redirectAfterPlaceOrder: false,
             defaults: {
                 template: 'Vyne_Magento/payment/vyne'
             },
@@ -33,10 +34,14 @@ define(
                     }
                 });
             },
-            initVynePayment: function () {
+            getMethodImage: function () {
+                return checkoutConfig.image[this.item.method];
             },
             getInstructions: function () {
                 return window.checkoutConfig.payment.vyne.description;
+            },
+            afterPlaceOrder: function () {
+                window.location.replace(url.build('vyne/gateway/redirect/'));
             },
             /**
              * @returns {String}
