@@ -27,6 +27,7 @@ class Data extends AbstractHelper
     const VYNE_INTENT = 'payment/vyne/payment_action';
     const VYNE_ORDER_STATUS = 'payment/vyne/order_status';
     const VYNE_ENV = 'payment/vyne/environment';
+    const VYNE_MEDIA_TYPE = 'payment/vyne/media_type';
 
     const VYNE_WEBHOOK_PAYMENT = 'vyne/webhook/payment';
 
@@ -106,12 +107,12 @@ class Data extends AbstractHelper
     public function getVyneConfig()
     {
         if (!$this->vyneConfig) {
-            $this->vyneConfig = new \VyneConfig();
+            $this->vyneConfig = new VyneConfig();
 
             $this->vyneConfig
                  ->setDebug($this->isDebugOn())
                  ->setEnvironment($this->getVyneEnvironment())
-                 ->setClientCredentials($this->getVyneClientId(), $this->getVyneClientSecret());
+                 ->setClientCredential($this->getVyneClientId(), $this->getVyneClientSecret());
         }
 
         return $this->vyneConfig;
@@ -125,15 +126,19 @@ class Data extends AbstractHelper
      */
     public function extractOrderData($entity_id)
     {
-        $order = $this->orderRepository->get($order_id);
+        $order = $this->orderRepository->get($entity_id);
+        $currency_code = $order->getOrderCurrencyCode();
+        $currency_code = "GBP";
         $data = [
-            'amount' => $order->getGrandTotal(),
-            'currency' => $order->getOrderCurrencyCode(),
+            'amount' => number_format(floatval($order->getGrandTotal()), 2),
+            'currency' => $currency_code,
             'destinationAccount' => $this->getDestinationAccount(),
-            'description' => __('Web payment'),
+            'description' => (string) __('Web payment'),
             'callbackUrl' => $this->getVyneWebhookPayment(),
             'mediaType' => $this->getMediaType(),
             'countries' => [$this->getCountryCodeByWebsite()],
+            //'customerReference' => 'P739570946',
+            //'merchantReference' => '76FG7JQ'
         ];
 
         return $data;
@@ -196,6 +201,7 @@ class Data extends AbstractHelper
      */
     public function getCountryCodeByWebsite()
     {
+        return "GB";
         return $this->scopeConfig->getValue(
             self::COUNTRY_CODE_PATH,
             ScopeInterface::SCOPE_WEBSITES
@@ -363,5 +369,16 @@ class Data extends AbstractHelper
         $processed_body = str_replace('_', '/', str_replace('-','+',$body));
 
         return json_decode(base64_decode($processed_body));
+    }
+
+    /**
+     * translate Vyne Payment status to Magento Order Status
+     *
+     * @param string
+     * @return string
+     */
+    public function getOrderStatus($payment_status)
+    {
+        return 'processing';
     }
 }

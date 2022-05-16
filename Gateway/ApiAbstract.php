@@ -26,22 +26,15 @@ class ApiAbstract
     protected $config;
 
     /**
-     * @var String
-     */
-    protected $environment;
-
-    /**
      * @param Configuration $config
      * @param String $environment
      * @param ClientInterface $client
      */
     public function __construct(
         Configuration $config = null,
-        $environment = null,
         ClientInterface $client = null
     ) {
         $this->config = $config ?: new Configuration();
-        $this->environment = $environment;
         $this->client = $client ?: new Client();
     }
 
@@ -74,8 +67,47 @@ class ApiAbstract
     {
         try {
             $response = $this->client->send($request, $options);
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            switch($statusCode) {
+            case 200:
+                $content = $response->getBody()->getContents();
+
+                return json_decode($content);
+            case 400:
+                // handle 400
+                return $response->getBody();
+            case 401:
+                // handle 401
+                return $response->getBody();
+            case 404:
+                // handle 404
+                return $response->getBody();
+            default:
+                return [
+                    $content,
+                    $response->getStatusCode(),
+                    $response->getHeaders()
+                ];
+            }
+
         }
         catch (\Exception $e) {
+            die($e->getMessage());
             // log undefined errors here
         }
 
@@ -94,8 +126,11 @@ class ApiAbstract
 
         try {
             $response = $this->sendRequest($request, $options);
+            $this->getConfig()->setApiKey('Authorization', $response->access_token)->setApiKeyPrefix('Authorization', 'Bearer');
+            $this->getConfig()->setApiKey('Content-Type', 'application/json');
         }
         catch (\Exception $e) {
+            // handle exception
         }
 
         return $this;
@@ -109,13 +144,13 @@ class ApiAbstract
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function tokenRequest($client_id, $client_secret)
+    public function tokenRequest()
     {
         $headers = [
             'Content-Type' => 'application/x-www-form-urlencoded'
         ];
 
-        $httpBody = \GuzzleHttp\Psr7\build_query($this->getConfig()->getCredential());
+        $httpBody = \GuzzleHttp\Psr7\build_query($this->getConfig()->getClientCredential());
 
         return new Request(
             'POST',

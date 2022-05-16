@@ -59,9 +59,9 @@ class Info extends \Magento\Payment\Block\Info\Cc
         $payment = $this->getInfo();
         $data = [];
         $vyne_transaction_id = $payment->getData('vyne_transaction_id');
-        $transaction = $this->_transactionRepository->getByVyneTransactionId($vyne_transaction_id);
+        //$transaction = $this->_transactionRepository->getByVyneTransactionId($vyne_transaction_id);
 
-        if ($transaction && $transaction->getId()) {
+        //if ($transaction && $transaction->getId()) {
             /*prepare labels*/
             $last_trans_id = (string)__('Last Transaction ID');
             $status = (string)__('Status');
@@ -71,17 +71,16 @@ class Info extends \Magento\Payment\Block\Info\Cc
             $currency = (string)__('Currency');
 
             /*prepare data*/
-            $captured = $transaction->getCapturedAmount() ? $this->_vyneHelper->formatCurrency($transaction->getCapturedAmount()/100) : 0;
-            $refunded = $transaction->getRefundedAmount() ? $this->_vyneHelper->formatCurrency($transaction->getRefundedAmount()/100) : 0;
+            $captured = $payment->getAmountPaid() ? $this->_vyneHelper->formatCurrency($payment->getAmountPaid()) : 0;
+            $refunded = $payment->getAmountRefunded() ? $this->_vyneHelper->formatCurrency($payment->getAmountRefunded()) : 0;
             $data = array(
-                $last_trans_id => $transaction->getVyneTransactionId(),
-                $status => ucwords(str_replace('_', ' ',$transaction->getStatus())),
-                $amount => $this->_vyneHelper->formatCurrency($transaction->getAmount()/100),
+                $last_trans_id => $vyne_transaction_id,
+                $status => ucwords(str_replace('_', ' ',$payment->getVyneStatus())),
+                $amount => $this->_vyneHelper->formatCurrency($payment->getAmountOrdered()),
                 $captured_amount => $captured ?: '0.00',
-                $refunded_amount => $refunded ?: '0.00',
-                $currency => $transaction->getCurrency()
+                $refunded_amount => $refunded ?: '0.00'
             );
-        }
+        //}
 
         return $transport->addData($data);
     }

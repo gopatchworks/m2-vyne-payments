@@ -1,6 +1,7 @@
 <?php
-
 namespace Vyne\Magento\Gateway;
+
+use GuzzleHttp\Psr7\Request;
 
 class Payment extends ApiAbstract
 {
@@ -28,16 +29,14 @@ class Payment extends ApiAbstract
      * @param array
      * @return string
      */
-    public function paymentRedirect($token, $order_data)
+    public function paymentRedirect($order_data)
     {
-        $request = $this->redirectRequest($token, $order_data);
-        $options = $this->createHttpClientOptions();
+        $request = $this->redirectRequest($order_data);
+        $options = $this->getConfig()->createHttpClientOptions();
 
-        $response = $this->client->send($request, $options);
-        $redirect_content = $response->getBody()->getContents();
-        $redirect_obj = json_decode($redirect_content);
+        $response = $this->sendRequest($request, $options);
 
-        return $redirect_obj->redirectUrl;
+        return $response->redirectUrl;
     }
 
     /**
@@ -48,13 +47,9 @@ class Payment extends ApiAbstract
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function redirectRequest($token, $order_data)
+    public function redirectRequest($order_data)
     {
-        $headers = [
-            'Authorization' => 'Bearer ' . $token,
-            'Content-Type' => 'application/json'
-        ];
-
+        $headers = $this->getConfig()->getAllApiKeys();
         $httpBody = \GuzzleHttp\json_encode($order_data);
 
         return new Request(

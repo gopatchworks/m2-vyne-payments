@@ -16,17 +16,19 @@ class Redirect extends GatewayAbstract implements HttpGetActionInterface, CsrfAw
      */
     public function execute()
     {
-        var_dump($this->vyneHelper->getVyneClientSecret());
-        die('test');
-        if ($last_real_order_id = $this->checkoutSession->getLastRealOrderId()) {
-            try {
-                $order_details = $this->vyneHelper->extractOrderData($last_real_order_id);
-                $this->logger->logMixed(['id' => $last_real_order_id, 'order_details' => $order_details]);
+        // initialize vyne payment class
+        $this->initPayment();
 
-                $redirect_url = $this->paymentApi->paymentRedirect($token, $order_details);
+        if ($order_id = $this->checkoutSession->getLastOrderId()) {
+            try {
+                $order_details = $this->vyneHelper->extractOrderData($order_id);
+                $this->logger->logMixed(['id' => $order_id, 'order_details' => $order_details]);
+
+                $redirect_url = $this->paymentApi->paymentRedirect($order_details);
                 return $this->resultRedirect->setUrl($redirect_url);
             }
             catch (\Exception $e) {
+                die($e->getMessage());
                 $this->logger->logException($e);
             }
 

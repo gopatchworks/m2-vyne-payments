@@ -33,6 +33,10 @@
                     <label>Payment Action</label>
                     <source_model>Vyne\Magento\Model\Source\PaymentAction</source_model>
                 </field>
+                <field id="media_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="65" translate="label" type="select">
+                    <label>MediaType</label>
+                    <source_model>Vyne\Magento\Model\Source\MediaType</source_model>
+                </field>
 				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="text">
 					<label>Title</label>
 				</field>

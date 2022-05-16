@@ -77,6 +77,8 @@ class Order extends AbstractHelper
         $order->setState($status)->setStatus($status);
 
         if ($paymentId) {
+            $this->generatePaidInvoice($order, $paymentId);
+
             // update order payment
             $payment = $order->getPayment();
             $payment->setTransactionId($paymentId);

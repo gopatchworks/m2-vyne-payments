@@ -48,13 +48,6 @@ class Configuration
     protected $apiKeyPrefixes = [];
 
     /**
-     * Access token for OAuth/Bearer authentication
-     *
-     * @var string
-     */
-    protected $paymentToken = '';
-
-    /**
      * environment
      *
      * @var string
@@ -95,7 +88,7 @@ class Configuration
      *
      * @return $this
      */
-    public function setClientCredentials($client_id, $client_secret)
+    public function setClientCredential($client_id, $client_secret)
     {
         $this->credential['client_id'] = $client_id;
         $this->credential['client_secret'] = $client_secret;
@@ -107,7 +100,7 @@ class Configuration
      *
      * @return string[]
      */
-    public function getClientCredentials()
+    public function getClientCredential()
     {
         return $this->credential;
     }
@@ -162,29 +155,6 @@ class Configuration
     public function getApiKeyPrefix($apiKeyIdentifier)
     {
         return isset($this->apiKeyPrefixes[$apiKeyIdentifier]) ? $this->apiKeyPrefixes[$apiKeyIdentifier] : null;
-    }
-
-    /**
-     * Sets the access token for OAuth
-     *
-     * @param string $paymentToken Token for OAuth
-     *
-     * @return $this
-     */
-    public function setPaymentToken($paymentToken)
-    {
-        $this->paymentToken = $paymentToken;
-        return $this;
-    }
-
-    /**
-     * Gets the access token for OAuth
-     *
-     * @return string Access token for OAuth
-     */
-    public function getPaymentToken()
-    {
-        return $this->paymentToken;
     }
 
     /**
@@ -345,12 +315,27 @@ class Configuration
     }
 
     /**
+     * return array of formatted data in $this->apiKeys
+     *
+     * @return array
+     */
+    public function getAllApiKeys()
+    {
+        $formatted_keys = [];
+        foreach ($this->apiKeys as $key => $value){
+            $formatted_keys[$key] = $this->getApiKeyWithPrefix($key);
+        }
+
+        return $formatted_keys;
+    }
+
+    /**
      * Create http client option
      *
      * @throws \RuntimeException on file opening failure
      * @return array of http client options
      */
-    protected function createHttpClientOptions()
+    public function createHttpClientOptions()
     {
         $options = [];
         // client options logic

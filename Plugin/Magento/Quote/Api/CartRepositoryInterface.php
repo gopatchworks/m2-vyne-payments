@@ -47,10 +47,6 @@ class CartRepositoryInterface
         \Closure $proceed,
         \Magento\Quote\Api\Data\CartInterface $quote
     ) {
-        if ($this->vyneHelper->checkVyneReady()) {
-            $this->customerHelper->connectQuoteWithVyne($quote);
-        }
-
         // NOTE: additional fix for multishipping checkout issue  https://github.com/magento/magento2/pull/26637
         // issue in vendor/magento/module-quote/Model/QuoteAddressValidator.php [function] validateForCart
         // when customer logged in, $cart->getCustomerIsGuest() still return true

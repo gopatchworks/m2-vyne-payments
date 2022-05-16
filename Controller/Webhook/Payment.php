@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Vyne\Magento\Controller\Webhook;
 
-class Payment extends AbstractWebhook
+use Magento\Framework\Controller\ResultFactory;
+
+class Payment extends AbstractWebhookGet
 {
     /**
      * @inheritDoc
@@ -14,10 +16,11 @@ class Payment extends AbstractWebhook
         /** @var \Magento\Framework\Controller\ResultInterface $result */
         $result = $this->resultFactory->create(ResultFactory::TYPE_RAW);
         $payload = $this->getRequest()->getParam('payvyne_payment_payload');
-        $last_real_order_id = $this->checkoutSession->getLastRealOrderId();
+        $order_id = $this->checkoutSession->getLastOrderId();
+        $order = $this->orderRepository->get($order_id);
 
         $body = $this->vyneHelper->decodeJWTBase64($payload);
-        // validate request body
+        // validate jwt json decode
         if (json_last_error() !== JSON_ERROR_NONE) {
             $this->vyneLogger->logMixed(
                 ['request' => $requestBody],
@@ -30,7 +33,8 @@ class Payment extends AbstractWebhook
 
 
         try {
-            $this->orderHelper->updateOrderHistory($order, __('Order Updated by Vyne'), $body['paymentStatus'], $body['paymentId']);
+            $order_status = $this->vyneHelper->getOrderStatus($body->paymentStatus);
+            $this->vyneOrder->updateOrderHistory($order, __('Order Updated by Vyne'), $order_status, $body->paymentId);
             return $this->resultRedirect->setPath('checkout/onepage/success', array('_secure'=>true));
         }
         catch (\Exception $e) {

@@ -35,7 +35,7 @@ class GatewayAbstract extends \Magento\Framework\App\Action\Action
     /**
      * @var PaymentApi
      */
-    protected $paymentApi;
+    protected $paymentApi = false;
 
     /**
      * Constructor
@@ -47,8 +47,7 @@ class GatewayAbstract extends \Magento\Framework\App\Action\Action
         \Magento\Customer\Model\Session $customerSession,
         \Magento\Checkout\Model\Session $checkoutSession,
         \Vyne\Magento\Helper\Data $vyneHelper,
-        \Vyne\Magento\Helper\Logger $vyneLogger,
-        PaymentApi $paymentApi
+        \Vyne\Magento\Helper\Logger $vyneLogger
     ) {
         parent::__construct($context);
         $this->resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
@@ -56,7 +55,6 @@ class GatewayAbstract extends \Magento\Framework\App\Action\Action
         $this->checkoutSession = $checkoutSession;
         $this->vyneHelper = $vyneHelper;
         $this->logger = $vyneLogger;
-        $this->paymentApi = $paymentApi;
     }
 
     /**
@@ -64,5 +62,17 @@ class GatewayAbstract extends \Magento\Framework\App\Action\Action
      */
     public function execute()
     {
+    }
+
+    public function initPayment()
+    {
+        if (!$this->paymentApi) {
+            $config = $this->vyneHelper->getVyneConfig();
+
+            $this->paymentApi = new PaymentApi($config);
+            $this->paymentApi->initToken();
+        }
+
+        return $this->paymentApi;
     }
 }
