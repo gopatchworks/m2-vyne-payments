@@ -6,7 +6,7 @@ namespace Vyne\Magento\Controller\Webhook;
 
 use Magento\Framework\Controller\ResultFactory;
 
-class Payment extends AbstractWebhookGet
+class Payout extends AbstractWebhookGet
 {
     /**
      * @inheritDoc
@@ -34,12 +34,10 @@ class Payment extends AbstractWebhookGet
 
         try {
             $order_status = $this->vyneHelper->getOrderStatus($body->paymentStatus);
-
             $this->vyneOrder->updateOrderHistory($order, __('Order Updated by Vyne'), $order_status, $body->paymentId);
             return $this->resultRedirect->setPath('checkout/onepage/success', array('_secure'=>true));
         }
         catch (\Exception $e) {
-            die($e->getMessage());
             $this->vyneLogger->logException($e);
         }
 

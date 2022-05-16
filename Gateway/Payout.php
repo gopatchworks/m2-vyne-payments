@@ -6,13 +6,18 @@ class Payout extends ApiAbstract
 {
     const ENDPOINT_PAYOUT = 'api/v1/payouts';
 
+    const STATUS_NEW = 'The payout is submitted.';
+    const STATUS_PROCESSING = 'The payout is processing and the transfer is in progress.';
+    const STATUS_COMPLETED = 'The payout is successful and the transfer was completed.';
+    const STATUS_FALIED = ' Processing the payout or transferring the money to the consumer failed.';
+
     /**
      * retrieve payment redirect using given order data
      *
      * @param array
      * @return string
      */
-    public function paymentRedirect($token, $order_data)
+    public function submitPayout($token, $order_data)
     {
         $request = $this->payoutRequest($token, $order_data);
         $options = $this->createHttpClientOptions();

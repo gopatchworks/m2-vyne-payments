@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Vyne\Magento\Controller\Webhook;
 
 use Magento\Framework\Controller\ResultFactory;
+use Vyne\Magento\Gateway\Payment as VynePayment;
 
-class Payment extends AbstractWebhookGet
+class Callback extends AbstractWebhookGet
 {
     /**
      * @inheritDoc
@@ -33,17 +34,42 @@ class Payment extends AbstractWebhookGet
 
 
         try {
-            $order_status = $this->vyneHelper->getOrderStatus($body->paymentStatus);
+            switch (VynePayment::getTransactionAction($body->paymentStatus)) {
+            case VynePayment::GROUP_PROCESSING:
+                $order_status = VynePayment::GROUP_PROCESSING;
+                $this->vyneOrder->updateOrderHistory($order, __('Order Updated by Vyne'), $order_status, $body->paymentId);
+                return $this->resultRedirect->setPath('checkout/onepage/success', array('_secure'=>true));
 
-            $this->vyneOrder->updateOrderHistory($order, __('Order Updated by Vyne'), $order_status, $body->paymentId);
-            return $this->resultRedirect->setPath('checkout/onepage/success', array('_secure'=>true));
+                break;
+            case VynePayment::GROUP_CANCEL:
+                return $this->failedVynePayment($order_id);
+
+                break;
+            case VynePayment::GROUP_SUCCESS:
+                break;
+            case VynePayment::GROUP_REFUND:
+                break;
+            }
+
         }
         catch (\Exception $e) {
-            die($e->getMessage());
             $this->vyneLogger->logException($e);
         }
 
         $this->messageManager->addNoticeMessage(__('Vyne Payment Webhook failed. Please contact us for support'));
         return $this->resultRedirect->setUrl('/');
+    }
+
+    /**
+     * reinit shopping cart if payment is failed
+     *
+     * @return ResultInterface
+     */
+    public function failedVynePayment($order_id)
+    {
+        $this->messageManager->addNoticeMessage(__('Vyne payment failed. Please contact us for support'));
+        $this->vyneCart->reinitCart($order_id);
+
+        return $this->resultRedirect->setUrl('/checkout/cart/');
     }
 }

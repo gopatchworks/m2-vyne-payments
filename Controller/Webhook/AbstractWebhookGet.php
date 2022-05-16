@@ -6,15 +6,10 @@ namespace Vyne\Magento\Controller\Webhook;
 
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
-use Magento\Framework\App\Action\HttpPostActionInterface;
-use Magento\Framework\App\CsrfAwareActionInterface;
-use Magento\Framework\App\Request\InvalidRequestException;
-use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Sales\Api\OrderRepositoryInterface;
-use Vyne\Magento\Model\Client\Transaction as VyneTransaction;
-use Vyne\Magento\Api\TransactionRepositoryInterface;
 use Vyne\Magento\Helper\Logger as VyneLogger;
+use Vyne\Magento\Helper\Cart as VyneCart;
 use Vyne\Magento\Helper\Order as VyneOrder;
 
 /**
@@ -24,16 +19,6 @@ use Vyne\Magento\Helper\Order as VyneOrder;
  */
 abstract class AbstractWebhookGet extends Action
 {
-    /**
-     * @var VyneTransaction
-     */
-    public $transactionApi;
-
-    /**
-     * @var TransactionRepositoryInterface
-     */
-    public $transactionRepository;
-
     /**
      * @var \Magento\Checkout\Model\Session
      */
@@ -50,9 +35,14 @@ abstract class AbstractWebhookGet extends Action
     protected $vyneHelper;
 
     /**
+     * @var \Vyne\Magento\Helper\Cart
+     */
+    protected $vyneCart;
+
+    /**
      * @var vyneOrder
      */
-    public $vyneOrder;
+    protected $vyneOrder;
 
     /**
      * @var VyneLogger
@@ -61,22 +51,20 @@ abstract class AbstractWebhookGet extends Action
 
     public function __construct(
         Context $context,
-        VyneTransaction $transactionApi,
         \Magento\Checkout\Model\Session $checkoutSession,
-        TransactionRepositoryInterface $transactionRepositoryInterface,
         OrderRepositoryInterface $orderRepository,
         \Vyne\Magento\Helper\Data $vyneHelper,
+        VyneCart $vyneCart,
         VyneOrder $vyneOrder,
         VyneLogger $vyneLogger
     ) {
         parent::__construct($context);
 
         $this->resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
-        $this->transactionApi = $transactionApi;
         $this->checkoutSession = $checkoutSession;
-        $this->transactionRepository = $transactionRepositoryInterface;
         $this->orderRepository = $orderRepository;
         $this->vyneHelper = $vyneHelper;
+        $this->vyneCart = $vyneCart;
         $this->vyneOrder = $vyneOrder;
         $this->vyneLogger = $vyneLogger;
     }

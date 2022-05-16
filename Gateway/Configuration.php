@@ -330,6 +330,22 @@ class Configuration
     }
 
     /**
+     * decode payvyne_payemnt_payload returned from Vyne
+     *
+     * @param string
+     * @return stdClass Object
+     */
+    public static function decodeJWTBase64($payvyne_payemnt_payload)
+    {
+        $envelope = explode('.', $payvyne_payemnt_payload);
+        // only take body
+        $body = $envelope[1];
+        $processed_body = str_replace('_', '/', str_replace('-','+',$body));
+
+        return json_decode(base64_decode($processed_body));
+    }
+
+    /**
      * Create http client option
      *
      * @throws \RuntimeException on file opening failure

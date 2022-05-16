@@ -21,7 +21,7 @@ use Vyne\Magento\Helper\Order as VyneOrder;
  *
  * @package Vyne\Magento\Controller\Decision
  */
-abstract class AbstractWebhook extends Action implements HttpPostActionInterface, CsrfAwareActionInterface
+abstract class AbstractWebhookPost extends Action implements HttpPostActionInterface, CsrfAwareActionInterface
 {
     /**
      * @var VyneTransaction

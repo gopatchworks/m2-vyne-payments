@@ -17,12 +17,22 @@ class Cart extends AbstractHelper
     /**
      * @var CustomerSession
      */
-    protected $customerSession;
+    protected $_customerSession;
+
+    /**
+     * @var Magento\Sales\Model\Order\Config
+     */
+    protected $_orderConfig;
 
     /**
      * @var Logger
      */
     protected $vyneLogger;
+
+    /**
+     * @var Magento\Sales\Model\OrderFactory
+     */
+    protected $_orderFactory;
 
     /**
      * @var Customer
@@ -36,12 +46,14 @@ class Cart extends AbstractHelper
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
         CustomerSession $customerSession,
-        CustomerRepositoryInterface $customerRepository,
+        \Magento\Sales\Model\Order\Config $orderConfig,
+        \Magento\Sales\Model\OrderFactory $orderFactory,
         Logger $vyneLogger
     ) {
         parent::__construct($context);
-        $this->customerSession = $customerSession;
-        $this->customerRepository = $customerRepository;
+        $this->_customerSession = $customerSession;
+        $this->_orderConfig = $orderConfig;
+        $this->_orderFactory = $orderFactory;
         $this->vyneLogger = $vyneLogger;
     }
 
@@ -73,7 +85,7 @@ class Cart extends AbstractHelper
             return false;
         }
 
-        $order = $this->_orderFactory->create()->loadByIncrementId($increment_id);
+        $order = $this->_orderFactory->create()->load($increment_id);
         if ($this->_canViewOrder($order)) {
             return $order;
         }

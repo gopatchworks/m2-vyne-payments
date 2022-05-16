@@ -29,7 +29,7 @@ class Data extends AbstractHelper
     const VYNE_ENV = 'payment/vyne/environment';
     const VYNE_MEDIA_TYPE = 'payment/vyne/media_type';
 
-    const VYNE_WEBHOOK_PAYMENT = 'vyne/webhook/payment';
+    const VYNE_WEBHOOK_CALLBACK = 'vyne/webhook/callback';
 
     const COUNTRY_CODE_PATH = 'general/country/default';
 
@@ -134,7 +134,7 @@ class Data extends AbstractHelper
             'currency' => $currency_code,
             'destinationAccount' => $this->getDestinationAccount(),
             'description' => (string) __('Web payment'),
-            'callbackUrl' => $this->getVyneWebhookPayment(),
+            'callbackUrl' => $this->getVyneWebhookCallback(),
             'mediaType' => $this->getMediaType(),
             'countries' => [$this->getCountryCodeByWebsite()],
             //'customerReference' => 'P739570946',
@@ -149,9 +149,9 @@ class Data extends AbstractHelper
      *
      * @return string
      */
-    public function getVyneWebhookPayment()
+    public function getVyneWebhookCallback()
     {
-        return $this->urlBuilder->getUrl(self::VYNE_WEBHOOK_PAYMENT);
+        return $this->urlBuilder->getUrl(self::VYNE_WEBHOOK_CALLBACK);
     }
 
     /**
@@ -356,29 +356,13 @@ class Data extends AbstractHelper
     }
 
     /**
-     * decode payload from Vyne
+     * decode the payload return from Vyne using static method
      *
      * @param string
      * @return stdClass Object
      */
     public function decodeJWTBase64($payvyne_payemnt_payload)
     {
-        $envelope = explode('.', $payvyne_payemnt_payload);
-        // only take body
-        $body = $envelope[1];
-        $processed_body = str_replace('_', '/', str_replace('-','+',$body));
-
-        return json_decode(base64_decode($processed_body));
-    }
-
-    /**
-     * translate Vyne Payment status to Magento Order Status
-     *
-     * @param string
-     * @return string
-     */
-    public function getOrderStatus($payment_status)
-    {
-        return 'processing';
+        return VyneConfig::decodeJWTBase64($payvyne_payemnt_payload);
     }
 }
