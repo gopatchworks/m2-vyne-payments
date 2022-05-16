@@ -1,7 +1,4 @@
 <?php
-/**
- * NOTE: generate api classes with https://openapi-generator.tech
- */
 
 namespace Vyne\Magento\Gateway;
 
@@ -11,26 +8,26 @@ class ApiException extends Exception
 {
 
     /**
-     * @var \stdClass|string|null
+     * @var \stdClass | string | null
      */
     protected $responseBody;
 
     /**
-     * @var string[]|null
+     * @var string[] | null
      */
     protected $responseHeaders;
 
     /**
-     * @var \stdClass|string|null
+     * @var \stdClass | string | null
      */
     protected $responseObject;
 
     /**
      * Constructor
      *
-     * @param string                $message
-     * @param int                   $code
-     * @param string[]|null         $responseHeaders
+     * @param string $message
+     * @param int $code
+     * @param string[]|null $responseHeaders
      * @param \stdClass|string|null $responseBody
      */
     public function __construct($message = "", $code = 0, $responseHeaders = [], $responseBody = null)
@@ -43,7 +40,7 @@ class ApiException extends Exception
     /**
      * Gets the HTTP response header
      *
-     * @return string[]|null HTTP response header
+     * @return string[] | null
      */
     public function getResponseHeaders()
     {
@@ -53,7 +50,7 @@ class ApiException extends Exception
     /**
      * Gets the HTTP body of the server response as Json
      *
-     * @return \stdClass|string|null
+     * @return \stdClass | string | null
      */
     public function getResponseBody()
     {

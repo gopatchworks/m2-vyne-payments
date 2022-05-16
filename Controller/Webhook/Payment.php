@@ -13,9 +13,10 @@ class Payment extends AbstractWebhook
     {
         /** @var \Magento\Framework\Controller\ResultInterface $result */
         $result = $this->resultFactory->create(ResultFactory::TYPE_RAW);
-        $requestBody = $this->getRequest()->getContent();
-        $request = json_decode($requestBody);
+        $payload = $this->getRequest()->getParam('payvyne_payment_payload');
+        $last_real_order_id = $this->checkoutSession->getLastRealOrderId();
 
+        $body = $this->vyneHelper->decodeJWTBase64($payload);
         // validate request body
         if (json_last_error() !== JSON_ERROR_NONE) {
             $this->vyneLogger->logMixed(
@@ -29,15 +30,14 @@ class Payment extends AbstractWebhook
 
 
         try {
-            // placeholder to handle webhook request
-
+            $this->orderHelper->updateOrderHistory($order, __('Order Updated by Vyne'), $body['paymentStatus'], $body['paymentId']);
+            return $this->resultRedirect->setPath('checkout/onepage/success', array('_secure'=>true));
         }
         catch (\Exception $e) {
             $this->vyneLogger->logException($e);
         }
 
-        $result->setHttpResponseCode(200);
-
-        return $result;
+        $this->messageManager->addNoticeMessage(__('Vyne Payment Webhook failed. Please contact us for support'));
+        return $this->resultRedirect->setUrl('/');
     }
 }

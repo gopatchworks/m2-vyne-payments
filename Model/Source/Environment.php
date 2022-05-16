@@ -9,13 +9,13 @@ namespace Vyne\Magento\Model\Source;
 
 class Environment implements \Magento\Framework\Option\ArrayInterface
 {
-    const ENV_DEV = 'sandbox';
+    const ENV_STAGING = 'staging';
     const ENV_PRD = 'production';
 
     public function toOptionArray()
     {
         return [
-            ['value' => self::ENV_DEV, 'label' => __('Sandbox')],
+            ['value' => self::ENV_STAGING, 'label' => __('Staging')],
             ['value' => self::ENV_PRD, 'label' => __('Production')],
         ];
     }
@@ -23,7 +23,7 @@ class Environment implements \Magento\Framework\Option\ArrayInterface
     public function toArray()
     {
         return [
-            self::ENV_DEV => __('Sandbox'),
+            self::ENV_STAGING => __('Staging'),
             self::ENV_PRD => __('Production')
         ];
     }

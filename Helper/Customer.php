@@ -65,20 +65,4 @@ class Customer extends AbstractHelper
 
         return $this->customer;
     }
-
-    /**
-     * initialize vyne customer data in session
-     *
-     * @param \Magento\Quote\Api\Data\CartInterface $quote
-     * @return void
-     */
-    public function connectQuoteWithVyne($quote)
-    {
-        try {
-            // connect logic
-        }
-        catch (\Exception $e) {
-            $this->vyneLogger->logException($e);
-        }
-    }
 }

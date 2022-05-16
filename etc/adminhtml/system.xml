@@ -22,6 +22,9 @@
 					<label>Client Secret</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
 				</field>
+				<field id="destination_account" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="45" translate="label" type="text">
+					<label>Destination Account</label>
+				</field>
 				<field id="debug" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="50" translate="label" type="select">
 					<label>Enable Debug</label>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>

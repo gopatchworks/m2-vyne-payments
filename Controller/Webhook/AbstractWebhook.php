@@ -14,6 +14,7 @@ use Magento\Framework\Controller\ResultFactory;
 use Vyne\Magento\Model\Client\Transaction as VyneTransaction;
 use Vyne\Magento\Api\TransactionRepositoryInterface;
 use Vyne\Magento\Helper\Logger as VyneLogger;
+use Vyne\Magento\Helper\Order as VyneOrder;
 
 /**
  * Vyne Payment Webhook Order Controller
@@ -33,7 +34,7 @@ abstract class AbstractWebhook extends Action implements HttpPostActionInterface
     public $transactionRepository;
 
     /**
-     * @var \Vyne\Magento\Helper\Order
+     * @var vyneOrder
      */
     public $vyneOrder;
 
@@ -46,7 +47,7 @@ abstract class AbstractWebhook extends Action implements HttpPostActionInterface
         Context $context,
         VyneTransaction $transactionApi,
         TransactionRepositoryInterface $transactionRepositoryInterface,
-        \Vyne\Magento\Helper\Order $vyneOrder,
+        VyneOrder $vyneOrder,
         VyneLogger $vyneLogger
     ) {
         parent::__construct($context);

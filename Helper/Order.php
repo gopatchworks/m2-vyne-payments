@@ -64,7 +64,6 @@ class Order extends AbstractHelper
         $this->_invoiceService = $invoiceService;
     }
 
-
     /**
      * update Order History
      *
@@ -72,14 +71,21 @@ class Order extends AbstractHelper
      * @param String
      * @param String
      */
-    public function updateOrderHistory($order, $msg, $status)
+    public function updateOrderHistory($order, $msg, $status, $paymentId = null)
     {
         $order->addStatusHistoryComment($msg);
         $order->setState($status)->setStatus($status);
 
+        if ($paymentId) {
+            // update order payment
+            $payment = $order->getPayment();
+            $payment->setTransactionId($paymentId);
+            $payment->setVyneTransactionId($paymentId);
+            $payment->save();
+        }
+
         try {
             $order->save();
-            $this->vyneLogger->logMixed(['msg' => $msg, 'status' => $status]);
         }
         catch (\Exception $e) {
             $this->vyneLogger->logException($e);
