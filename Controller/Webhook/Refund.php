@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Vyne\Magento\Controller\Webhook;
 
-class Refund extends AbstractWebhook
+class Refund extends AbstractWebhookGet
 {
     /**
      * @inheritDoc

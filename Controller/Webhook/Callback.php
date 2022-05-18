@@ -56,7 +56,7 @@ class Callback extends AbstractWebhookGet
             $this->vyneLogger->logException($e);
         }
 
-        $this->messageManager->addNoticeMessage(__('Vyne Payment Webhook failed. Please contact us for support'));
+        $this->messageManager->addNoticeMessage(__('Vyne Payment failed. Please contact us for support'));
         return $this->resultRedirect->setUrl('/');
     }
 
@@ -67,7 +67,7 @@ class Callback extends AbstractWebhookGet
      */
     public function failedVynePayment($order_id)
     {
-        $this->messageManager->addNoticeMessage(__('Vyne payment failed. Please contact us for support'));
+        $this->messageManager->addNoticeMessage(__('Vyne Payment failed. Please contact us for support'));
         $this->vyneCart->reinitCart($order_id);
 
         return $this->resultRedirect->setUrl('/checkout/cart/');
