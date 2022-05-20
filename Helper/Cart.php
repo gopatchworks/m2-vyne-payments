@@ -20,6 +20,11 @@ class Cart extends AbstractHelper
     protected $_customerSession;
 
     /**
+     * @var \Magento\Sales\Api\OrderManagementInterface 
+     */
+    protected $orderManagement;
+
+    /**
      * @var Magento\Sales\Model\Order\Config
      */
     protected $_orderConfig;
@@ -46,12 +51,14 @@ class Cart extends AbstractHelper
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
         CustomerSession $customerSession,
+        \Magento\Sales\Api\OrderManagementInterface $orderManagement,
         \Magento\Sales\Model\Order\Config $orderConfig,
         \Magento\Sales\Model\OrderFactory $orderFactory,
         Logger $vyneLogger
     ) {
         parent::__construct($context);
         $this->_customerSession = $customerSession;
+        $this->_orderManagement = $orderManagement;
         $this->_orderConfig = $orderConfig;
         $this->_orderFactory = $orderFactory;
         $this->vyneLogger = $vyneLogger;

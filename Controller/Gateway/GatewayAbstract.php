@@ -64,15 +64,13 @@ class GatewayAbstract extends \Magento\Framework\App\Action\Action
     {
     }
 
+    /**
+     * initialize payment object and token
+     *
+     * @return PaymentApi
+     */
     public function initPayment()
     {
-        if (!$this->paymentApi) {
-            $config = $this->vyneHelper->getVyneConfig();
-
-            $this->paymentApi = new PaymentApi($config);
-            $this->paymentApi->initToken();
-        }
-
-        return $this->paymentApi;
+        $this->paymentApi = $this->vyneHelper->initPayment();
     }
 }

@@ -15,6 +15,8 @@ use Magento\Framework\UrlInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
 use Vyne\Magento\Gateway\Configuration as VyneConfig;
+use Vyne\Magento\Gateway\Payment as PaymentApi;
+use Vyne\Magento\Gateway\Refund as RefundApi;
 
 class Data extends AbstractHelper
 {
@@ -42,6 +44,21 @@ class Data extends AbstractHelper
      * @var VyneConfig
      */
     protected $vyneConfig;
+
+    /**
+     * @var PaymentApi
+     */
+    protected $paymentApi = false;
+
+    /**
+     * @var RefundApi
+     */
+    protected $refundApi = false;
+
+    /**
+     * @var PayoutApi
+     */
+    protected $payoutApi = false;
 
     /**
      * @var StoreManagerInterface
@@ -116,6 +133,57 @@ class Data extends AbstractHelper
         }
 
         return $this->vyneConfig;
+    }
+
+    /**
+     * initialize payment object and token
+     *
+     * @return PaymentApi
+     */
+    public function initPayment()
+    {
+        if (!$this->paymentApi) {
+            $config = $this->getVyneConfig();
+
+            $this->paymentApi = new PaymentApi($config);
+            $this->paymentApi->initToken();
+        }
+
+        return $this->paymentApi;
+    }
+
+    /**
+     * initialize refund object and token
+     *
+     * @return RefundApi
+     */
+    public function initRefund()
+    {
+        if (!$this->refundApi) {
+            $config = $this->getVyneConfig();
+
+            $this->refundApi = new RefundApi($config);
+            $this->refundApi->initToken();
+        }
+
+        return $this->refundApi;
+    }
+
+    /**
+     * initialize refund payout and token
+     *
+     * @return RefundApi
+     */
+    public function initPayout()
+    {
+        if (!$this->payoutApi) {
+            $config = $this->getVyneConfig();
+
+            $this->payoutApi = new PayoutApi($config);
+            $this->payoutApi->initToken();
+        }
+
+        return $this->payoutApi;
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace Vyne\Magento\Gateway;
 
+use GuzzleHttp\Psr7\Request;
+
 class Refund extends ApiAbstract
 {
     const ENDPOINT_REFUND = 'api/v1/refunds/init';
@@ -17,16 +19,23 @@ class Refund extends ApiAbstract
      * @param array
      * @return string
      */
-    public function paymentRefund($token, $order_data)
+    public function paymentRefund($transaction_id, $amount)
     {
-        $request = $this->refundRequest($token, $order_data);
-        $options = $this->createHttpClientOptions();
+        $refund_data = [
+            'payments' => [
+                [
+                    'paymentId' => $transaction_id,
+                    'amount' => $amount
+                ]
+            ]
+        ];
 
-        $response = $this->client->send($request, $options);
-        $redirect_content = $response->getBody()->getContents();
-        $redirect_obj = json_decode($redirect_content);
+        $request = $this->refundRequest($refund_data);
+        $options = $this->getConfig()->createHttpClientOptions();
 
-        return $redirect_obj->redirectUrl;
+        $response = $this->sendRequest($request, $options);
+
+        return $response;
     }
 
     /**
@@ -37,14 +46,10 @@ class Refund extends ApiAbstract
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function refundRequest($token, $order_data)
+    public function refundRequest($refund_data)
     {
-        $headers = [
-            'Authorization' => 'Bearer ' . $token,
-            'Content-Type' => 'application/json'
-        ];
-
-        $httpBody = \GuzzleHttp\json_encode($order_data);
+        $headers = $this->getConfig()->getAllApiKeys();
+        $httpBody = \GuzzleHttp\json_encode($refund_data);
 
         return new Request(
             'POST',

@@ -2,6 +2,8 @@
 
 namespace Vyne\Magento\Gateway;
 
+use GuzzleHttp\Psr7\Request;
+
 class Payout extends ApiAbstract
 {
     const ENDPOINT_PAYOUT = 'api/v1/payouts';
@@ -17,16 +19,14 @@ class Payout extends ApiAbstract
      * @param array
      * @return string
      */
-    public function submitPayout($token, $order_data)
+    public function submitPayout($payout_data)
     {
-        $request = $this->payoutRequest($token, $order_data);
-        $options = $this->createHttpClientOptions();
+        $request = $this->payoutRequest($payoutData);
+        $options = $this->getConfig()->createHttpClientOptions();
 
-        $response = $this->client->send($request, $options);
-        $redirect_content = $response->getBody()->getContents();
-        $redirect_obj = json_decode($redirect_content);
+        $response = $this->sendRequest($request, $options);
 
-        return $redirect_obj->redirectUrl;
+        return $redirect->redirectUrl;
     }
 
     /**
@@ -37,14 +37,10 @@ class Payout extends ApiAbstract
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function payoutRequest($token, $order_data)
+    public function payoutRequest($payout_data)
     {
-        $headers = [
-            'Authorization' => 'Bearer ' . $token,
-            'Content-Type' => 'application/json'
-        ];
-
-        $httpBody = \GuzzleHttp\json_encode($order_data);
+        $headers = $this->getConfig()->getAllApiKeys();
+        $httpBody = \GuzzleHttp\json_encode($payout_data);
 
         return new Request(
             'POST',

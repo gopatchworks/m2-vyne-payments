@@ -10,6 +10,8 @@ namespace Vyne\Magento\Model\Payment;
 use Vyne\Magento\Helper\Data as VyneHelper;
 use Vyne\Magento\Helper\Logger as VyneLogger;
 use Magento\Directory\Helper\Data as DirectoryHelper;
+use Vyne\Magento\Gateway\Payment as PaymentApi;
+use Vyne\Magento\Gateway\Refund as RefundApi;
 
 class Vyne extends \Magento\Payment\Model\Method\AbstractMethod
 {
@@ -177,6 +179,7 @@ class Vyne extends \Magento\Payment\Model\Method\AbstractMethod
     public function capture(\Magento\Payment\Model\InfoInterface $payment, $amount)
     {
         // capture payment logic
+        return $this;
     }
 
     /**
@@ -190,6 +193,22 @@ class Vyne extends \Magento\Payment\Model\Method\AbstractMethod
     public function refund(\Magento\Payment\Model\InfoInterface $payment, $amount)
     {
         // refund payment logic
+        $order = $payment->getOrder();
+        $refundApi = $this->vyneHelper->initRefund();
+
+        $transaction_id = $payment->getData('vyne_transaction_id');
+
+        // send refund request and retrieve response
+        $response = $refundApi->paymentRefund($transaction_id, $amount);
+
+        if (is_array($response->errors) && count($response->errors) > 0) {
+            $errors = [];
+            foreach ($response->errors as $error){
+                $errors[] = "Issue with Payment #{$error->paymentId} : {$error->errorMessage}";
+            }
+
+            throw new \Exception(implode(',' , $errors));
+        }
 
         return $this;
     }

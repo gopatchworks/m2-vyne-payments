@@ -11,6 +11,7 @@ use Magento\Sales\Api\OrderRepositoryInterface;
 use Vyne\Magento\Helper\Logger as VyneLogger;
 use Vyne\Magento\Helper\Cart as VyneCart;
 use Vyne\Magento\Helper\Order as VyneOrder;
+use Vyne\Magento\Gateway\Payment as PaymentApi;
 
 /**
  * Vyne Payment Webhook Order Controller
@@ -49,6 +50,11 @@ abstract class AbstractWebhookGet extends Action
      */
     protected $vyneLogger;
 
+    /**
+     * @var PaymentApi
+     */
+    protected $paymentApi = false;
+
     public function __construct(
         Context $context,
         \Magento\Checkout\Model\Session $checkoutSession,
@@ -73,4 +79,16 @@ abstract class AbstractWebhookGet extends Action
      * @inheritDoc
      */
     abstract public function execute();
+
+    public function initPayment()
+    {
+        if (!$this->paymentApi) {
+            $config = $this->vyneHelper->getVyneConfig();
+
+            $this->paymentApi = new PaymentApi($config);
+            $this->paymentApi->initToken();
+        }
+
+        return $this->paymentApi;
+    }
 }

@@ -39,7 +39,6 @@ class Payment extends AbstractWebhookGet
             return $this->resultRedirect->setPath('checkout/onepage/success', array('_secure'=>true));
         }
         catch (\Exception $e) {
-            die($e->getMessage());
             $this->vyneLogger->logException($e);
         }
 

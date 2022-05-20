@@ -83,14 +83,27 @@ class ApiAbstract
                 );
             }
 
-            switch($statusCode) {
-            case 200:
-                $content = $response->getBody()->getContents();
+            $content = $response->getBody()->getContents();
 
-                return json_decode($content);
+            return json_decode($content);
+
+        }
+        catch (\Exception $e) {
+            $response_e = $e->getResponse();
+            $statusCode_e = $response_e->getStatusCode();
+
+            switch($statusCode) {
             case 400:
-                // handle 400
-                return $response->getBody();
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode_e,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
             case 401:
                 // handle 401
                 return $response->getBody();
@@ -104,11 +117,6 @@ class ApiAbstract
                     $response->getHeaders()
                 ];
             }
-
-        }
-        catch (\Exception $e) {
-            die($e->getMessage());
-            // log undefined errors here
         }
 
         return false;

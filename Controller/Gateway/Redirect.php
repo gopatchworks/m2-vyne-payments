@@ -28,7 +28,6 @@ class Redirect extends GatewayAbstract implements HttpGetActionInterface, CsrfAw
                 return $this->resultRedirect->setUrl($redirect_url);
             }
             catch (\Exception $e) {
-                die($e->getMessage());
                 $this->logger->logException($e);
             }
 
