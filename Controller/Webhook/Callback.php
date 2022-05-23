@@ -36,6 +36,7 @@ class Callback extends AbstractWebhookGet
         try {
             switch (VynePayment::getTransactionAction($body->paymentStatus)) {
             case VynePayment::GROUP_PROCESSING:
+            case VynePayment::GROUP_SUCCESS:
                 $order_status = VynePayment::GROUP_PROCESSING;
                 $this->vyneOrder->updateOrderHistory($order, __('Order Updated by Vyne'), $order_status, $body->paymentId);
                 return $this->resultRedirect->setPath('checkout/onepage/success', array('_secure'=>true));
@@ -44,8 +45,6 @@ class Callback extends AbstractWebhookGet
             case VynePayment::GROUP_CANCEL:
                 return $this->failedVynePayment($order_id);
 
-                break;
-            case VynePayment::GROUP_SUCCESS:
                 break;
             case VynePayment::GROUP_REFUND:
                 break;
@@ -56,6 +55,7 @@ class Callback extends AbstractWebhookGet
             $this->vyneLogger->logException($e);
         }
 
+        // default action and notice message
         $this->messageManager->addNoticeMessage(__('Vyne Payment failed. Please contact us for support'));
         return $this->resultRedirect->setUrl('/');
     }

@@ -11,6 +11,7 @@ use Magento\Framework\App\Helper\AbstractHelper;
 use Vyne\Magento\Helper\Logger as VyneLogger;
 use Magento\Customer\Model\Session as CustomerSession;
 use Magento\Customer\Api\CustomerRepositoryInterface;
+use Magento\Checkout\Model\Cart as CustomerCart;
 
 class Cart extends AbstractHelper
 {
@@ -40,6 +41,16 @@ class Cart extends AbstractHelper
     protected $_orderFactory;
 
     /**
+     * @var \Magento\Framework\Message\ManagerInterface
+     */
+    protected $messageManager;
+
+    /**
+     * @var CustomerCart
+     */
+    protected $cart;
+
+    /**
      * @var Customer
      */
     private $customer = null;
@@ -53,14 +64,18 @@ class Cart extends AbstractHelper
         CustomerSession $customerSession,
         \Magento\Sales\Api\OrderManagementInterface $orderManagement,
         \Magento\Sales\Model\Order\Config $orderConfig,
+        CustomerCart $cart,
         \Magento\Sales\Model\OrderFactory $orderFactory,
+        \Magento\Framework\Message\ManagerInterface $messageManager,
         Logger $vyneLogger
     ) {
         parent::__construct($context);
         $this->_customerSession = $customerSession;
         $this->_orderManagement = $orderManagement;
         $this->_orderConfig = $orderConfig;
+        $this->cart = $cart;
         $this->_orderFactory = $orderFactory;
+        $this->messageManager = $messageManager;
         $this->vyneLogger = $vyneLogger;
     }
 
@@ -84,15 +99,15 @@ class Cart extends AbstractHelper
     /**
      * Try to load valid order by order_id and register it
      *
-     * @param Integer $increment_id
+     * @param Integer $order_id
      */
-    protected function _loadValidOrder($increment_id = null)
+    protected function _loadValidOrder($order_id = null)
     {
-        if (!$increment_id) {
+        if (!$order_id) {
             return false;
         }
 
-        $order = $this->_orderFactory->create()->load($increment_id);
+        $order = $this->_orderFactory->create()->load($order_id);
         if ($this->_canViewOrder($order)) {
             return $order;
         }

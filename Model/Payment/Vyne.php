@@ -201,6 +201,17 @@ class Vyne extends \Magento\Payment\Model\Method\AbstractMethod
         // send refund request and retrieve response
         $response = $refundApi->paymentRefund($transaction_id, $amount);
 
+        // sample request
+        $refund_data = [
+            'payments' => [
+                [
+                    'paymentId' => $transaction_id,
+                    'amount' => $amount
+                ]
+            ]
+        ];
+        $this->vyneLogger->logMixed(['serialized' => serialize($refundApi->refundRequest($refund_data))]);
+
         if (is_array($response->errors) && count($response->errors) > 0) {
             $errors = [];
             foreach ($response->errors as $error){

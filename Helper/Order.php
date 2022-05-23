@@ -81,8 +81,8 @@ class Order extends AbstractHelper
 
             // update order payment
             $payment = $order->getPayment();
-            $payment->setTransactionId($paymentId);
-            $payment->setVyneTransactionId($paymentId);
+            $payment->setData('vyne_transaction_id', $paymentId);
+            $payment->setData('last_trans_id', $paymentId);
             $payment->save();
         }
 
@@ -138,9 +138,9 @@ class Order extends AbstractHelper
         try {
             $invoice = $this->_invoiceService->prepareInvoice($order);
             //set Vyne Transaction Id for this invoice
-            $invoice->setTransactionId($vyne_transaction_id);
+            $invoice->setData('transaction_id', $vyne_transaction_id);
             //set Invoice State to Paid
-            $invoice->setState(\Magento\Sales\Model\Order\Invoice::STATE_PAID);
+            //$invoice->setState(\Magento\Sales\Model\Order\Invoice::STATE_PAID);
             $invoice->register();
             $this->_transaction->addObject($invoice)->addObject($order)->save();
         }
