@@ -6,6 +6,14 @@
 		</item>
 	</argument>
 	<settings>
+        <buttons>
+            <button name="payout">
+                <url path="vyne_magento/payout/create"/>
+                <class>primary</class>
+                <label translate="true">Create Payout</label>
+                <aclResource>Vyne_Magento::Payout_save</aclResource>
+            </button>
+        </buttons>
 		<spinner>vyne_magento_payout_columns</spinner>
 		<deps>
 			<dep>vyne_magento_payout_listing.vyne_magento_payout_listing_data_source</dep>
@@ -38,20 +46,55 @@
 	<columns name="vyne_magento_payout_columns">
 		<selectionsColumn name="ids">
 			<settings>
-				<indexField>payout_id</indexField>
+				<indexField>id</indexField>
 			</settings>
 		</selectionsColumn>
-		<column name="payout_id">
-			<settings>
-				<filter>text</filter>
-				<sorting>asc</sorting>
-				<label translate="true">ID</label>
-			</settings>
-		</column>
 		<column name="id">
 			<settings>
 				<filter>text</filter>
-				<label translate="true">id</label>
+				<label translate="true">Vyne Payout Id</label>
+			</settings>
+		</column>
+		<column name="payment_id">
+			<settings>
+				<filter>text</filter>
+				<sorting>asc</sorting>
+				<label translate="true">Vyne Payment Id</label>
+			</settings>
+		</column>
+		<column name="status">
+			<settings>
+				<filter>text</filter>
+				<sorting>asc</sorting>
+				<label translate="true">Status</label>
+			</settings>
+		</column>
+		<column name="amount">
+			<settings>
+				<filter>text</filter>
+				<sorting>asc</sorting>
+				<label translate="true">Amount</label>
+			</settings>
+		</column>
+		<column name="currency">
+			<settings>
+				<filter>text</filter>
+				<sorting>asc</sorting>
+				<label translate="true">Currency</label>
+			</settings>
+		</column>
+		<column name="created_at">
+			<settings>
+				<filter>datetime</filter>
+				<sorting>asc</sorting>
+				<label translate="true">Created At</label>
+			</settings>
+		</column>
+		<column name="updated_at">
+			<settings>
+				<filter>datetime</filter>
+				<sorting>asc</sorting>
+				<label translate="true">Updated At</label>
 			</settings>
 		</column>
 	</columns>

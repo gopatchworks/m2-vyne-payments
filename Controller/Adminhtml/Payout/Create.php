@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Vyne\Magento\Controller\Adminhtml\Payout;
 
-class Index extends \Magento\Backend\App\Action
+class Create extends \Magento\Backend\App\Action
 {
 
     protected $resultPageFactory;
@@ -33,9 +33,10 @@ class Index extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        $resultPage = $this->resultPageFactory->create();
-            $resultPage->getConfig()->getTitle()->prepend(__("Vyne Payouts"));
-            return $resultPage;
+        $resultRedirect = $this->resultRedirectFactory->create();
+
+        $this->messageManager->addErrorMessage(__('You have not created the payout.'));
+        return $resultRedirect->setPath('vyne_magento/*/');
     }
 }
 
