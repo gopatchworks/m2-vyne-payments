@@ -1,42 +1,21 @@
 <?xml version="1.0"?>
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
     <table name="vyne_transactions">
-        <column xsi:type="int" name="id" nullable="false" identity="true" padding="10" unsigned="true" comment="The unique identifier for this transaction."/>
-        <column xsi:type="varchar" name="vyne_transaction_id" length="50" nullable="false" comment="The unique Vyne ID for this transaction."/>
-        <column xsi:type="varchar" name="status" nullable="false" length="50" comment="The status of the transaction being processed."/>
-        <column xsi:type="float" name="amount" unsigned="false" nullable="false" comment="The authorized amount for this transaction."/>
-        <column xsi:type="float" name="captured_amount" unsigned="false" nullable="false" comment="The captured amount for this transaction."/>
-        <column xsi:type="float" name="refunded_amount" unsigned="false" nullable="false" comment="The refunded amount for this transaction."/>
-        <column xsi:type="varchar" name="currency" nullable="false" length="5" comment="The currency code for this transaction."/>
-        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="The date and time when this transaction was created in system."/>
-        <column xsi:type="timestamp" name="updated_at" nullable="false" on_update="true" default="CURRENT_TIMESTAMP" comment="Defines when the transaction was last updated."/>
-        <column xsi:type="varchar" name="environment" nullable="false" length="20" comment="The environment this transaction has been created in."/>
+        <column xsi:type="varchar" name="id" length="30" nullable="false" comment="The unique identifier for this payout."/>
+        <column xsi:type="varchar" name="payment_id" length="30" nullable="false" comment="The unique Vyne ID for this payout."/>
+        <column xsi:type="varchar" name="status" nullable="false" length="50" comment="The status of the payout being processed."/>
+        <column xsi:type="float" name="amount" unsigned="false" nullable="false" comment="The authorized amount for this payout."/>
+        <column xsi:type="varchar" name="currency" nullable="false" length="5" comment="The currency code for this payout."/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="The date and time when this payout was created in system."/>
+        <column xsi:type="timestamp" name="updated_at" nullable="false" on_update="true" default="CURRENT_TIMESTAMP" comment="Defines when the payout was last updated."/>
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="id"/>
         </constraint>
-        <index referenceId="VYNE_TRANSACTION_ID" indexType="btree">
-            <column name="vyne_transaction_id"/>
+        <index referenceId="PAYMENT_ID" indexType="btree">
+            <column name="payment_id"/>
         </index>
-        <index referenceId="VYNE_TRANSACTION_STATUS" indexType="btree">
+        <index referenceId="STATUS" indexType="btree">
             <column name="status"/>
-        </index>
-    </table>
-    <table name="vyne_tokens">
-        <column xsi:type="int" name="id" nullable="false" identity="true" padding="10" unsigned="true" comment="The unique identifier for this transaction."/>
-        <column xsi:type="varchar" name="access_token" length="600" nullable="false" comment="The unique Vyne Access Token"/>
-        <column xsi:type="varchar" name="token_type" nullable="false" length="50" comment="Vyne Access Token Type"/>
-        <column xsi:type="int" name="expires_in" unsigned="false" nullable="false" comment="Time before token is expired"/>
-        <column xsi:type="varchar" name="scope" length="50" nullable="false" omment="Scope of payment request"/>
-        <column xsi:type="varchar" name="merchant_id" length="50" nullable="false" comment="Vyne merchant id"/>
-        <column xsi:type="boolean" name="mfa_required" nullable="false" length="20" comment="Is Multi factors authentication required ?"/>
-        <column xsi:type="varchar" name="iss" nullable="false" length="255" comment="Vyne ISS"/>
-        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"/>
-        <column xsi:type="timestamp" name="updated_at" nullable="false" on_update="true" default="CURRENT_TIMESTAMP" />
-        <constraint xsi:type="primary" referenceId="PRIMARY">
-            <column name="id"/>
-        </constraint>
-        <index referenceId="VYNE_ACCESS_TOKEN" indexType="btree">
-            <column name="access_token"/>
         </index>
     </table>
     <table name="quote_payment" resource="checkout" engine="innodb" comment="Sales Flat Quote Payment">

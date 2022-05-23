@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Vyne\Magento\Model\ResourceModel\Transaction;
+namespace Vyne\Magento\Model\ResourceModel\Payout;
 
 class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {
@@ -13,7 +13,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     /**
      * @var string
      */
-    protected $_idFieldName = 'transaction_id';
+    protected $_idFieldName = 'id';
 
     /**
      * Define resource model
@@ -23,8 +23,8 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     protected function _construct()
     {
         $this->_init(
-            \Vyne\Magento\Model\Transaction::class,
-            \Vyne\Magento\Model\ResourceModel\Transaction::class
+            \Vyne\Magento\Model\Payout::class,
+            \Vyne\Magento\Model\ResourceModel\Payout::class
         );
     }
 }

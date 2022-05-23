@@ -2,46 +2,46 @@
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
     <!--custom set-payment-information-->
     <route url="/V1/vyne-payment/set-payment-information" method="POST">
-        <service class="Vyne\Magento\Api\TransactionRepositoryInterface" method="setPaymentInformation"/>
+        <service class="Vyne\Magento\Api\PayoutRepositoryInterface" method="setPaymentInformation"/>
         <resources>
             <resource ref="anonymous" />
         </resources>
     </route>
     <route url="/V1/vyne-payment/get-token" method="POST">
-        <service class="Vyne\Magento\Api\TransactionRepositoryInterface" method="getToken"/>
+        <service class="Vyne\Magento\Api\PayoutRepositoryInterface" method="getToken"/>
         <resources>
             <resource ref="anonymous" />
         </resources>
     </route>
     <!--end of custom api-->
-    <route url="/V1/vyne-payment/transaction" method="POST">
-        <service class="Vyne\Magento\Api\TransactionRepositoryInterface" method="save"/>
+    <route url="/V1/vyne-payment/payout" method="POST">
+        <service class="Vyne\Magento\Api\PayoutRepositoryInterface" method="save"/>
         <resources>
-            <resource ref="Vyne_Magento::Transaction_save" />
+            <resource ref="Vyne_Magento::Payout_save" />
         </resources>
     </route>
-    <route url="/V1/vyne-payment/transaction/search" method="GET">
-        <service class="Vyne\Magento\Api\TransactionRepositoryInterface" method="getList"/>
+    <route url="/V1/vyne-payment/payout/search" method="GET">
+        <service class="Vyne\Magento\Api\PayoutRepositoryInterface" method="getList"/>
         <resources>
-            <resource ref="Vyne_Magento::Transaction_view"/>
+            <resource ref="Vyne_Magento::Payout_view"/>
         </resources>
     </route>
-    <route url="/V1/vyne-payment/transaction/:id" method="GET">
-        <service class="Vyne\Magento\Api\TransactionRepositoryInterface" method="get"/>
+    <route url="/V1/vyne-payment/payout/:id" method="GET">
+        <service class="Vyne\Magento\Api\PayoutRepositoryInterface" method="get"/>
         <resources>
-            <resource ref="Vyne_Magento::Transaction_view"/>
+            <resource ref="Vyne_Magento::Payout_view"/>
         </resources>
     </route>
-    <route url="/V1/vyne-payment/transaction/:id" method="PUT">
-        <service class="Vyne\Magento\Api\TransactionRepositoryInterface" method="save"/>
+    <route url="/V1/vyne-payment/payout/:id" method="PUT">
+        <service class="Vyne\Magento\Api\PayoutRepositoryInterface" method="save"/>
         <resources>
-            <resource ref="Vyne_Magento::Transaction_update"/>
+            <resource ref="Vyne_Magento::Payout_update"/>
         </resources>
     </route>
-    <route url="/V1/vyne-payment/transaction/:id" method="DELETE">
-        <service class="Vyne\Magento\Api\TransactionRepositoryInterface" method="deleteById"/>
+    <route url="/V1/vyne-payment/payout/:id" method="DELETE">
+        <service class="Vyne\Magento\Api\PayoutRepositoryInterface" method="deleteById"/>
         <resources>
-            <resource ref="Vyne_Magento::Transaction_delete"/>
+            <resource ref="Vyne_Magento::Payout_delete"/>
         </resources>
     </route>
 </routes>

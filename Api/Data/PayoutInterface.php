@@ -7,9 +7,9 @@ declare(strict_types=1);
 
 namespace Vyne\Magento\Api\Data;
 
-interface TransactionInterface extends \Magento\Framework\Api\ExtensibleDataInterface
+interface PayoutInterface extends \Magento\Framework\Api\ExtensibleDataInterface
 {
-    const TRANSACTION_ID = 'transaction_id';
+    const payout_ID = 'payout_id';
     const ID = 'id';
     const METHOD_ID = 'method_id';
     const BUYER_ID = 'buyer_id';
@@ -21,20 +21,20 @@ interface TransactionInterface extends \Magento\Framework\Api\ExtensibleDataInte
     const CURRENCY = 'currency';
     const EXTERNAL_IDENTIFIER = 'external_identifier';
     const ENVIRONMENT = 'environment';
-    const VYNE_TRANSACTION_ID = 'vyne_transaction_id';
+    const VYNE_payout_ID = 'vyne_payout_id';
 
     /**
-     * Get transaction_id
+     * Get payout_id
      * @return string|null
      */
-    public function getTransactionId();
+    public function getPayoutId();
 
     /**
-     * Set transaction_id
-     * @param string $transactionId
-     * @return \Vyne\Magento\Api\Data\TransactionInterface
+     * Set payout_id
+     * @param string $payoutId
+     * @return \Vyne\Magento\Api\Data\PayoutInterface
      */
-    public function setTransactionId($transactionId);
+    public function setPayoutId($payoutId);
 
     /**
      * Get id
@@ -45,7 +45,7 @@ interface TransactionInterface extends \Magento\Framework\Api\ExtensibleDataInte
     /**
      * Set id
      * @param string $id
-     * @return \Vyne\Magento\Api\Data\TransactionInterface
+     * @return \Vyne\Magento\Api\Data\PayoutInterface
      */
     public function setId($id);
 
@@ -58,7 +58,7 @@ interface TransactionInterface extends \Magento\Framework\Api\ExtensibleDataInte
     /**
      * Set method_id
      * @param string $method_id
-     * @return \Vyne\Magento\Api\Data\TransactionInterface
+     * @return \Vyne\Magento\Api\Data\PayoutInterface
      */
     public function setMethodId($method_id);
 
@@ -71,7 +71,7 @@ interface TransactionInterface extends \Magento\Framework\Api\ExtensibleDataInte
     /**
      * Set buyer_id
      * @param string $buyer_id
-     * @return \Vyne\Magento\Api\Data\TransactionInterface
+     * @return \Vyne\Magento\Api\Data\PayoutInterface
      */
     public function setBuyerId($buyer_id);
 
@@ -84,7 +84,7 @@ interface TransactionInterface extends \Magento\Framework\Api\ExtensibleDataInte
     /**
      * Set service_id
      * @param string $service_id
-     * @return \Vyne\Magento\Api\Data\TransactionInterface
+     * @return \Vyne\Magento\Api\Data\PayoutInterface
      */
     public function setServiceId($service_id);
 
@@ -97,7 +97,7 @@ interface TransactionInterface extends \Magento\Framework\Api\ExtensibleDataInte
     /**
      * Set status
      * @param string $status
-     * @return \Vyne\Magento\Api\Data\TransactionInterface
+     * @return \Vyne\Magento\Api\Data\PayoutInterface
      */
     public function setStatus($status);
 
@@ -110,7 +110,7 @@ interface TransactionInterface extends \Magento\Framework\Api\ExtensibleDataInte
     /**
      * Set amount
      * @param integer $amount
-     * @return \Vyne\Magento\Api\Data\TransactionInterface
+     * @return \Vyne\Magento\Api\Data\PayoutInterface
      */
     public function setAmount($amount);
 
@@ -123,7 +123,7 @@ interface TransactionInterface extends \Magento\Framework\Api\ExtensibleDataInte
     /**
      * Set captured_amount
      * @param integer $captured_amount
-     * @return \Vyne\Magento\Api\Data\TransactionInterface
+     * @return \Vyne\Magento\Api\Data\PayoutInterface
      */
     public function setCapturedAmount($captured_amount);
 
@@ -136,7 +136,7 @@ interface TransactionInterface extends \Magento\Framework\Api\ExtensibleDataInte
     /**
      * Set refunded_amount
      * @param string $refunded_amount
-     * @return \Vyne\Magento\Api\Data\TransactionInterface
+     * @return \Vyne\Magento\Api\Data\PayoutInterface
      */
     public function setRefundedAmount($refunded_amount);
 
@@ -149,7 +149,7 @@ interface TransactionInterface extends \Magento\Framework\Api\ExtensibleDataInte
     /**
      * Set currency
      * @param string $currency
-     * @return \Vyne\Magento\Api\Data\TransactionInterface
+     * @return \Vyne\Magento\Api\Data\PayoutInterface
      */
     public function setCurrency($currency);
 
@@ -162,7 +162,7 @@ interface TransactionInterface extends \Magento\Framework\Api\ExtensibleDataInte
     /**
      * Set external_identifier
      * @param string $external_identifier
-     * @return \Vyne\Magento\Api\Data\TransactionInterface
+     * @return \Vyne\Magento\Api\Data\PayoutInterface
      */
     public function setExternalIdentifier($external_identifier);
 
@@ -175,35 +175,35 @@ interface TransactionInterface extends \Magento\Framework\Api\ExtensibleDataInte
     /**
      * Set environment
      * @param string $environment
-     * @return \Vyne\Magento\Api\Data\TransactionInterface
+     * @return \Vyne\Magento\Api\Data\PayoutInterface
      */
     public function setEnvironment($environment);
 
     /**
-     * Get vyne_transaction_id
+     * Get vyne_payout_id
      * @return string|null
      */
-    public function getVyneTransactionId();
+    public function getVynePayoutId();
 
     /**
-     * Set vyne_transaction_id
-     * @param string $vyne_transaction_id
-     * @return \Vyne\Magento\Api\Data\TransactionInterface
+     * Set vyne_payout_id
+     * @param string $vyne_payout_id
+     * @return \Vyne\Magento\Api\Data\PayoutInterface
      */
-    public function setVyneTransactionId($vyne_transaction_id);
+    public function setVynePayoutId($vyne_payout_id);
 
     /**
      * Retrieve existing extension attributes object or create a new one.
-     * @return \Vyne\Magento\Api\Data\TransactionExtensionInterface|null
+     * @return \Vyne\Magento\Api\Data\PayoutExtensionInterface|null
      */
     public function getExtensionAttributes();
 
     /**
      * Set an extension attributes object.
-     * @param \Vyne\Magento\Api\Data\TransactionExtensionInterface $extensionAttributes
+     * @param \Vyne\Magento\Api\Data\PayoutExtensionInterface $extensionAttributes
      * @return $this
      */
     public function setExtensionAttributes(
-        \Vyne\Magento\Api\Data\TransactionExtensionInterface $extensionAttributes
+        \Vyne\Magento\Api\Data\PayoutExtensionInterface $extensionAttributes
     );
 }

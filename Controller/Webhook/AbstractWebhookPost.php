@@ -12,7 +12,6 @@ use Magento\Framework\App\Request\InvalidRequestException;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\ResultFactory;
 use Vyne\Magento\Model\Client\Transaction as VyneTransaction;
-use Vyne\Magento\Api\TransactionRepositoryInterface;
 use Vyne\Magento\Helper\Logger as VyneLogger;
 use Vyne\Magento\Helper\Order as VyneOrder;
 
@@ -29,11 +28,6 @@ abstract class AbstractWebhookPost extends Action implements HttpPostActionInter
     public $transactionApi;
 
     /**
-     * @var TransactionRepositoryInterface
-     */
-    public $transactionRepository;
-
-    /**
      * @var vyneOrder
      */
     public $vyneOrder;
@@ -46,14 +40,12 @@ abstract class AbstractWebhookPost extends Action implements HttpPostActionInter
     public function __construct(
         Context $context,
         VyneTransaction $transactionApi,
-        TransactionRepositoryInterface $transactionRepositoryInterface,
         VyneOrder $vyneOrder,
         VyneLogger $vyneLogger
     ) {
         parent::__construct($context);
 
         $this->transactionApi = $transactionApi;
-        $this->transactionRepository = $transactionRepositoryInterface;
         $this->vyneOrder = $vyneOrder;
         $this->vyneLogger = $vyneLogger;
     }

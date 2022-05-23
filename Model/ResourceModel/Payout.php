@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Vyne\Magento\Model\ResourceModel;
 
-class Transaction extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
+class Payout extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
 
     /**
@@ -17,7 +17,7 @@ class Transaction extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      */
     protected function _construct()
     {
-        $this->_init('vyne_transactions', 'id');
+        $this->_init('vyne_payouts', 'id');
     }
 }
 

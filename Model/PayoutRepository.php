@@ -7,11 +7,11 @@ declare(strict_types=1);
 
 namespace Vyne\Magento\Model;
 
-use Vyne\Magento\Api\Data\TransactionInterfaceFactory;
-use Vyne\Magento\Api\Data\TransactionSearchResultsInterfaceFactory;
-use Vyne\Magento\Api\TransactionRepositoryInterface;
-use Vyne\Magento\Model\ResourceModel\Transaction as ResourceTransaction;
-use Vyne\Magento\Model\ResourceModel\Transaction\CollectionFactory as TransactionCollectionFactory;
+use Vyne\Magento\Api\Data\PayoutInterfaceFactory;
+use Vyne\Magento\Api\Data\PayoutSearchResultsInterfaceFactory;
+use Vyne\Magento\Api\PayoutRepositoryInterface;
+use Vyne\Magento\Model\ResourceModel\Payout as ResourcePayout;
+use Vyne\Magento\Model\ResourceModel\Payout\CollectionFactory as PayoutCollectionFactory;
 use Vyne\Magento\Model\Client\Token as VyneToken;
 use Vyne\Magento\Helper\Logger as VyneLogger;
 use Vyne\Magento\Helper\Data as VyneHelper;
@@ -27,14 +27,14 @@ use Magento\Framework\Reflection\DataObjectProcessor;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 
-class TransactionRepository implements TransactionRepositoryInterface
+class PayoutRepository implements PayoutRepositoryInterface
 {
 
     protected $resource;
 
-    protected $transactionFactory;
+    protected $payoutFactory;
 
-    protected $transactionCollectionFactory;
+    protected $payoutCollectionFactory;
 
     protected $searchResultsFactory;
 
@@ -42,7 +42,7 @@ class TransactionRepository implements TransactionRepositoryInterface
 
     protected $dataObjectProcessor;
 
-    protected $dataTransactionFactory;
+    protected $dataPayoutFactory;
 
     protected $extensionAttributesJoinProcessor;
 
@@ -83,11 +83,11 @@ class TransactionRepository implements TransactionRepositoryInterface
     private $searchCriteriaBuilder;
 
     /**
-     * @param ResourceTransaction $resource
-     * @param TransactionFactory $transactionFactory
-     * @param TransactionInterfaceFactory $dataTransactionFactory
-     * @param TransactionCollectionFactory $transactionCollectionFactory
-     * @param TransactionSearchResultsInterfaceFactory $searchResultsFactory
+     * @param ResourcePayout $resource
+     * @param PayoutFactory $payoutFactory
+     * @param PayoutInterfaceFactory $dataPayoutFactory
+     * @param PayoutCollectionFactory $payoutCollectionFactory
+     * @param PayoutSearchResultsInterfaceFactory $searchResultsFactory
      * @param DataObjectHelper $dataObjectHelper
      * @param DataObjectProcessor $dataObjectProcessor
      * @param StoreManagerInterface $storeManager
@@ -101,11 +101,11 @@ class TransactionRepository implements TransactionRepositoryInterface
      * @param \Magento\Quote\Api\PaymentMethodManagementInterface $paymentMethodManagement
      */
     public function __construct(
-        ResourceTransaction $resource,
-        TransactionFactory $transactionFactory,
-        TransactionInterfaceFactory $dataTransactionFactory,
-        TransactionCollectionFactory $transactionCollectionFactory,
-        TransactionSearchResultsInterfaceFactory $searchResultsFactory,
+        ResourcePayout $resource,
+        PayoutFactory $payoutFactory,
+        PayoutInterfaceFactory $dataPayoutFactory,
+        PayoutCollectionFactory $payoutCollectionFactory,
+        PayoutSearchResultsInterfaceFactory $searchResultsFactory,
         DataObjectHelper $dataObjectHelper,
         DataObjectProcessor $dataObjectProcessor,
         StoreManagerInterface $storeManager,
@@ -119,11 +119,11 @@ class TransactionRepository implements TransactionRepositoryInterface
         \Magento\Quote\Api\PaymentMethodManagementInterface $paymentMethodManagement
     ) {
         $this->resource = $resource;
-        $this->transactionFactory = $transactionFactory;
-        $this->transactionCollectionFactory = $transactionCollectionFactory;
+        $this->payoutFactory = $payoutFactory;
+        $this->payoutCollectionFactory = $payoutCollectionFactory;
         $this->searchResultsFactory = $searchResultsFactory;
         $this->dataObjectHelper = $dataObjectHelper;
-        $this->dataTransactionFactory = $dataTransactionFactory;
+        $this->dataPayoutFactory = $dataPayoutFactory;
         $this->dataObjectProcessor = $dataObjectProcessor;
         $this->storeManager = $storeManager;
         $this->collectionProcessor = $collectionProcessor;
@@ -140,30 +140,30 @@ class TransactionRepository implements TransactionRepositoryInterface
      * {@inheritdoc}
      */
     public function save(
-        \Vyne\Magento\Api\Data\TransactionInterface $transaction
+        \Vyne\Magento\Api\Data\PayoutInterface $payout
     ) {
-        /* if (empty($transaction->getStoreId())) {
+        /* if (empty($payout->getStoreId())) {
             $storeId = $this->storeManager->getStore()->getId();
-            $transaction->setStoreId($storeId);
+            $payout->setStoreId($storeId);
         } */
         
-        $transactionData = $this->extensibleDataObjectConverter->toNestedArray(
-            $transaction,
+        $payoutData = $this->extensibleDataObjectConverter->toNestedArray(
+            $payout,
             [],
-            \Vyne\Magento\Api\Data\TransactionInterface::class
+            \Vyne\Magento\Api\Data\PayoutInterface::class
         );
         
-        $transactionModel = $this->transactionFactory->create()->setData($transactionData);
+        $payoutModel = $this->payoutFactory->create()->setData($payoutData);
         
         try {
-            $this->resource->save($transactionModel);
+            $this->resource->save($payoutModel);
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(__(
-                'Could not save the transaction: %1',
+                'Could not save the payout: %1',
                 $exception->getMessage()
             ));
         }
-        return $transactionModel->getDataModel();
+        return $payoutModel->getDataModel();
     }
 
     /**
@@ -172,16 +172,16 @@ class TransactionRepository implements TransactionRepositoryInterface
     public function setPaymentInformation(
         $cartId,
         \Magento\Quote\Api\Data\PaymentInterface $paymentMethod,
-        \Vyne\Magento\Api\Data\TransactionInterface $transactionData
+        \Vyne\Magento\Api\Data\PayoutInterface $payoutData
     )
     {
-        // 1. save transaction data
-        $this->save($transactionData);
+        // 1. save payout data
+        $this->save($payoutData);
 
         // 2. set payment information
         $quote = $this->getQuoteModel($cartId);
         $payment = $quote->getPayment();
-        $payment->setData('vyne_transaction_id', $transactionData->getVyneTransactionId())->save();
+        $payment->setData('vyne_payout_id', $payoutData->getVynePayoutId())->save();
         $this->vyneLogger->logMixed($payment->getData());
 
         $quote_payment_id = $this->paymentMethodManagement->set($cartId, $paymentMethod);
@@ -255,29 +255,29 @@ class TransactionRepository implements TransactionRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function get($transactionId)
+    public function get($payoutId)
     {
-        $transaction = $this->transactionFactory->create();
-        $this->resource->load($transaction, $transactionId);
-        if (!$transaction->getId()) {
-            throw new NoSuchEntityException(__('Transaction with id "%1" does not exist.', $transactionId));
+        $payout = $this->payoutFactory->create();
+        $this->resource->load($payout, $payoutId);
+        if (!$payout->getId()) {
+            throw new NoSuchEntityException(__('Payout with id "%1" does not exist.', $payoutId));
         }
-        return $transaction->getDataModel();
+        return $payout->getDataModel();
     }
 
     /**
-     * retrieve buyer buy vyne transaction using vyne_transaction_id
+     * retrieve buyer buy vyne payout using vyne_payout_id
      *
      * @param string
-     * @return Vyne\Magento\Api\Data\TransactionInterface
+     * @return Vyne\Magento\Api\Data\PayoutInterface
      */
-    public function getByVyneTransactionId($vyne_transaction_id)
+    public function getByVynePayoutId($vyne_payout_id)
     {
-        $transactionSearchCriteria = $this->searchCriteriaBuilder->addFilter('vyne_transaction_id', $vyne_transaction_id, 'eq')->create();
-        $transactionSearchResults = $this->getList($transactionSearchCriteria);
+        $payoutSearchCriteria = $this->searchCriteriaBuilder->addFilter('vyne_payout_id', $vyne_payout_id, 'eq')->create();
+        $payoutSearchResults = $this->getList($payoutSearchCriteria);
 
-        if ($transactionSearchResults->getTotalCount() > 0) {
-            list($item) = $transactionSearchResults->getItems();
+        if ($payoutSearchResults->getTotalCount() > 0) {
+            list($item) = $payoutSearchResults->getItems();
             return $item;
         }
 
@@ -290,11 +290,11 @@ class TransactionRepository implements TransactionRepositoryInterface
     public function getList(
         \Magento\Framework\Api\SearchCriteriaInterface $criteria
     ) {
-        $collection = $this->transactionCollectionFactory->create();
+        $collection = $this->payoutCollectionFactory->create();
         
         $this->extensionAttributesJoinProcessor->process(
             $collection,
-            \Vyne\Magento\Api\Data\TransactionInterface::class
+            \Vyne\Magento\Api\Data\PayoutInterface::class
         );
         
         $this->collectionProcessor->process($criteria, $collection);
@@ -316,15 +316,15 @@ class TransactionRepository implements TransactionRepositoryInterface
      * {@inheritdoc}
      */
     public function delete(
-        \Vyne\Magento\Api\Data\TransactionInterface $transaction
+        \Vyne\Magento\Api\Data\PayoutInterface $payout
     ) {
         try {
-            $transactionModel = $this->transactionFactory->create();
-            $this->resource->load($transactionModel, $transaction->getTransactionId());
-            $this->resource->delete($transactionModel);
+            $payoutModel = $this->payoutFactory->create();
+            $this->resource->load($payoutModel, $payout->getPayoutId());
+            $this->resource->delete($payoutModel);
         } catch (\Exception $exception) {
             throw new CouldNotDeleteException(__(
-                'Could not delete the Transaction: %1',
+                'Could not delete the Payout: %1',
                 $exception->getMessage()
             ));
         }
@@ -334,9 +334,9 @@ class TransactionRepository implements TransactionRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function deleteById($transactionId)
+    public function deleteById($payoutId)
     {
-        return $this->delete($this->get($transactionId));
+        return $this->delete($this->get($payoutId));
     }
 }
 
