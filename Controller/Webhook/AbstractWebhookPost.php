@@ -11,7 +11,6 @@ use Magento\Framework\App\CsrfAwareActionInterface;
 use Magento\Framework\App\Request\InvalidRequestException;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\ResultFactory;
-use Vyne\Magento\Model\Client\Transaction as VyneTransaction;
 use Vyne\Magento\Helper\Logger as VyneLogger;
 use Vyne\Magento\Helper\Order as VyneOrder;
 
@@ -22,11 +21,6 @@ use Vyne\Magento\Helper\Order as VyneOrder;
  */
 abstract class AbstractWebhookPost extends Action implements HttpPostActionInterface, CsrfAwareActionInterface
 {
-    /**
-     * @var VyneTransaction
-     */
-    public $transactionApi;
-
     /**
      * @var vyneOrder
      */
@@ -39,13 +33,11 @@ abstract class AbstractWebhookPost extends Action implements HttpPostActionInter
 
     public function __construct(
         Context $context,
-        VyneTransaction $transactionApi,
         VyneOrder $vyneOrder,
         VyneLogger $vyneLogger
     ) {
         parent::__construct($context);
 
-        $this->transactionApi = $transactionApi;
         $this->vyneOrder = $vyneOrder;
         $this->vyneLogger = $vyneLogger;
     }
