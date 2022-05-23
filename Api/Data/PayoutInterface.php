@@ -9,32 +9,13 @@ namespace Vyne\Magento\Api\Data;
 
 interface PayoutInterface extends \Magento\Framework\Api\ExtensibleDataInterface
 {
-    const payout_ID = 'payout_id';
     const ID = 'id';
-    const METHOD_ID = 'method_id';
-    const BUYER_ID = 'buyer_id';
-    const SERVICE_ID = 'service_id';
+    const PAYMENT_ID = 'payment_id';
     const STATUS = 'status';
     const AMOUNT = 'amount';
-    const CAPTURED_AMOUNT = 'captured_amount';
-    const REFUNDED_AMOUNT = 'refunded_amount';
     const CURRENCY = 'currency';
-    const EXTERNAL_IDENTIFIER = 'external_identifier';
-    const ENVIRONMENT = 'environment';
-    const VYNE_payout_ID = 'vyne_payout_id';
-
-    /**
-     * Get payout_id
-     * @return string|null
-     */
-    public function getPayoutId();
-
-    /**
-     * Set payout_id
-     * @param string $payoutId
-     * @return \Vyne\Magento\Api\Data\PayoutInterface
-     */
-    public function setPayoutId($payoutId);
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'updated_at';
 
     /**
      * Get id
@@ -50,43 +31,17 @@ interface PayoutInterface extends \Magento\Framework\Api\ExtensibleDataInterface
     public function setId($id);
 
     /**
-     * Get method_id
+     * Get payment_id
      * @return string|null
      */
-    public function getMethodId();
+    public function getPaymentId();
 
     /**
-     * Set method_id
-     * @param string $method_id
+     * Set payment_id
+     * @param string $payment_id
      * @return \Vyne\Magento\Api\Data\PayoutInterface
      */
-    public function setMethodId($method_id);
-
-    /**
-     * Get buyer_id
-     * @return string|null
-     */
-    public function getBuyerId();
-
-    /**
-     * Set buyer_id
-     * @param string $buyer_id
-     * @return \Vyne\Magento\Api\Data\PayoutInterface
-     */
-    public function setBuyerId($buyer_id);
-
-    /**
-     * Get service_id
-     * @return string|null
-     */
-    public function getServiceId();
-
-    /**
-     * Set service_id
-     * @param string $service_id
-     * @return \Vyne\Magento\Api\Data\PayoutInterface
-     */
-    public function setServiceId($service_id);
+    public function setPaymentId($payment_id);
 
     /**
      * Get status
@@ -103,42 +58,16 @@ interface PayoutInterface extends \Magento\Framework\Api\ExtensibleDataInterface
 
     /**
      * Get amount
-     * @return integer|null
+     * @return float|null
      */
     public function getAmount();
 
     /**
      * Set amount
-     * @param integer $amount
+     * @param float $amount
      * @return \Vyne\Magento\Api\Data\PayoutInterface
      */
     public function setAmount($amount);
-
-    /**
-     * Get captured_amount
-     * @return integer|null
-     */
-    public function getCapturedAmount();
-
-    /**
-     * Set captured_amount
-     * @param integer $captured_amount
-     * @return \Vyne\Magento\Api\Data\PayoutInterface
-     */
-    public function setCapturedAmount($captured_amount);
-
-    /**
-     * Get refunded_amount
-     * @return integer|null
-     */
-    public function getRefundedAmount();
-
-    /**
-     * Set refunded_amount
-     * @param string $refunded_amount
-     * @return \Vyne\Magento\Api\Data\PayoutInterface
-     */
-    public function setRefundedAmount($refunded_amount);
 
     /**
      * Get currency
@@ -154,56 +83,28 @@ interface PayoutInterface extends \Magento\Framework\Api\ExtensibleDataInterface
     public function setCurrency($currency);
 
     /**
-     * Get external_identifier
-     * @return string|null
+     * Get created_at
+     * @return timestamp|null
      */
-    public function getExternalIdentifier();
+    public function getCreatedAt();
 
     /**
-     * Set external_identifier
-     * @param string $external_identifier
+     * Set created_at
+     * @param string $created_at
      * @return \Vyne\Magento\Api\Data\PayoutInterface
      */
-    public function setExternalIdentifier($external_identifier);
+    public function setCreatedAt($created_at);
 
     /**
-     * Get environment
-     * @return string|null
+     * Get updated_at
+     * @return timestamp|null
      */
-    public function getEnvironment();
+    public function getUpdatedAt();
 
     /**
-     * Set environment
-     * @param string $environment
+     * Set updated_at
+     * @param string $updated_at
      * @return \Vyne\Magento\Api\Data\PayoutInterface
      */
-    public function setEnvironment($environment);
-
-    /**
-     * Get vyne_payout_id
-     * @return string|null
-     */
-    public function getVynePayoutId();
-
-    /**
-     * Set vyne_payout_id
-     * @param string $vyne_payout_id
-     * @return \Vyne\Magento\Api\Data\PayoutInterface
-     */
-    public function setVynePayoutId($vyne_payout_id);
-
-    /**
-     * Retrieve existing extension attributes object or create a new one.
-     * @return \Vyne\Magento\Api\Data\PayoutExtensionInterface|null
-     */
-    public function getExtensionAttributes();
-
-    /**
-     * Set an extension attributes object.
-     * @param \Vyne\Magento\Api\Data\PayoutExtensionInterface $extensionAttributes
-     * @return $this
-     */
-    public function setExtensionAttributes(
-        \Vyne\Magento\Api\Data\PayoutExtensionInterface $extensionAttributes
-    );
+    public function setUpdatedAt($updated_at);
 }

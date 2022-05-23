@@ -7,7 +7,9 @@ declare(strict_types=1);
 
 namespace Vyne\Magento\Model\ResourceModel\Payout;
 
-class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
+use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
+
+class Collection extends AbstractCollection
 {
 
     /**
@@ -28,4 +30,3 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
         );
     }
 }
-

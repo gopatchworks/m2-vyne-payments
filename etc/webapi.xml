@@ -1,19 +1,5 @@
 <?xml version="1.0" ?>
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
-    <!--custom set-payment-information-->
-    <route url="/V1/vyne-payment/set-payment-information" method="POST">
-        <service class="Vyne\Magento\Api\PayoutRepositoryInterface" method="setPaymentInformation"/>
-        <resources>
-            <resource ref="anonymous" />
-        </resources>
-    </route>
-    <route url="/V1/vyne-payment/get-token" method="POST">
-        <service class="Vyne\Magento\Api\PayoutRepositoryInterface" method="getToken"/>
-        <resources>
-            <resource ref="anonymous" />
-        </resources>
-    </route>
-    <!--end of custom api-->
     <route url="/V1/vyne-payment/payout" method="POST">
         <service class="Vyne\Magento\Api\PayoutRepositoryInterface" method="save"/>
         <resources>

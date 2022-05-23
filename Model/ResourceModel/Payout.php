@@ -7,13 +7,13 @@ declare(strict_types=1);
 
 namespace Vyne\Magento\Model\ResourceModel;
 
-class Payout extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
+use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
+
+class Payout extends AbstractDb
 {
 
     /**
-     * Define resource model
-     *
-     * @return void
+     * @inheritDoc
      */
     protected function _construct()
     {

@@ -1,0 +1,36 @@
+{
+    "vyne_payouts": {
+        "column": {
+            "id": true,
+            "payment_id": true,
+            "status": true,
+            "amount": true,
+            "currency": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "VYNE_PAYOUTS_PAYMENT_ID": true,
+            "VYNE_PAYOUTS_STATUS": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "quote_payment": {
+        "column": {
+            "vyne_transaction_id": true
+        },
+        "index": {
+            "QUOTE_PAYMENT_VYNE_TRANSACTION_ID": true
+        }
+    },
+    "sales_order_payment": {
+        "column": {
+            "vyne_transaction_id": true
+        },
+        "index": {
+            "SALES_ORDER_PAYMENT_VYNE_TRANSACTION_ID": true
+        }
+    }
+}

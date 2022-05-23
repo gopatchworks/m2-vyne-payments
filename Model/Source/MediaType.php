@@ -16,7 +16,7 @@ class MediaType implements \Magento\Framework\Option\ArrayInterface
     {
         return [
             ['value' => self::TYPE_URL, 'label' => __('URL')],
-            ['value' => self::TYPE_QR, 'label' => __('QR')],
+            //['value' => self::TYPE_QR, 'label' => __('QR')],
         ];
     }
 
@@ -24,7 +24,7 @@ class MediaType implements \Magento\Framework\Option\ArrayInterface
     {
         return [
             self::TYPE_URL => __('URL'),
-            self::TYPE_QR => __('QR')
+            //self::TYPE_QR => __('QR')
         ];
     }
 }
