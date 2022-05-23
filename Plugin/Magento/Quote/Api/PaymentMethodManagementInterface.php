@@ -7,16 +7,10 @@ declare(strict_types=1);
 
 namespace Vyne\Magento\Plugin\Magento\Quote\Api;
 
-use Vyne\Magento\Model\Client\Token as VyneToken;
 use Vyne\Magento\Helper\Data as VyneHelper;
 
 class PaymentMethodManagementInterface
 {
-    /**
-     * @var VyneToken
-     */
-    protected $vyneToken;
-
     /**
      * @var VyneHelper
      */
@@ -26,10 +20,8 @@ class PaymentMethodManagementInterface
      * @param \Magento\Framework\App\Helper\Context $context
      */
     public function __construct(
-        VyneToken $vyneToken,
         VyneHelper $vyneHelper
     ) {
-        $this->vyneToken = $vyneToken;
         $this->vyneHelper = $vyneHelper;
     }
 
