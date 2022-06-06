@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="product.info.form.content">
+            <block class="Magento\Framework\View\Element\Template" after="-" name="product.info.addtocart.vynepromo" template="Vyne_Magento::product/view/promo.phtml"/>
+        </referenceContainer>
+        <referenceBlock name="product.info.options.wrapper.bottom">
+            <block class="Magento\Framework\View\Element\Template" after="-" name="product.info.addtocart.vynepromo.optionswrapper" template="Vyne_Magento::product/view/promo.phtml"/>
+        </referenceBlock>
+    </body>
+</page>
