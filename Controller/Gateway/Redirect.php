@@ -50,7 +50,7 @@ class Redirect extends GatewayAbstract implements HttpGetActionInterface, CsrfAw
     public function failedVynePayment()
     {
         $this->messageManager->addNoticeMessage(__('Vyne payment failed. Please contact us for support'));
-        $this->vyneHelper->reinitCart($this->checkoutSession->getLastRealOrderId());
+        $this->vynecartHelper->reinitCart($this->checkoutSession->getLastRealOrderId());
 
         return $this->resultRedirect->setUrl('/checkout/cart/');
     }

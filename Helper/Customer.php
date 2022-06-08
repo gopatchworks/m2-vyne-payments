@@ -8,7 +8,6 @@ declare(strict_types=1);
 namespace Vyne\Magento\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
-use Vyne\Magento\Helper\Logger as VyneLogger;
 use Magento\Customer\Model\Session as CustomerSession;
 use Magento\Customer\Api\CustomerRepositoryInterface;
 
@@ -25,11 +24,6 @@ class Customer extends AbstractHelper
     protected $customerRepository;
 
     /**
-     * @var Logger
-     */
-    protected $vyneLogger;
-
-    /**
      * @var Customer
      */
     private $customer = null;
@@ -41,13 +35,11 @@ class Customer extends AbstractHelper
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
         CustomerSession $customerSession,
-        CustomerRepositoryInterface $customerRepository,
-        Logger $vyneLogger
+        CustomerRepositoryInterface $customerRepository
     ) {
         parent::__construct($context);
         $this->customerSession = $customerSession;
         $this->customerRepository = $customerRepository;
-        $this->vyneLogger = $vyneLogger;
     }
 
     /**
@@ -64,5 +56,20 @@ class Customer extends AbstractHelper
         }
 
         return $this->customer;
+    }
+
+    /**
+     * retrive current customer id
+     *
+     * @return int
+     */
+    public function getCurrentCustomerId()
+    {
+        $customer = $this->getCurrentCustomer();
+        if (is_null($this->customer)) {
+            return null;
+        }
+
+        return $customer->getId();
     }
 }

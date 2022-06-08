@@ -17,6 +17,7 @@ use Magento\Sales\Api\OrderRepositoryInterface;
 use Vyne\Magento\Gateway\Configuration as VyneConfig;
 use Vyne\Magento\Gateway\Payment as PaymentApi;
 use Vyne\Magento\Gateway\Refund as RefundApi;
+use Vyne\Magento\Helper\Customer as CustomerHelper;
 
 class Data extends AbstractHelper
 {
@@ -86,6 +87,11 @@ class Data extends AbstractHelper
     protected $quoteIdMaskFactory;
 
     /**
+     * @var CustomerHelper
+     */
+    protected $customerHelper;
+
+    /**
      * @var \Magento\Framework\Pricing\PriceCurrencyInterface
      */
     protected $priceHelper;
@@ -104,6 +110,7 @@ class Data extends AbstractHelper
         UrlInterface $urlBuilder,
         OrderRepositoryInterface $orderRepository,
         StoreManagerInterface $storeManager,
+        CustomerHelper $customerHelper,
         ScopeConfigInterface $scopeConfig
     ) {
         parent::__construct($context);
@@ -113,6 +120,7 @@ class Data extends AbstractHelper
         $this->urlBuilder = $urlBuilder;
         $this->orderRepository = $orderRepository;
         $this->storeManager = $storeManager;
+        $this->customerHelper = $customerHelper;
         $this->priceHelper = $priceHelper;
     }
 
@@ -205,8 +213,8 @@ class Data extends AbstractHelper
             'callbackUrl' => $this->getVyneWebhookCallback(),
             'mediaType' => $this->getMediaType(),
             'countries' => [$this->getCountryCodeByWebsite()],
-            //'customerReference' => 'P739570946',
-            //'merchantReference' => '76FG7JQ'
+            'customerReference' => $this->customerHelper->getCurrentCustomerId(),
+            'merchantReference' => $order->getIncrementId()
         ];
 
         return $data;

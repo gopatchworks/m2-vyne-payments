@@ -28,6 +28,11 @@ class GatewayAbstract extends \Magento\Framework\App\Action\Action
     protected $vyneHelper;
 
     /**
+     * @var \Vyne\Magento\Helper\Cart
+     */
+    protected $vyneorderHelper;
+
+    /**
      * @var \Vyne\Magento\Helper\Logger
      */
     protected $vyneLogger;
@@ -47,6 +52,7 @@ class GatewayAbstract extends \Magento\Framework\App\Action\Action
         \Magento\Customer\Model\Session $customerSession,
         \Magento\Checkout\Model\Session $checkoutSession,
         \Vyne\Magento\Helper\Data $vyneHelper,
+        \Vyne\Magento\Helper\Cart $vynecartHelper,
         \Vyne\Magento\Helper\Logger $vyneLogger
     ) {
         parent::__construct($context);
@@ -54,6 +60,7 @@ class GatewayAbstract extends \Magento\Framework\App\Action\Action
         $this->customerSession = $customerSession;
         $this->checkoutSession = $checkoutSession;
         $this->vyneHelper = $vyneHelper;
+        $this->vynecartHelper = $vynecartHelper;
         $this->logger = $vyneLogger;
     }
 
