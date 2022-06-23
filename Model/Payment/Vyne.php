@@ -119,6 +119,8 @@ class Vyne extends \Magento\Payment\Model\Method\AbstractMethod
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
+        VyneHelper $vyneHelper,
+        VyneLogger $vyneLogger,
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\Api\ExtensionAttributesFactory $extensionFactory,
@@ -128,10 +130,8 @@ class Vyne extends \Magento\Payment\Model\Method\AbstractMethod
         \Magento\Payment\Model\Method\Logger $logger,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
-        DirectoryHelper $directory = null,
-        VyneHelper $vyneHelper,
-        VyneLogger $vyneLogger,
-        array $data = []
+        array $data = [],
+        DirectoryHelper $directory = null
     ) {
         parent::__construct(
             $context,
@@ -184,6 +184,7 @@ class Vyne extends \Magento\Payment\Model\Method\AbstractMethod
 
     /**
      * Refund capture
+     * UPDATED - handle refund by webhook
      *
      * @param \Magento\Framework\DataObject|\Magento\Payment\Model\InfoInterface|Payment $payment
      * @param float $amount
@@ -192,34 +193,23 @@ class Vyne extends \Magento\Payment\Model\Method\AbstractMethod
      */
     public function refund(\Magento\Payment\Model\InfoInterface $payment, $amount)
     {
-        // refund payment logic
-        $order = $payment->getOrder();
-        $refundApi = $this->vyneHelper->initRefund();
+        //// refund payment logic
+        //$order = $payment->getOrder();
+        //$refundApi = $this->vyneHelper->initRefund();
 
-        $transaction_id = $payment->getData('vyne_transaction_id');
+        //$transaction_id = $payment->getData('vyne_transaction_id');
 
-        // send refund request and retrieve response
-        $response = $refundApi->paymentRefund($transaction_id, $amount);
+        //// send refund request and retrieve response
+        //$response = $refundApi->paymentRefund($transaction_id, $amount);
 
-        // sample request
-        $refund_data = [
-            'payments' => [
-                [
-                    'paymentId' => $transaction_id,
-                    'amount' => $amount
-                ]
-            ]
-        ];
-        $this->vyneLogger->logMixed(['serialized' => serialize($refundApi->refundRequest($refund_data))]);
+        //if (is_array($response->errors) && count($response->errors) > 0) {
+        //    $errors = [];
+        //    foreach ($response->errors as $error){
+        //        $errors[] = "Issue with Payment #{$error->paymentId} : {$error->errorMessage}";
+        //    }
 
-        if (is_array($response->errors) && count($response->errors) > 0) {
-            $errors = [];
-            foreach ($response->errors as $error){
-                $errors[] = "Issue with Payment #{$error->paymentId} : {$error->errorMessage}";
-            }
-
-            throw new \Exception(implode(',' , $errors));
-        }
+        //    throw new \Exception(implode(',' , $errors));
+        //}
 
         return $this;
     }

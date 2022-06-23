@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Vyne\Magento\Controller\Webhook;
 
 use Magento\Framework\Controller\ResultFactory;
+use Vyne\Magento\Gateway\Payment as VynePayment;
 
-class Payment extends AbstractWebhookGet
+class Payment extends AbstractWebhookPost
 {
     /**
      * @inheritDoc
@@ -15,11 +16,10 @@ class Payment extends AbstractWebhookGet
     {
         /** @var \Magento\Framework\Controller\ResultInterface $result */
         $result = $this->resultFactory->create(ResultFactory::TYPE_RAW);
-        $payload = $this->getRequest()->getParam('payvyne_payment_payload');
-        $order_id = $this->checkoutSession->getLastOrderId();
-        $order = $this->orderRepository->get($order_id);
+        $requestBody = $this->getRequest()->getContent();
+        $this->vyneLogger->logMixed( ['webhook/payment' => $requestBody] );
 
-        $body = $this->vyneHelper->decodeJWTBase64($payload);
+        $request = json_decode($requestBody);
         // validate jwt json decode
         if (json_last_error() !== JSON_ERROR_NONE) {
             $this->vyneLogger->logMixed(
@@ -31,18 +31,27 @@ class Payment extends AbstractWebhookGet
             return $result;
         }
 
-
         try {
-            $order_status = $this->vyneHelper->getOrderStatus($body->paymentStatus);
+            $this->vyneLogger->logMixed( ['webhook/payment' => VynePayment::getTransactionAction($request->status)] );
+            switch (VynePayment::getTransactionAction($request->status)) {
+            case VynePayment::GROUP_PROCESSING:
+            case VynePayment::GROUP_SUCCESS:
+                $this->vyneOrder->captureVyneInvoice($request->paymentId);
 
-            $this->vyneOrder->updateOrderHistory($order, __('Order Updated by Vyne'), $order_status, $body->paymentId);
-            return $this->resultRedirect->setPath('checkout/onepage/success', array('_secure'=>true));
+                break;
+            case VynePayment::GROUP_CANCEL:
+                $this->vyneOrder->cancelOrderById($order->getId());
+                break;
+            }
+            // placeholder to handle webhook request
+
         }
         catch (\Exception $e) {
             $this->vyneLogger->logException($e);
         }
 
-        $this->messageManager->addNoticeMessage(__('Vyne Payment Webhook failed. Please contact us for support'));
-        return $this->resultRedirect->setUrl('/');
+        $result->setHttpResponseCode(200);
+
+        return $result;
     }
 }

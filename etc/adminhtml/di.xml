@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<type name="Magento\Sales\Controller\Adminhtml\Order\Creditmemo\Save">
+		<plugin name="Vyne_Magento_Plugin_Magento_Sales_Controller_Adminhtml_Order_Creditmemo_Save" type="Vyne\Magento\Plugin\Magento\Sales\Controller\Adminhtml\Order\Creditmemo\Save" sortOrder="10" disabled="false"/>
+	</type>
+</config>

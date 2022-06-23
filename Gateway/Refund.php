@@ -8,10 +8,17 @@ class Refund extends ApiAbstract
 {
     const ENDPOINT_REFUND = 'api/v1/refunds/init';
 
+    // refund statuses
     const STATUS_NEW = 'The refund is submitted.';
     const STATUS_PROCESSING = 'The refund is processing and the transfer is in progress.';
     const STATUS_COMPLETED = 'The refund is successful and the transfer was completed.';
     const STATUS_FALIED = 'Processing the refund or transferring the money to the consumer failed.';
+
+    // refund status groups
+    const GROUP_PROCESSING = 'PROCESSING';
+    const GROUP_FAILED = 'FAILED';
+    const GROUP_COMPLETED = 'COMPLETED';
+    const GROUP_NEW = 'NEW';
 
     /**
      * retrieve payment redirect using given order data

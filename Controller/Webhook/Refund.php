@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Vyne\Magento\Controller\Webhook;
 
-class Refund extends AbstractWebhookGet
+use Magento\Framework\Controller\ResultFactory;
+use Vyne\Magento\Gateway\Refund as VyneRefund;
+
+class Refund extends AbstractWebhookPost
 {
     /**
      * @inheritDoc
@@ -27,9 +30,12 @@ class Refund extends AbstractWebhookGet
             return $result;
         }
 
-
         try {
             // placeholder to handle webhook request
+            $this->vyneLogger->logMixed( ['webhook/refund' => $request->status] );
+            if ($request->status == VyneRefund::GROUP_COMPLETED) {
+                $this->vyneOrder->createCreditmemo($request->paymentId, $request->refundId);
+            }
 
         }
         catch (\Exception $e) {

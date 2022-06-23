@@ -441,4 +441,14 @@ class Data extends AbstractHelper
     {
         return VyneConfig::decodeJWTBase64($payvyne_payemnt_payload);
     }
+
+    /**
+     * get order status to update base on the vyne response
+     *
+     * @param string
+     * @return string
+     */
+    public function getOrderStatus($vyne_status)
+    {
+    }
 }
