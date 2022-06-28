@@ -100,6 +100,8 @@ class Order extends AbstractHelper
      * @param \Magento\Sales\Model\Order
      * @param String
      * @param String
+     *
+     * @return void
      */
     public function updateOrderHistory($order, $msg, $status, $paymentId = null)
     {
@@ -115,6 +117,30 @@ class Order extends AbstractHelper
             $payment->setData('last_trans_id', $paymentId);
             $payment->save();
         }
+
+        try {
+            $order->save();
+        }
+        catch (\Exception $e) {
+            $this->vyneLogger->logException($e);
+        }
+    }
+
+    /**
+     * update order history using vyne payment id
+     *
+     * @param string
+     * @param string
+     * @param string
+     *
+     * @return void
+     */
+    public function updateRefundByPaymentId($transaction_id, $refund_id, $status)
+    {
+        $order = $this->getOrderByVyneTransactionId($transaction_id);
+        $msg = __('Refund request %1 has been processed by Vyne and returned with Status %2', $refund_id, $status);
+
+        $order->addStatusHistoryComment($msg);
 
         try {
             $order->save();

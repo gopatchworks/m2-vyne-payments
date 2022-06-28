@@ -36,6 +36,7 @@ class Refund extends AbstractWebhookPost
             if ($request->status == VyneRefund::GROUP_COMPLETED) {
                 $this->vyneOrder->createCreditmemo($request->paymentId, $request->refundId);
             }
+            $this->vyneOrder->updateRefundByPaymentId($request->paymentId, $request->refundId, $request->status);
 
         }
         catch (\Exception $e) {
