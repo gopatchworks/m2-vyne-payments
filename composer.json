@@ -13,9 +13,8 @@
             "name": "Thanh, Nguyen Duy"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
-        "php": "^7.3.0",
         "ext-hash": "*",
         "ext-json": "*",
         "magento/framework": ">=101 <104",

@@ -6,7 +6,7 @@
 				<active>1</active>
 				<environment>development</environment>
 				<media_type>URL</media_type>
-				<destination_account>GBP1</destination_account>
+				<!--<destination_account>GBP1</destination_account>-->
 				<model>Vyne\Magento\Model\Payment\Vyne</model>
 				<order_status>processing</order_status>
 				<title>Vyne</title>
