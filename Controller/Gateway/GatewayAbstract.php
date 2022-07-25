@@ -5,7 +5,7 @@ namespace Vyne\Magento\Controller\Gateway;
 use Magento\Framework\Controller\ResultFactory;
 use Vyne\Magento\Gateway\Payment as PaymentApi;
 
-class GatewayAbstract extends \Magento\Framework\App\Action\Action
+abstract class GatewayAbstract extends \Magento\Framework\App\Action\Action
 {
     /**
      * @var ResultFactory
@@ -67,9 +67,7 @@ class GatewayAbstract extends \Magento\Framework\App\Action\Action
     /**
      * child classes handled this function
      */
-    public function execute()
-    {
-    }
+    abstract public function execute();
 
     /**
      * initialize payment object and token

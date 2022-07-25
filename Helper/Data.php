@@ -204,6 +204,7 @@ class Data extends AbstractHelper
     {
         $order = $this->orderRepository->get($entity_id);
         $currency_code = $order->getOrderCurrencyCode();
+        // force GBP
         $currency_code = "GBP";
         $data = [
             'amount' => number_format(floatval($order->getGrandTotal()), 2),

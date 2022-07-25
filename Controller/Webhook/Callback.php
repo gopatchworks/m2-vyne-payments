@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Vyne\Magento\Controller\Webhook;
@@ -31,7 +30,6 @@ class Callback extends AbstractWebhookGet
             $result->setHttpResponseCode(400);
             return $result;
         }
-
 
         $this->vyneLogger->logMixed(['status' => $body->paymentStatus]);
         try {
