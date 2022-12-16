@@ -15,6 +15,11 @@ class Info extends \Magento\Payment\Block\Info\Cc
     protected $_vyneHelper;
 
     /**
+     * @var \Magento\Framework\App\State
+     */
+    protected $_state;
+
+    /**
      * Constructor
      *
      * @param \Magento\Framework\View\Element\Template\Context  $context
@@ -26,9 +31,11 @@ class Info extends \Magento\Payment\Block\Info\Cc
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Payment\Model\Config $paymentConfig,
         \Vyne\Magento\Helper\Data $vyneHelper,
+        \Magento\Framework\App\State $state,
         array $data = []
     ) {
         $this->_vyneHelper = $vyneHelper;
+        $this->_state = $state;
         parent::__construct($context, $paymentConfig, $data);
     }
 
@@ -63,13 +70,22 @@ class Info extends \Magento\Payment\Block\Info\Cc
         /*prepare data*/
         $captured = $payment->getAmountPaid() ? $this->_vyneHelper->formatCurrency($payment->getAmountPaid()) : 0;
         $refunded = $payment->getAmountRefunded() ? $this->_vyneHelper->formatCurrency($payment->getAmountRefunded()) : 0;
-        $data = array(
-            $last_trans_id => $vyne_transaction_id,
-            $status => ucwords(str_replace('_', ' ',$payment->getVyneStatus())),
-            $amount => $this->_vyneHelper->formatCurrency($payment->getAmountOrdered()),
-            $captured_amount => $captured ?: '0.00',
-            $refunded_amount => $refunded ?: '0.00'
-        );
+        if ($this->_state->getAreaCode() == \Magento\Framework\App\Area::AREA_ADMINHTML) {
+            $data = array(
+                $last_trans_id => $vyne_transaction_id,
+                $status => ucwords(str_replace('_', ' ',$payment->getVyneStatus())),
+                $amount => $this->_vyneHelper->formatCurrency($payment->getAmountOrdered()),
+                $captured_amount => $captured ?: '0.00',
+                $refunded_amount => $refunded ?: '0.00'
+            );
+        }
+        else {
+            $data = array(
+                $amount => $this->_vyneHelper->formatCurrency($payment->getAmountOrdered()),
+                $captured_amount => $captured ?: '0.00',
+                $refunded_amount => $refunded ?: '0.00'
+            );
+        }
 
         return $transport->addData($data);
     }

@@ -1,0 +1,40 @@
+<?php
+    $currentVersion = $this->getCurrentVersion();
+?>
+<div class="vyne-config-header">
+    <?php if (!$currentVersion): ?>
+        <p>
+            <?php echo __('Cannot read module version. Please update your extension.') ?>
+        </p>
+    <?php else: ?>
+        <p>
+            <?php echo __('Currently installed version:') ?> <?php echo $this->getCurrentVersion(); ?>
+        </p>
+    <?php endif; ?>
+</div>
+
+<div class="webhook-urls">
+    <div class="instructions" style="font-size: 10px">
+        <p>
+            <?php echo __('Please use below URLs to configure Vyne Webhooks') ?>
+        </p>
+        <p>
+            <b>
+                <?php echo __('Payment status change : ') ?>
+            </b>
+            <?php echo $this->getWebhookUrl('vyne/webhook/payment') ?>
+        </p>
+        <p>
+            <b>
+                <?php echo __('Refund status change : ') ?>
+            </b>
+            <?php echo $this->getWebhookUrl('vyne/webhook/refund') ?>
+        </p>
+        <p>
+            <b>
+                <?php echo __('Payout status change : ') ?>
+            </b>
+            <?php echo $this->getWebhookUrl('vyne/webhook/payout') ?>
+        </p>
+    </div>
+</div>

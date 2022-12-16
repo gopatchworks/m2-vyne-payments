@@ -6,6 +6,10 @@
                 <comment><![CDATA[<div class="vyne-payment-logo"></div><div class="vyne-payment-text">Vyne Payment integration.<br/>Vyne is the safest and most secure Payment approach for your Magento Store.</div>]]></comment>
                 <fieldset_css>complex vyne-section</fieldset_css>
                 <frontend_model>Vyne\Magento\Block\Adminhtml\System\Config\Fieldset\Payment</frontend_model>
+                <field id="webhook_instructions" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Information</label>
+                    <frontend_model>Vyne\Magento\Block\System\Config\Instructions</frontend_model>
+                </field>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
 					<label>Enabled</label>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
@@ -29,10 +33,6 @@
 					<label>Enable Debug</label>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
-                <field id="payment_action" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60" translate="label" type="select">
-                    <label>Payment Action</label>
-                    <source_model>Vyne\Magento\Model\Source\PaymentAction</source_model>
-                </field>
                 <field id="media_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="65" translate="label" type="select">
                     <label>MediaType</label>
                     <source_model>Vyne\Magento\Model\Source\MediaType</source_model>

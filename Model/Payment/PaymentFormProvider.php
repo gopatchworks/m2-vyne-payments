@@ -59,7 +59,6 @@ class PaymentFormProvider implements ConfigProviderInterface
                     'method' => __('Vyne Payment'),
                     'environment' => $this->vyneHelper->getVyneEnvironment(),
                     'description' => $this->vyneHelper->getPaymentInstructions(),
-                    'intent' => $this->vyneHelper->getVyneIntent(),
                     'isActive' => $this->vyneHelper->isEnabled()
                 ]
             ]

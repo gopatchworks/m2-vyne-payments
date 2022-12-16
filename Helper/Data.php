@@ -27,7 +27,6 @@ class Data extends AbstractHelper
     const VYNE_CLIENT_SECRET = 'payment/vyne/client_secret';
     const VYNE_DESTINATION_ACCOUNT = 'payment/vyne/destination_account';
     const VYNE_DEBUG = 'payment/vyne/debug';
-    const VYNE_INTENT = 'payment/vyne/payment_action';
     const VYNE_ORDER_STATUS = 'payment/vyne/order_status';
     const VYNE_ENV = 'payment/vyne/environment';
     const VYNE_MEDIA_TYPE = 'payment/vyne/media_type';
@@ -339,19 +338,6 @@ class Data extends AbstractHelper
         );
 
         return $this->_encryptor->decrypt($encrypted_client_secret);
-    }
-
-    /**
-     * retrieve Vyne Intent
-     *
-     * @return string
-     */
-    public function getVyneIntent()
-    {
-        return (string) $this->scopeConfig->getValue(
-            self::VYNE_INTENT,
-            ScopeInterface::SCOPE_STORE
-        );
     }
 
     /**

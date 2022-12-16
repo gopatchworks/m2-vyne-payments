@@ -45,8 +45,6 @@ class Callback extends AbstractWebhookGet
                 return $this->failedVynePayment($order_id);
 
                 break;
-            case VynePayment::GROUP_REFUND:
-                break;
             }
 
         }
