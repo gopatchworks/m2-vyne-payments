@@ -34,6 +34,12 @@ define(
                     }
                 });
             },
+            showPopup: function() {
+                document.getElementsByClassName('vyne-popup')[0].style.visibility = 'visible';
+            },
+            hidePopup: function() {
+                document.getElementsByClassName('vyne-popup')[0].style.visibility = 'hidden';
+            },
             getMethodImage: function () {
                 return checkoutConfig.image[this.item.method];
             },

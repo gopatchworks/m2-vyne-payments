@@ -1,1 +1,5 @@
-<span class="vyne-banner promo-white"></span>
+<?php
+$config = $block->getLayout()->createBlock(\Magento\Config\Block\System\Config\Form::class);
+$colour_scheme = strtolower($config->getConfigValue('payment/vyne/colour_scheme'));
+?>
+<span class="vyne-banner promo-pdp-<?=$colour_scheme?>"></span>

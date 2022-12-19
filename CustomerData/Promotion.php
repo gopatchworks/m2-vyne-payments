@@ -2,7 +2,6 @@
 namespace Vyne\Magento\CustomerData;
 
 use Magento\Customer\CustomerData\SectionSourceInterface;
-use Magento\Framework\Api\SearchCriteriaBuilderFactory;
 use Magento\Cms\Api\BlockRepositoryInterface;
 
 class Promotion extends \Magento\Framework\DataObject implements SectionSourceInterface
@@ -11,11 +10,6 @@ class Promotion extends \Magento\Framework\DataObject implements SectionSourceIn
      * @var \Magento\Customer\Model\Session
      */
     protected $customerSession;
-
-    /**
-     * @var SearchCriteriaBuilderFactory
-     */
-    protected $searchCriteriaBuilderFactory;
 
     /**
      * @var BlockRepositoryInterface
@@ -34,7 +28,6 @@ class Promotion extends \Magento\Framework\DataObject implements SectionSourceIn
 
     /**
      * @param \Magento\Customer\Model\Session $customerSession
-     * @param SearchCriteriaBuilderFactory $searchCriteriaBuilderFactory
      * @param BlockRepositoryInterface $blockRepository
      * @param \Magento\Cms\Model\Template\FilterProvider $filter
      * @param \Magento\Framework\View\LayoutInterface $layout
@@ -43,7 +36,6 @@ class Promotion extends \Magento\Framework\DataObject implements SectionSourceIn
      */
     public function __construct(
         \Magento\Customer\Model\Session $customerSession,
-        SearchCriteriaBuilderFactory $searchCriteriaBuilderFactory,
         BlockRepositoryInterface $blockRepository,
         \Magento\Cms\Model\Template\FilterProvider $filter,
         \Magento\Framework\View\LayoutInterface $layout,
@@ -52,7 +44,6 @@ class Promotion extends \Magento\Framework\DataObject implements SectionSourceIn
         parent::__construct($data);
         $this->customerSession = $customerSession;
         $this->resourceBlock = $resourceBlock;
-        $this->searchCriteriaBuilderFactory = $searchCriteriaBuilderFactory;
         $this->blockRepository = $blockRepository;
         $this->filter = $filter;
         $this->layout = $layout;
@@ -87,7 +78,6 @@ class Promotion extends \Magento\Framework\DataObject implements SectionSourceIn
         $block_ids = $this->resourceBlock->lookupCmsBlockIds($customer_group_id);
 
         /** @var SearchCriteriaBuilder $searchCriteriaBuilder */
-        $searchCriteriaBuilder = $this->searchCriteriaBuilderFactory->create();
         $searchCriteria = $searchCriteriaBuilder->addFilter('block_id', $block_ids, 'in')->create();
         $searchResults = $this->blockRepository->getList($searchCriteria);
 

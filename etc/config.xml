@@ -11,6 +11,8 @@
 				<order_status>processing</order_status>
 				<title>Vyne</title>
 				<allowspecific>0</allowspecific>
+				<colour_scheme>Light</colour_scheme>
+                <promotion>1</promotion>
 			</vyne>
 		</payment>
 	</default>

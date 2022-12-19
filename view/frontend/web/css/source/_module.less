@@ -1,27 +1,151 @@
-.action.primary.vyne-btn {
-    background: url('@{baseDir}images/placeorder-btn.svg');
-    display: block;
-    width: 327px !important;
-    height: 110px;
-    border: 0;
+@font-face {
+    font-family: SofiaPro;
+    src: url("fonts/sofia.woff");
+}
+.vyne-popup {
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 1px 20px 30px #ccc;
+    padding: 20px 25px;
+    width: 420px;
+    font-family: SofiaPro;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9;
+    background: #fff;
 
-    span {
-        float: right;
-        color: #222222;
-        &:hover {
-            color: #858585;
+    a {
+        text-decoration: none;
+        display: block;
+    }
+
+    p {
+        color: gray;
+        font-size: 14px;
+        padding: 0;
+        line-height: 20px;
+        margin: 0;
+    }
+
+    .close {
+        position: absolute;
+        top: 20px;
+        right: 25px;
+    }
+    .description {
+        text-align: center;
+        margin-bottom: 15px;
+
+        h3 {
+            font-size: 24px;
+            line-height: 24px;
+            margin: 20px 0 10px;
         }
     }
+
+    .steps {
+        &> div {
+            padding-left: 60px;
+            margin-bottom: 23px;
+        }
+
+        .step1 {
+            background: url('@{baseDir}images/popup/bank-step1.svg') no-repeat left top;
+        }
+        .step2 {
+            background: url('@{baseDir}images/popup/authorise-step2.svg') no-repeat left top;
+        }
+        .step3 {
+            background: url(@{baseDir}images/popup/check-step3.svg) no-repeat left 5px;
+        }
+        h5 {
+            font-size: 16px;
+            margin: 0;
+        }
+    }
+
+    .control {
+        margin: 10px 0 5px;
+        text-align: center;
+        .button {
+            padding: 10px;
+            border: solid 2px #ddd;
+            border-radius: 50px;
+            text-align: center;
+            color: gray;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .button img {
+            vertical-align: top;
+        }
+        .secondary {
+            float: left;
+            width: 27%;
+        }
+        .primary {
+            width: 55%;
+        }
+        .button {
+            padding: 15px 10px;
+        }
+        .primary {
+            background-color: #685EF2;
+            border: solid 0px #685EF2;
+            color: #fff;
+            float: right;
+            width: 60%;
+        }
+        .primary span{
+            display: inline-block;
+            padding-top: 3px;
+            color: #fff;
+        }
+    }
+    .control ::after {
+        clear: both;
+    }
 }
+
+.vyne-btn {
+    border: 1.5px #685EF2 solid;
+    border-radius: 10px;
+    padding: 10px 15px 5px;
+    display: block;
+    width: 280px;
+    font-family: SofiaPro;
+    font-size: 14px;
+    float: right;
+    cursor: pointer;
+
+    ul {
+        padding: 0;
+        margin: 0;
+    }
+    li {
+        list-style-type: none;
+        padding: 0 0 10px 0;
+        float: none;
+        margin: 0;
+    }
+    img {
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
+
 .vyne-banner {
     display: block;
     margin: 10px 0;
-    &.promo-pdp-white {
+    &.promo-pdp-light {
         background: url('@{baseDir}images/promo/pdp/white.svg');
         width: 327px;
         height: 56px;
     }
-    &.promo-pdp-black {
+    &.promo-pdp-dark {
         background: url('@{baseDir}images/promo/pdp/black.svg');
         width: 327px;
         height: 56px;
@@ -31,12 +155,12 @@
         width: 327px;
         height: 56px;
     }
-    &.promo-minicart-white {
+    &.promo-minicart-light {
         background: url('@{baseDir}images/promo/minicart/white.svg');
         width: 327px;
         height: 56px;
     }
-    &.promo-minicart-black {
+    &.promo-minicart-dark {
         background: url('@{baseDir}images/promo/minicart/black.svg');
         width: 327px;
         height: 56px;
@@ -46,9 +170,29 @@
         width: 327px;
         height: 56px;
     }
-    &.promo-checkout {
-        background: url('@{baseDir}images/promo-checkout.svg');
+    &.promo-checkout-light {
+        background: url('@{baseDir}images/promo/checkout/white.svg');
         width: 273px;
         height: 164px;
+    }
+    &.promo-checkout-dark {
+        background: url('@{baseDir}images/promo/checkout/black.svg');
+        width: 273px;
+        height: 164px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .vyne-popup{
+        width: 300px;
+        padding: 15px;
+    }
+    .vyne-popup .control .primary {
+        width: 55%;
+    }
+
+    .vyne-btn {
+        float: none;
+        width: 90%;
     }
 }

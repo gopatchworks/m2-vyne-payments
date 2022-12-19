@@ -3,7 +3,7 @@
 	<system>
 		<section id="payment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1000" translate="label">
 			<group id="vyne" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
-                <comment><![CDATA[<div class="vyne-payment-logo"></div><div class="vyne-payment-text">Vyne Payment integration.<br/>Vyne is the safest and most secure Payment approach for your Magento Store.</div>]]></comment>
+                <comment><![CDATA[<div class="vyne-payment-logo"></div><div class="vyne-payment-text">Vyne Payment integration.<br/>Vyne is the safest and most secure Payment approach for your Magento Store.<div class="bank-logo"></div></div>]]></comment>
                 <fieldset_css>complex vyne-section</fieldset_css>
                 <frontend_model>Vyne\Magento\Block\Adminhtml\System\Config\Fieldset\Payment</frontend_model>
                 <field id="webhook_instructions" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -34,7 +34,7 @@
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
                 <field id="media_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="65" translate="label" type="select">
-                    <label>MediaType</label>
+                    <label>Media Type</label>
                     <source_model>Vyne\Magento\Model\Source\MediaType</source_model>
                 </field>
 				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="text">
@@ -58,6 +58,14 @@
 				</field>
 				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="110" translate="label" type="text">
 					<label>Sort Order</label>
+				</field>
+				<field id="colour_scheme" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="200" translate="label" type="select">
+					<label>Colour Scheme</label>
+					<source_model>Vyne\Magento\Model\Source\ColourScheme</source_model>
+				</field>
+				<field id="promotion" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="210" translate="label" type="select">
+					<label>Enable Promotion Content</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
 			</group>
 		</section>

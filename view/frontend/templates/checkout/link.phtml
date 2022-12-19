@@ -1,3 +1,7 @@
+<?php
+$config = $block->getLayout()->createBlock(\Magento\Config\Block\System\Config\Form::class);
+$colour_scheme = strtolower($config->getConfigValue('payment/vyne/colour_scheme'));
+?>
 <a href="<?= $block->escapeUrl($block->getCheckoutUrl()) ?>">
-    <span class="vyne-banner promo-checkout"></span>
+    <span class="vyne-banner promo-checkout-<?=$colour_scheme?>"></span>
 </a>
