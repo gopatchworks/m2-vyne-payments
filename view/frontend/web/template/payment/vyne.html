@@ -39,7 +39,9 @@
                         " disabled>
                     <ul>
                         <li class="logo">
-                            <img data-bind="click: placeOrder, attr: { src: require.toUrl('Vyne_Magento/images/logos/logo-violet.svg') }" alt="vyne_logo" width="62"/>
+                            <a href="https://www.payvyne.com/" target="_blank">
+                                <img data-bind="click: placeOrder, attr: { src: require.toUrl('Vyne_Magento/images/logos/logo-violet.svg') }" alt="vyne_logo" width="62"/>
+                            </a>
                         </li>
                         <li class="infomation">
                             <img data-bind="click, placeOrder, attr: { src: require.toUrl('Vyne_Magento/images/logos/lock-dark.svg') }" alt="padlock"/>
@@ -80,7 +82,7 @@
                     </div>
                     <div class="control">
                         <a class="button secondary" data-bind="click: hidePopup()">Close</a>
-                        <a class="button primary"><span>More about</span> <img  data-bind="attr: { src: require.toUrl('Vyne_Magento/images/popup/btn_logo.svg') }" alt="Vyne"></a>
+                        <a class="button primary" href="https://www.payvyne.com/pay-with-vyne#faqs" target="_blank"><span>More about</span> <img  data-bind="attr: { src: require.toUrl('Vyne_Magento/images/popup/btn_logo.svg') }" alt="Vyne"></a>
                         <div style="clear: both"></div>
                     </div>
                 </div>

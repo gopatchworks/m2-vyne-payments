@@ -184,7 +184,7 @@ class Vyne extends \Magento\Payment\Model\Method\AbstractMethod
 
     /**
      * Refund capture
-     * UPDATED - handle refund by webhook
+     * UPDATED - handle refund by webhook & Plugin
      *
      * @param \Magento\Framework\DataObject|\Magento\Payment\Model\InfoInterface|Payment $payment
      * @param float $amount
@@ -193,23 +193,7 @@ class Vyne extends \Magento\Payment\Model\Method\AbstractMethod
      */
     public function refund(\Magento\Payment\Model\InfoInterface $payment, $amount)
     {
-        //// refund payment logic
-        //$order = $payment->getOrder();
-        //$refundApi = $this->vyneHelper->initRefund();
-
-        //$transaction_id = $payment->getData('vyne_transaction_id');
-
-        //// send refund request and retrieve response
-        //$response = $refundApi->paymentRefund($transaction_id, $amount);
-
-        //if (is_array($response->errors) && count($response->errors) > 0) {
-        //    $errors = [];
-        //    foreach ($response->errors as $error){
-        //        $errors[] = "Issue with Payment #{$error->paymentId} : {$error->errorMessage}";
-        //    }
-
-        //    throw new \Exception(implode(',' , $errors));
-        //}
+        // refund payment logic is now in Vyne\Magento\Plugin\Magento\Sales\Controller\Adminhtml\Order\Creditmemo\Save
 
         return $this;
     }
