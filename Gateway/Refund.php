@@ -50,7 +50,7 @@ class Refund extends ApiAbstract
                 ]
             ]
         ];
-        $this->vyneLogger->logMixed(sprintf('Refund payload: %s', $refund_data));
+        $this->vyneLogger->logMixed(sprintf('Refund payload: %s', json_encode($refund_data)));
 
         $request = $this->refundRequest($refund_data);
         $options = $this->getConfig()->createHttpClientOptions();
