@@ -206,7 +206,7 @@ class Data extends AbstractHelper
         // force GBP
         $currency_code = "GBP";
         $data = [
-            'amount' => number_format(floatval($order->getGrandTotal()), 2),
+            'amount' => number_format(floatval($order->getGrandTotal()), 2, '.', ''),
             'currency' => $currency_code,
             'destinationAccount' => $this->getDestinationAccount(),
             'description' => (string) __('Web payment'),
