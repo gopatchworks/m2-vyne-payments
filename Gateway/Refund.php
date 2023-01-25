@@ -2,7 +2,10 @@
 
 namespace Vyne\Magento\Gateway;
 
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
+use Vyne\Magento\Helper\Logger;
+use Vyne\Magento\Helper\Logger as VyneLogger;
 
 class Refund extends ApiAbstract
 {
@@ -21,6 +24,17 @@ class Refund extends ApiAbstract
     const GROUP_NEW = 'NEW';
 
     /**
+     * @var VyneLogger
+     */
+    protected $vyneLogger;
+
+    public function __construct(Configuration $config = null, ClientInterface $client = null)
+    {
+        parent::__construct($config, $client);
+        $this->vyneLogger = new Logger();
+    }
+
+    /**
      * retrieve payment redirect using given order data
      *
      * @param array
@@ -36,11 +50,13 @@ class Refund extends ApiAbstract
                 ]
             ]
         ];
+        $this->vyneLogger->logMixed(sprintf('Refund payload: %s', $refund_data));
 
         $request = $this->refundRequest($refund_data);
         $options = $this->getConfig()->createHttpClientOptions();
 
         $response = $this->sendRequest($request, $options);
+        $this->vyneLogger->logMixed(sprintf('Refund response: %s', json_encode($response)));
 
         return $response;
     }
