@@ -7,8 +7,8 @@ declare(strict_types=1);
 
 namespace Vyne\Magento\Plugin\Magento\Sales\Model\Order\Email\Sender;
 
-use Vyne\Payments\Helper\Data as VyneHelper;
-use Vyne\Payments\Helper\Logger as VyneLogger;
+use Vyne\Magento\Helper\Data as VyneHelper;
+use Vyne\Magento\Helper\Logger as VyneLogger;
 
 class OrderSender
 {
