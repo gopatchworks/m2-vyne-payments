@@ -66,7 +66,23 @@ class Order extends AbstractHelper
     protected $creditmemoSender;
 
     /**
+     * @var \Magento\Sales\Model\Order\Email\Sender\OrderSender
+     */
+    protected $orderSender;
+
+    /**
      * @param \Magento\Framework\App\Helper\Context $context
+     * @param Data
+     * @param Logger
+     * @param CollectionFactory
+     * @param \Magento\Framework\DB\Transaction
+     * @param \Magento\Sales\Api\OrderManagementInterface
+     * @param \Magento\Framework\Api\SearchCriteriaBuilder
+     * @param \Magento\Sales\Api\InvoiceRepositoryInterface
+     * @param \Magento\Sales\Model\Service\InvoiceService
+     * @param \Magento\Sales\Controller\Adminhtml\Order\CreditmemoLoader
+     * @param CreditmemoSender
+     * @param \Magento\Sales\Model\Order\Email\Sender\OrderSender
      */
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
@@ -79,7 +95,8 @@ class Order extends AbstractHelper
         \Magento\Sales\Api\InvoiceRepositoryInterface $invoiceRepository,
         \Magento\Sales\Model\Service\InvoiceService $invoiceService,
         \Magento\Sales\Controller\Adminhtml\Order\CreditmemoLoader $creditmemoLoader,
-        CreditmemoSender $creditmemoSender
+        CreditmemoSender $creditmemoSender,
+        \Magento\Sales\Model\Order\Email\Sender\OrderSender $orderSender
     ) {
         parent::__construct($context);
         $this->vyneHelper = $vyneHelper;
@@ -92,6 +109,7 @@ class Order extends AbstractHelper
         $this->_invoiceService = $invoiceService;
 	    $this->creditmemoSender = $creditmemoSender;
         $this->creditmemoLoader = $creditmemoLoader;
+        $this->orderSender = $orderSender;
     }
 
     /**
@@ -116,6 +134,9 @@ class Order extends AbstractHelper
             $payment->setData('vyne_transaction_id', $paymentId);
             $payment->setData('last_trans_id', $paymentId);
             $payment->save();
+
+            // attempt sending order notification email
+            $this->orderSender->send($order);
         }
 
         try {
