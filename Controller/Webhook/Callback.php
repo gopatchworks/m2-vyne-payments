@@ -39,16 +39,20 @@ class Callback extends AbstractWebhookGet
             switch ($order_status) {
             case VynePayment::GROUP_PROCESSING:
             case VynePayment::GROUP_PENDING_PAYMENT:
-                $this->vyneOrder->updateOrderHistory($order, __('Order Status Updated by Vyne'), $order_status);
-                return $this->resultRedirect->setPath('checkout/onepage/success', array('_secure'=>true));
+                //$this->vyneOrder->updateOrderHistory($order, __('Order Status Updated by Vyne'), $order_status);
+                //return $this->resultRedirect->setPath('checkout/onepage/success', array('_secure'=>true));
 
-                break;
+                //break;
             case VynePayment::GROUP_SUCCESS:
-                $this->vyneOrder->updateOrderHistory($order, __('Order Completed by Vyne'), $order_status);
+                //$this->vyneOrder->updateOrderHistory($order, __('Order Completed by Vyne'), $order_status);
+                $this->messageManager->addSuccessMessage(__('Payment processing...'));
+                $this->messageManager->addSuccessMessage(__('Your payment is currently in progress, we’ll let you know as soon as we receive the funds.'));
                 return $this->resultRedirect->setPath('checkout/onepage/success', array('_secure'=>true));
 
                 break;
             case VynePayment::GROUP_CANCEL:
+                $this->messageManager->addErrorMessage(__('Oh, snap! Your payment didn\'t go through.'));
+                $this->messageManager->addErrorMessage(__('It looks you didn\'t authorise this payment. Please try again.'));
                 return $this->failedVynePayment($order_id);
 
                 break;
