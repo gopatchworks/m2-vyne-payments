@@ -75,10 +75,23 @@ class Save
 
         // if payment method is Vyne, let Vyne server handle credit memo creation via /vyne/webhook/refund
         if ($order->getPayment()->getMethod() == \Vyne\Magento\Model\Payment\Vyne::PAYMENT_METHOD_CODE) {
-            $amount = $order->getGrandTotal();
-            $this->refund($order->getPayment(), $amount);
+            $amount = number_format(floatval($order->getGrandTotal()), 2, '.', '');
 
-            $this->messageManager->addSuccessMessage(__('You have requested Refund Request. Vyne is processing it.'));
+            try {
+                $this->refund($order->getPayment(), $amount);
+                $msg = __('You have requested Refund Request. Vyne is processing it.');
+
+                // append msg to order comment section
+                $order->addStatusHistoryComment($msg);
+                $order->save();
+            }
+            catch (\Exception $e) {
+                $msg = $e->getMessage();
+            }
+
+            // add top banner message
+            $this->messageManager->addSuccessMessage($msg);
+
             $resultRedirect = $this->resultFactory->create(\Magento\Framework\Controller\ResultFactory::TYPE_REDIRECT);
             $resultRedirect->setPath('sales/order/view', ['order_id' => $order_id]);
             return $resultRedirect;

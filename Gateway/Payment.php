@@ -69,7 +69,8 @@ class Payment extends ApiAbstract
 
     const GROUP_PROCESSING = 'processing';
     const GROUP_CANCEL = 'cancel';
-    const GROUP_SUCCESS = 'success';
+    const GROUP_SUCCESS = 'complete';
+    const GROUP_PAYMENT_REVIEW = 'payment_review';
     const GROUP_REFUND = 'refund';
 
     /**
@@ -83,15 +84,17 @@ class Payment extends ApiAbstract
             'CREATED' => self::STATUS_CREATED,
             'PROCESSING' => self::STATUS_PROCESSING
         ];
+        $payment_review_statuses = [
+            'COMPLETED' => self::STATUS_COMPLETED,
+        ];
+        $success_statuses = [
+            'SETTLED' => self::STATUS_SETTLED
+        ];
         $cancel_statuses = [
             'NO_CONSENT' => self::STATUS_NO_CONSENT,
             'NO_CONFIRM' => self::STATUS_NO_CONFIRM,
             'FAILED' => self::STATUS_FAILED,
             'EXPIRED' => self::STATUS_EXPIRED
-        ];
-        $success_statuses = [
-            'COMPLETED' => self::STATUS_COMPLETED,
-            'SETTLED' => self::STATUS_SETTLED
         ];
         $refund_statuses = [
             'PART_REFUNDED' => self::STATUS_PART_REFUNDED,
@@ -100,8 +103,9 @@ class Payment extends ApiAbstract
 
         return [
             self::GROUP_PROCESSING => $processing_statuses,
-            self::GROUP_CANCEL => $cancel_statuses,
+            self::GROUP_PAYMENT_REVIEW => $payment_review_statuses,
             self::GROUP_SUCCESS => $success_statuses,
+            self::GROUP_CANCEL => $cancel_statuses,
             self::GROUP_REFUND => $refund_statuses
         ];
     }
