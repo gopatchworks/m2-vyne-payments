@@ -7,6 +7,9 @@
 	<type name="Magento\Quote\Api\PaymentMethodManagementInterface">
 		<plugin name="Vyne_Magento_Plugin_Magento_Quote_Api_PaymentMethodManagementInterface" type="Vyne\Magento\Plugin\Magento\Quote\Api\PaymentMethodManagementInterface" sortOrder="10" disabled="false"/>
 	</type>
+    <type name="Magento\Sales\Model\Order\Email\Sender\OrderSender">
+        <plugin name="Vyne_webhook_notification_email" type="Vyne\Magento\Plugin\Magento\Sales\Model\Order\Email\Sender\OrderSender" sortOrder="10" disabled="false"/>
+    </type>
 
     <!--logger-->
     <virtualType name="Vyne\Magento\Logger\Handler" type="Magento\Framework\Logger\Handler\Base">
