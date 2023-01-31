@@ -38,7 +38,7 @@ class Callback extends AbstractWebhookGet
 
             switch ($order_status) {
             case VynePayment::GROUP_PROCESSING:
-            case VynePayment::GROUP_PAYMENT_REVIEW:
+            case VynePayment::GROUP_PENDING_PAYMENT:
                 $this->vyneOrder->updateOrderHistory($order, __('Order Status Updated by Vyne'), $order_status);
                 return $this->resultRedirect->setPath('checkout/onepage/success', array('_secure'=>true));
 
