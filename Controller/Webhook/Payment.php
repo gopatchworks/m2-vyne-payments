@@ -32,8 +32,8 @@ class Payment extends AbstractWebhookPost
         }
 
         try {
-            $this->vyneLogger->logMixed( ['webhook/payment' => VynePayment::getTransactionAction($request->status)] );
-            $order_status = VynePayment::getTransactionAction($body->paymentStatus);
+            $order_status = VynePayment::getTransactionAction($request->status);
+            $this->vyneLogger->logMixed( ['webhook/payment' => $order_status] );
 
             switch ($order_status) {
             case VynePayment::GROUP_PROCESSING:
