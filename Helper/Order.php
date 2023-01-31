@@ -151,17 +151,6 @@ class Order extends AbstractHelper
     }
 
     /**
-     * capture invoice created for vyne payment
-     *
-     * @return void
-     */
-    public function captureVyneInvoice($transaction_id)
-    {
-        $order = $this->getOrderByVyneTransactionId($transaction_id);
-        $this->generatePaidInvoice($order, $transaction_id);
-    }
-
-    /**
      * retrieve order invoices
      *
      * @return array

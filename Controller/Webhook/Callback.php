@@ -31,19 +31,20 @@ class Callback extends AbstractWebhookGet
             return $result;
         }
 
-        $this->vyneLogger->logMixed(['status' => $body->paymentStatus]);
+        $this->vyneLogger->logMixed( ['webhook/callback' => $body] );
         try {
             $order_status = VynePayment::getTransactionAction($body->paymentStatus);
+            $this->vyneLogger->logMixed(['status' => $order_status]);
 
             switch ($order_status) {
             case VynePayment::GROUP_PROCESSING:
             case VynePayment::GROUP_PAYMENT_REVIEW:
-                $this->vyneOrder->updateOrderHistory($order, __('Order Status Updated by Vyne'), $order_status, $body->paymentId);
+                $this->vyneOrder->updateOrderHistory($order, __('Order Status Updated by Vyne'), $order_status);
                 return $this->resultRedirect->setPath('checkout/onepage/success', array('_secure'=>true));
 
                 break;
             case VynePayment::GROUP_SUCCESS:
-                $this->vyneOrder->updateOrderHistory($order, __('Order Completed by Vyne'), $order_status, $body->paymentId);
+                $this->vyneOrder->updateOrderHistory($order, __('Order Completed by Vyne'), $order_status);
                 return $this->resultRedirect->setPath('checkout/onepage/success', array('_secure'=>true));
 
                 break;
