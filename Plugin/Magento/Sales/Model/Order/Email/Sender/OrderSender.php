@@ -58,7 +58,7 @@ class OrderSender
         $this->logger->logMixed(['method' => $order->getPayment()->getMethod()]);
         $result = false;
 
-        if ($order->getPayment()->getMethod() == \Vyne\Magento\Model\Payment\Vyne::CODE) {
+        if ($order->getPayment()->getMethod() == \Vyne\Magento\Model\Payment\Vyne::PAYMENT_METHOD_CODE) {
             if (!$order->getEmailSent()
                 && $order->getPayment()
                 && $order->getPayment()->getLastTransId()) {
