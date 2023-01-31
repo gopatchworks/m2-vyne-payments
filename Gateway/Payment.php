@@ -70,7 +70,7 @@ class Payment extends ApiAbstract
     const GROUP_PROCESSING = 'processing';
     const GROUP_CANCEL = 'cancel';
     const GROUP_SUCCESS = 'complete';
-    const GROUP_PAYMENT_REVIEW = 'payment_review';
+    const GROUP_PENDING_PAYMENT = 'pending_payment';
     const GROUP_REFUND = 'refund';
 
     /**
@@ -84,7 +84,7 @@ class Payment extends ApiAbstract
             'CREATED' => self::STATUS_CREATED,
             'PROCESSING' => self::STATUS_PROCESSING
         ];
-        $payment_review_statuses = [
+        $pending_payment_statuses = [
             'COMPLETED' => self::STATUS_COMPLETED,
         ];
         $success_statuses = [
@@ -103,7 +103,7 @@ class Payment extends ApiAbstract
 
         return [
             self::GROUP_PROCESSING => $processing_statuses,
-            self::GROUP_PAYMENT_REVIEW => $payment_review_statuses,
+            self::GROUP_PENDING_PAYMENT => $pending_payment_statuses,
             self::GROUP_SUCCESS => $success_statuses,
             self::GROUP_CANCEL => $cancel_statuses,
             self::GROUP_REFUND => $refund_statuses
