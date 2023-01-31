@@ -32,6 +32,7 @@ class Payment extends AbstractWebhookPost
         }
 
         try {
+            $order = $this->orderRepository->get($request->merchantReference);
             $order_status = VynePayment::getTransactionAction($request->status);
             $this->vyneLogger->logMixed( ['webhook/payment' => $order_status] );
 
@@ -49,7 +50,6 @@ class Payment extends AbstractWebhookPost
                 $this->vyneOrder->cancelOrderById($order->getId());
                 break;
             }
-            // placeholder to handle webhook request
 
         }
         catch (\Exception $e) {
