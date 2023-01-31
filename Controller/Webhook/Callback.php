@@ -34,7 +34,7 @@ class Callback extends AbstractWebhookGet
         $this->vyneLogger->logMixed( ['webhook/callback' => $body] );
         try {
             $order_status = VynePayment::getTransactionAction($body->paymentStatus);
-            $this->vyneLogger->logMixed(['status' => $order_status]);
+            $this->vyneLogger->logMixed(['webhook/callback' => $order_status]);
 
             switch ($order_status) {
             case VynePayment::GROUP_PROCESSING:
