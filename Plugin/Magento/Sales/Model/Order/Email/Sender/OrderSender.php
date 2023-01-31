@@ -55,7 +55,7 @@ class OrderSender
         \Magento\Sales\Model\Order $order,
         $forceSyncMode = false
     ) {
-        $this->logger->write($order->getPayment()->getMethod());
+        $this->logger->logMixed(['method' => $order->getPayment()->getMethod()]);
         $result = false;
 
         if ($order->getPayment()->getMethod() == \Vyne\Magento\Model\Payment\Vyne::CODE) {
