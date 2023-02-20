@@ -13,6 +13,9 @@
 				<allowspecific>0</allowspecific>
 				<colour_scheme>Light</colour_scheme>
                 <promotion>1</promotion>
+                <promo_text_1>Card not in hand?</promo_text_1>
+                <promo_text_2>Checkout securely with your bank</promo_text_2>
+                <sort_order>0</sort_order>
 			</vyne>
 		</payment>
 	</default>

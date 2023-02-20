@@ -46,7 +46,8 @@ class Info extends \Magento\Payment\Block\Info\Cc
      */
     public function getCcTypeName()
     {
-        return parent::getCcTypeName();
+        return null;
+        //return parent::getCcTypeName();
     }
 
     /**

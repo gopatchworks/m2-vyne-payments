@@ -67,6 +67,42 @@
 					<label>Enable Promotion Content</label>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <!--add promotion content fields-->
+                <field id="pdp_promotion" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="230" translate="label" type="select">
+                    <label>Display Promoton on PDP</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="promotion">1</field>
+                    </depends>
+                </field>
+				<field id="promo_text_1" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="231" translate="label" type="text">
+					<label>Promo Text 1</label>
+                    <comment><![CDATA[Promotional text line 1 on PDP]]></comment>
+                    <depends>
+                        <field id="pdp_promotion">1</field>
+                    </depends>
+				</field>
+				<field id="promo_text_2" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="232" translate="label" type="text">
+					<label>Promo Text 2</label>
+                    <comment><![CDATA[Promotional text line 2 on PDP]]></comment>
+                    <depends>
+                        <field id="pdp_promotion">1</field>
+                    </depends>
+				</field>
+                <field id="minicart_promotion" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="240" translate="label" type="select">
+                    <label>Display Promoton on Mini Cart</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="promotion">1</field>
+                    </depends>
+                </field>
+                <field id="cart_promotion" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="250" translate="label" type="select">
+                    <label>Display Promoton on Basket Page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="promotion">1</field>
+                    </depends>
+                </field>
 			</group>
 		</section>
 	</system>

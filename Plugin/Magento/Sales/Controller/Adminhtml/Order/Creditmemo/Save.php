@@ -27,6 +27,11 @@ class Save
     protected $orderRepository;
 
     /**
+     * @var \Magento\Sales\Controller\Adminhtml\Order\CreditmemoLoader
+     */
+    protected $creditmemoLoader;
+
+    /**
      * @var \Magento\Framework\Message\ManagerInterface
      */
     protected $messageManager;
@@ -40,6 +45,7 @@ class Save
      * @param \Magento\Framework\App\Request\Http $request
      * @param \Magento\Framework\Controller\ResultFactory $resultFactory
      * @param \Magento\Sales\Api\OrderRepositoryInterface $orderRepository
+     * @param \Magento\Sales\Controller\Adminhtml\Order\CreditmemoLoader $creditmemoLoader
      * @param \Magento\Framework\Message\ManagerInterface $messageManager
      * @param VyneHelper $vyneHelper
      */
@@ -47,12 +53,14 @@ class Save
         \Magento\Framework\App\Request\Http $request,
         \Magento\Framework\Controller\ResultFactory $resultFactory,
         \Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
+        \Magento\Sales\Controller\Adminhtml\Order\CreditmemoLoader $creditmemoLoader,
         \Magento\Framework\Message\ManagerInterface $messageManager,
         VyneHelper $vyneHelper
     ) {
         $this->_request = $request;
         $this->resultFactory = $resultFactory;
         $this->orderRepository = $orderRepository;
+        $this->creditmemoLoader = $creditmemoLoader;
         $this->messageManager = $messageManager;
         $this->vyneHelper = $vyneHelper;
     }
@@ -75,10 +83,20 @@ class Save
 
         // if payment method is Vyne, let Vyne server handle credit memo creation via /vyne/webhook/refund
         if ($order->getPayment()->getMethod() == \Vyne\Magento\Model\Payment\Vyne::PAYMENT_METHOD_CODE) {
-            $amount = $order->getGrandTotal();
-            $this->refund($order->getPayment(), $amount);
+            $this->creditmemoLoader->setOrderId($this->_request->getParam('order_id'));
+            $this->creditmemoLoader->setCreditmemoId($this->_request->getParam('creditmemo_id'));
+            $this->creditmemoLoader->setCreditmemo($this->_request->getParam('creditmemo'));
+            $this->creditmemoLoader->setInvoiceId($this->_request->getParam('invoice_id'));
+            $creditmemo = $this->creditmemoLoader->load();
 
-            $this->messageManager->addSuccessMessage(__('You have requested Refund Request. Vyne is processing it.'));
+            try {
+                $this->refund($order->getPayment(), $creditmemo->getGrandTotal());
+                $this->messageManager->addSuccessMessage(__('You have requested Refund Request. Vyne is processing it.'));
+            }
+            catch (\Exception $e) {
+                $this->messageManager->addErrorMessage(__($e->getMessage()));
+            }
+
             $resultRedirect = $this->resultFactory->create(\Magento\Framework\Controller\ResultFactory::TYPE_REDIRECT);
             $resultRedirect->setPath('sales/order/view', ['order_id' => $order_id]);
             return $resultRedirect;
