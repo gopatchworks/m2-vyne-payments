@@ -206,7 +206,7 @@ class Data extends AbstractHelper
         // force GBP
         $currency_code = "GBP";
         $data = [
-            'amount' => number_format(floatval($order->getGrandTotal()), 2),
+            'amount' => number_format(floatval($order->getGrandTotal()), 2, '.', ''),
             'currency' => $currency_code,
             'destinationAccount' => $this->getDestinationAccount(),
             'description' => (string) __('Web payment'),
@@ -427,15 +427,5 @@ class Data extends AbstractHelper
     public function decodeJWTBase64($payvyne_payemnt_payload)
     {
         return VyneConfig::decodeJWTBase64($payvyne_payemnt_payload);
-    }
-
-    /**
-     * get order status to update base on the vyne response
-     *
-     * @param string
-     * @return string
-     */
-    public function getOrderStatus($vyne_status)
-    {
     }
 }

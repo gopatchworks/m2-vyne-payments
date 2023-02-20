@@ -90,11 +90,18 @@ class Save
             $creditmemo = $this->creditmemoLoader->load();
 
             try {
-                $this->refund($order->getPayment(), $creditmemo->getGrandTotal());
-                $this->messageManager->addSuccessMessage(__('You have requested Refund Request. Vyne is processing it.'));
+                $amount = number_format(floatval($creditmemo->getGrandTotal()), 2, '.', '');
+                $this->refund($order->getPayment(), $amount);
+                $msg = __('You have requested Refund Request. Vyne is processing it.');
+
+                $this->messageManager->addSuccessMessage($msg);
+                // append msg to order comment section
+                $order->addStatusHistoryComment($msg);
+                $order->save();
             }
             catch (\Exception $e) {
-                $this->messageManager->addErrorMessage(__($e->getMessage()));
+                $msg = __($e->getMessage());
+                $this->messageManager->addErrorMessage($msg);
             }
 
             $resultRedirect = $this->resultFactory->create(\Magento\Framework\Controller\ResultFactory::TYPE_REDIRECT);

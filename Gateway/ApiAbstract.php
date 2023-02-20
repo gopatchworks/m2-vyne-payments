@@ -92,7 +92,7 @@ class ApiAbstract
             $response_e = $e->getResponse();
             $statusCode_e = $response_e->getStatusCode();
 
-            switch($statusCode) {
+            switch($statusCode_e) {
             case 400:
                 throw new ApiException(
                     sprintf(
@@ -100,21 +100,21 @@ class ApiAbstract
                         $statusCode_e,
                         (string) $request->getUri()
                     ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
+                    $statusCode_e,
+                    $response_e->getHeaders(),
+                    (string) $response_e->getBody()
                 );
             case 401:
                 // handle 401
-                return $response->getBody();
+                return $response_e->getBody();
             case 404:
                 // handle 404
-                return $response->getBody();
+                return $response_e->getBody();
             default:
                 return [
                     $content,
-                    $response->getStatusCode(),
-                    $response->getHeaders()
+                    $response_e->getStatusCode(),
+                    $response_e->getHeaders()
                 ];
             }
         }

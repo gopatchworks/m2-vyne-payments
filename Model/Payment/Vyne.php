@@ -184,7 +184,7 @@ class Vyne extends \Magento\Payment\Model\Method\AbstractMethod
 
     /**
      * Refund capture
-     * UPDATED - handle refund by webhook
+     * UPDATED - handle refund by webhook & Plugin
      *
      * @param \Magento\Framework\DataObject|\Magento\Payment\Model\InfoInterface|Payment $payment
      * @param float $amount

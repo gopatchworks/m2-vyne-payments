@@ -10,9 +10,31 @@
                name="payment[method]"
                class="radio"
                data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()"/>
-        <label data-bind="attr: {'for': getCode()}" class="label"><span data-bind="text: getTitle()"></span></label>
+        <label data-bind="attr: {'for': getCode()}" class="label">
+            <span class="logo logo-vyne">
+                <img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/logos/logo-violet.svg') }" alt="vyne_logo" width="62"/>
+            </span>
+        </label>
     </div>
     <div class="payment-method-content">
+        <div class="vyne-btn">
+            <ul>
+                <li class="information">
+                    <img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/logos/lock-dark.svg') }" alt="padlock"/>
+                    <span>Pay with bank</span>
+                    <a data-bind="click: showPopup()"><img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/logos/info-circle-dark.svg') }" alt="info_circle"/></a>
+                </li>
+                <li class="banks" alt="banks">
+                    <img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Barclays.svg') }" alt="barclays"/>
+                    <img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Lloyds-Bank.svg') }" alt="lloyds"/>
+                    <img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Halifax.svg') }" alt="halifax"/>
+                    <img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Natwest.svg') }" alt="natwest"/>
+                    <img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Santander.svg') }" alt="santander"/>
+                    <img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Revolut.svg') }" alt="revolut"/>
+                    <a style="color: #555">+ all major banks</a>
+                </li>
+            </ul>
+        </div>
         <!-- ko foreach: getRegion('messages') -->
         <!-- ko template: getTemplate() --><!-- /ko -->
         <!--/ko-->
@@ -29,34 +51,15 @@
         </div>
         <div class="container"></div>
         <div class="actions-toolbar">
-            <div class="primary_">
-                <div class="action primary_ checkout_ vyne-btn"
-                        type="submit"
-                        data-bind="
+            <div class="primary">
+                <button class="action primary checkout" type="submit"
+                        data-bind=" click: placeOrder,
                         attr: {title: $t('Place Order')},
                         css: {disabled: !isPlaceOrderActionAllowed()},
                         enable: (getCode() == isChecked())
                         " disabled>
-                    <ul>
-                        <li class="logo">
-                            <img data-bind="click: placeOrder, attr: { src: require.toUrl('Vyne_Magento/images/logos/logo-violet.svg') }" alt="vyne_logo" width="62"/>
-                        </li>
-                        <li class="infomation">
-                            <img data-bind="click, placeOrder, attr: { src: require.toUrl('Vyne_Magento/images/logos/lock-dark.svg') }" alt="padlock"/>
-                            <span data-bind="click: placeOrder">Pay with bank</span>
-                            <a data-bind="click: showPopup()"><img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/logos/info-circle-dark.svg') }" alt="info_circle"/></a>
-                        </li>
-                        <li class="banks" data-bind="click: placeOrder" alt="banks">
-                            <img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Barclays.svg') }" alt="barclays"/>
-                            <img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Lloyds-Bank.svg') }" alt="lloyds"/>
-                            <img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Halifax.svg') }" alt="halifax"/>
-                            <img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Natwest.svg') }" alt="natwest"/>
-                            <img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Santander.svg') }" alt="santander"/>
-                            <img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Revolut.svg') }" alt="revolut"/>
-                            <a style="color: #555">+ all major banks</a>
-                        </li>
-                    </ul>
-                </div>
+                        <span data-bind="i18n: 'Place Order'"></span>
+                </button>
                 <div class="vyne-popup" style="visibility: hidden">
                     <a class="close" style="cursor: pointer" data-bind="click: hidePopup()">x</a>
                     <div class="description">
@@ -80,7 +83,7 @@
                     </div>
                     <div class="control">
                         <a class="button secondary" data-bind="click: hidePopup()">Close</a>
-                        <a class="button primary"><span>More about</span> <img  data-bind="attr: { src: require.toUrl('Vyne_Magento/images/popup/btn_logo.svg') }" alt="Vyne"></a>
+                        <a class="button primary" href="https://www.payvyne.com/pay-with-vyne#faqs" target="_blank"><span>More about</span> <img  data-bind="attr: { src: require.toUrl('Vyne_Magento/images/popup/btn_logo.svg') }" alt="Vyne"></a>
                         <div style="clear: both"></div>
                     </div>
                 </div>
