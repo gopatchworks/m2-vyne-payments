@@ -149,35 +149,32 @@
 .vyne-banner {
     display: block;
     margin: 10px 0;
+    &.promo-pdp-light, &.promo-pdp-dark {
+        width: 297px;
+        height: 41px;
+        border-radius: 10px;
+        padding: 10px 15px 5px;
+        display: block;
+        font-family: SofiaPro;
+        font-size: 14px;
+    }
     &.promo-pdp-light {
-        background: url('@{baseDir}images/promo/pdp/white.svg');
-        width: 327px;
-        height: 56px;
+        border: 1.5px #685EF2 solid;
     }
     &.promo-pdp-dark {
-        background: url('@{baseDir}images/promo/pdp/black.svg');
-        width: 327px;
-        height: 56px;
-    }
-    &.promo-pdp-violet {
-        background: url('@{baseDir}images/promo/pdp/violet.svg');
-        width: 327px;
-        height: 56px;
+        background: black;
+        border: 1.5px #000 solid;
+        color: white;
     }
     &.promo-minicart-light {
         background: url('@{baseDir}images/promo/minicart/white.svg');
-        width: 327px;
-        height: 56px;
+        width: 283px;
+        height: 164px;
     }
     &.promo-minicart-dark {
         background: url('@{baseDir}images/promo/minicart/black.svg');
-        width: 327px;
-        height: 56px;
-    }
-    &.promo-minicart-violet {
-        background: url('@{baseDir}images/promo/minicart/violet.svg');
-        width: 327px;
-        height: 56px;
+        width: 283px;
+        height: 164px;
     }
     &.promo-checkout-light {
         background: url('@{baseDir}images/promo/checkout/white.svg');
@@ -188,6 +185,12 @@
         background: url('@{baseDir}images/promo/checkout/black.svg');
         width: 273px;
         height: 164px;
+    }
+    .promo_logo {
+        float: right;
+        img {
+            width: 60px;
+        }
     }
 }
 

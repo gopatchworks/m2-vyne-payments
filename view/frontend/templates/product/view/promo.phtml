@@ -1,8 +1,12 @@
 <?php
 $config = $block->getLayout()->createBlock(\Magento\Config\Block\System\Config\Form::class);
-$colour_scheme = strtolower($config->getConfigValue('payment/vyne/colour_scheme'));
+$colour_scheme = strtolower($config->getConfigValue('payment/vyne/colour_scheme')) == 'dark' ? 'dark' : 'light';
+if ($config->getConfigValue('payment/vyne/pdp_promotion')):
 ?>
-<span class="vyne-banner promo-pdp-<?=$colour_scheme?>" style="font-family: SofiaPro;">
+<span class="vyne-banner promo-pdp-<?=$colour_scheme?>">
+    <span class="promo_logo">
+        <img src="<?php echo $this->getViewFileUrl('Vyne_Magento::images/logos/logo-'.$colour_scheme.'-alt1.svg'); ?>" />
+    </span>
     <span class="promo_text_1">
         <?= $block->escapeHtml($config->getConfigValue('payment/vyne/promo_text_1'))?>
     </span>
@@ -10,5 +14,7 @@ $colour_scheme = strtolower($config->getConfigValue('payment/vyne/colour_scheme'
     <span class="promo_text_2">
         <?= $block->escapeHtml($config->getConfigValue('payment/vyne/promo_text_2'))?>
     </span>
-    <span class="promo_logo"></span>
 </span>
+<?php
+endif;
+?>

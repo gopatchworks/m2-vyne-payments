@@ -2,7 +2,7 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="minicart.addons">
-            <block class="Magento\Framework\View\Element\Template" name="minicart-vyne-promotion-content" template="Vyne_Magento::minicart/promotion.phtml" />
+            <block class="Magento\Framework\View\Element\Template" name="minicart-vyne-promotion-content" template="Vyne_Magento::minicart/promotion.phtml" ifconfig="payment/vyne/promotion"/>
         </referenceContainer>
     </body>
 </page>
