@@ -34,6 +34,10 @@ define(
                     }
                 });
             },
+            getColourScheme: function() {
+                var scheme = window.checkoutConfig.payment.vyne.colour_scheme == 'Dark' ? 'dark' : 'light';
+                return scheme + ' payment-method-content';
+            },
             showPopup: function() {
                 document.getElementsByClassName('vyne-popup')[0].style.visibility = 'visible';
             },

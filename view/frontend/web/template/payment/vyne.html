@@ -16,22 +16,27 @@
             </span>
         </label>
     </div>
-    <div class="payment-method-content">
+    <div class="light payment-method-content" data-bind="attr: {'class': getColourScheme()}">
         <div class="vyne-btn">
             <ul>
                 <li class="information">
-                    <img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/logos/lock-dark.svg') }" alt="padlock"/>
+                    <img class="light" data-bind="attr: { src: require.toUrl('Vyne_Magento/images/logos/lock-dark.svg') }" alt="padlock"/>
+                    <img class="dark" data-bind="attr: { src: require.toUrl('Vyne_Magento/images/logos/lock-light.svg') }" alt="padlock"/>
                     <span>Pay with bank</span>
-                    <a data-bind="click: showPopup()"><img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/logos/info-circle-dark.svg') }" alt="info_circle"/></a>
+                    <a class="light" data-bind="click: showPopup()"><img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/logos/info-circle-dark.svg') }" alt="info_circle"/></a>
+                    <a class="dark" data-bind="click: showPopup()"><img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/logos/info-circle-light.svg') }" alt="info_circle"/></a>
                 </li>
                 <li class="banks" alt="banks">
-                    <img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Barclays.svg') }" alt="barclays"/>
-                    <img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Lloyds-Bank.svg') }" alt="lloyds"/>
-                    <img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Halifax.svg') }" alt="halifax"/>
-                    <img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Natwest.svg') }" alt="natwest"/>
-                    <img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Santander.svg') }" alt="santander"/>
-                    <img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Revolut.svg') }" alt="revolut"/>
-                    <a style="color: #555">+ all major banks</a>
+                    <img width="20" height="20" data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Barclays.svg') }" alt="barclays"/>
+                    <img width="20" height="20" class="light" data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Lloyds-Bank.svg') }" alt="lloyds"/>
+                    <img width="20" height="20" class="dark" data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Lloyds-Bank-light.svg') }" alt="lloyds"/>
+                    <img width="20" height="20" data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Halifax.svg') }" alt="halifax"/>
+                    <img width="20" height="20" data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Natwest.svg') }" alt="natwest"/>
+                    <img width="20" height="20" data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Santander.svg') }" alt="santander"/>
+                    <img width="20" height="20" class="light" data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Revolut.svg') }" alt="revolut"/>
+                    <img width="20" height="20" class="dark" data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Revolut-light.svg') }" alt="revolut"/>
+                    <a class="light" style="color: #555">+ all major banks</a>
+                    <a class="dark" style="color: #eee">+ all major banks</a>
                 </li>
             </ul>
         </div>

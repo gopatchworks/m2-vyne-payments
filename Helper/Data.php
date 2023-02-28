@@ -30,6 +30,7 @@ class Data extends AbstractHelper
     const VYNE_ORDER_STATUS = 'payment/vyne/order_status';
     const VYNE_ENV = 'payment/vyne/environment';
     const VYNE_MEDIA_TYPE = 'payment/vyne/media_type';
+    const VYNE_COLOUR_SCHEME = 'payment/vyne/colour_scheme';
 
     const VYNE_WEBHOOK_CALLBACK = 'vyne/webhook/callback';
 
@@ -203,17 +204,21 @@ class Data extends AbstractHelper
     {
         $order = $this->orderRepository->get($entity_id);
         $currency_code = $order->getOrderCurrencyCode();
+        $current_customer = $this->customerHelper->getCurrentCustomer();
+        $current_customer_id = $this->customerHelper->getCurrentCustomerId();
+        $description = $current_customer ? $current_customer->getFirstName() . " " . $current_customer->getLastName() : "Guest";
+        $customerReference = $current_customer_id ? $current_customer_id : $order->getCustomerEmail();
         // force GBP
         $currency_code = "GBP";
         $data = [
             'amount' => number_format(floatval($order->getGrandTotal()), 2, '.', ''),
             'currency' => $currency_code,
             'destinationAccount' => $this->getDestinationAccount(),
-            'description' => (string) __('Web payment'),
+            'description' => $description,
             'callbackUrl' => $this->getVyneWebhookCallback(),
             'mediaType' => $this->getMediaType(),
             'countries' => [$this->getCountryCodeByWebsite()],
-            'customerReference' => $this->customerHelper->getCurrentCustomerId(),
+            'customerReference' => $customerReference,
             'merchantReference' => $order->getIncrementId()
         ];
 
@@ -252,6 +257,19 @@ class Data extends AbstractHelper
     {
         return (string) $this->scopeConfig->getValue(
             self::VYNE_MEDIA_TYPE,
+            ScopeInterface::SCOPE_STORE
+        );
+    }
+
+    /**
+     * get ColourScheme of Vyne
+     *
+     * @return string
+     */
+    public function getColourScheme()
+    {
+        return (string) $this->scopeConfig->getValue(
+            self::VYNE_COLOUR_SCHEME,
             ScopeInterface::SCOPE_STORE
         );
     }
