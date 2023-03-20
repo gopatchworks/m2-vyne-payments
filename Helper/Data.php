@@ -207,7 +207,7 @@ class Data extends AbstractHelper
         $current_customer = $this->customerHelper->getCurrentCustomer();
         $current_customer_id = $this->customerHelper->getCurrentCustomerId();
         $customerReference = $current_customer_id ? $current_customer_id : $order->getCustomerEmail();
-        $description = $current_customer ? $current_customer->getFirstName() . " " . $current_customer->getLastName() : "GUEST";
+        $description = $current_customer ? $current_customer->getFirstname() . " " . $current_customer->getLastname() : "GUEST";
         $description = empty(trim($description)) ? "GUEST" : trim($description);
         // force GBP
         $currency_code = "GBP";
