@@ -203,7 +203,7 @@ class Order extends AbstractHelper
      */
     public function cancelOrderById($order_id)
     {
-        $this->orderManagement->cancel($order->getId());
+        $this->orderManagement->cancel($order_id);
     }
 
     /**
