@@ -74,7 +74,7 @@ class Info extends \Magento\Payment\Block\Info\Cc
         if ($this->_state->getAreaCode() == \Magento\Framework\App\Area::AREA_ADMINHTML) {
             $data = array(
                 $last_trans_id => $vyne_transaction_id,
-                $status => ucwords(str_replace('_', ' ',$payment->getVyneStatus())),
+                $status => ucwords(str_replace('_', ' ',$payment->getVyneStatus() ?? '')),
                 $amount => $this->_vyneHelper->formatCurrency($payment->getAmountOrdered()),
                 $captured_amount => $captured ?: '0.00',
                 $refunded_amount => $refunded ?: '0.00'

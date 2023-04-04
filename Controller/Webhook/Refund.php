@@ -17,6 +17,7 @@ class Refund extends AbstractWebhookPost
         /** @var \Magento\Framework\Controller\ResultInterface $result */
         $result = $this->resultFactory->create(ResultFactory::TYPE_RAW);
         $requestBody = $this->getRequest()->getContent();
+        $this->vyneLogger->logMixed( ['webhook/refund/request' => $requestBody] );
         $request = json_decode($requestBody);
 
         // validate request body
@@ -36,7 +37,7 @@ class Refund extends AbstractWebhookPost
             if ($request->status == VyneRefund::GROUP_COMPLETED) {
                 $this->vyneOrder->createCreditmemo($request->paymentId, $request->refundId);
             }
-            $this->vyneOrder->updateRefundByPaymentId($request->paymentId, $request->refundId, $request->status);
+            $this->vyneOrder->updateRefundByPaymentId($request->paymentId, $request->refundId, $request->amount, $request->status);
 
         }
         catch (\Exception $e) {

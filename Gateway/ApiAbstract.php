@@ -158,7 +158,7 @@ class ApiAbstract
             'Content-Type' => 'application/x-www-form-urlencoded'
         ];
 
-        $httpBody = \GuzzleHttp\Psr7\build_query($this->getConfig()->getClientCredential());
+        $httpBody = \GuzzleHttp\Psr7\Query::build($this->getConfig()->getClientCredential());
 
         return new Request(
             'POST',

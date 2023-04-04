@@ -156,10 +156,10 @@ class Order extends AbstractHelper
      *
      * @return void
      */
-    public function updateRefundByPaymentId($transaction_id, $refund_id, $status)
+    public function updateRefundByPaymentId($transaction_id, $refund_id, $amount, $status)
     {
         $order = $this->getOrderByVyneTransactionId($transaction_id);
-        $msg = __('Refund request %1 has been processed by Vyne and returned with Status %2', $refund_id, $status);
+        $msg = __('Refund request %1 for Amount ( %2 ) has been processed by Vyne and returned with Status %3', $refund_id, $amount, $status);
 
         $order->addStatusHistoryComment($msg);
 
@@ -284,6 +284,10 @@ class Order extends AbstractHelper
         $this->vyneLogger->logMixed(['transaction_id' => $vyne_transaction_id, 'refund_id' => $vyne_refund_id]);
 
         $order = $this->getOrderByVyneTransactionId($vyne_transaction_id);
+
+        if (!$order) {
+            $this->vyneLogger->logMixed(['Unable to retrieve order, quitting...']);
+        }
 
         $creditMemoData = [];
         $creditMemoData['do_offline'] = 0;
