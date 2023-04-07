@@ -26,6 +26,7 @@
     </table>
     <table name="sales_order_payment" resource="sales" engine="innodb" comment="Sales Flat Order">
         <column xsi:type="varchar" name="vyne_transaction_id" length="50" nullable="false" comment="The unique Vyne Payment ID for this order payment."/>
+        <column xsi:type="varchar" name="vyne_status" length="50" nullable="false" comment="Vyne Payment Status"/>
         <index referenceId="VYNE_TRANSACTION_ID" indexType="btree">
             <column name="vyne_transaction_id"/>
         </index>

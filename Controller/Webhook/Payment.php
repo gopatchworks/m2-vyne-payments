@@ -33,17 +33,18 @@ class Payment extends AbstractWebhookPost
 
         try {
             $order = $this->orderRepository->get($request->merchantReference);
-            $order_status = VynePayment::getTransactionAction($request->status);
+            $vyne_status = $request->status;
+            $order_status = VynePayment::getTransactionAction($vyne_status);
             $this->vyneLogger->logMixed( ['webhook/payment' => $order_status] );
 
             switch ($order_status) {
             case VynePayment::GROUP_PROCESSING:
             case VynePayment::GROUP_PENDING_PAYMENT:
-                $this->vyneOrder->updateOrderHistory($order, __('Order Status Updated by Vyne'), $order_status);
+                $this->vyneOrder->updateOrderHistory($order, __('Order Status Updated by Vyne'), $order_status, null, $vyne_status);
 
                 break;
             case VynePayment::GROUP_SUCCESS:
-                $this->vyneOrder->updateOrderHistory($order, __('Order Completed by Vyne'), $order_status, $request->paymentId);
+                $this->vyneOrder->updateOrderHistory($order, __('Order Completed by Vyne'), $order_status, $request->paymentId, $vyne_status);
 
                 break;
             case VynePayment::GROUP_CANCEL:

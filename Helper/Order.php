@@ -121,7 +121,7 @@ class Order extends AbstractHelper
      *
      * @return void
      */
-    public function updateOrderHistory($order, $msg, $status, $paymentId = null)
+    public function updateOrderHistory($order, $msg, $status, $paymentId = null, $vyne_status = null)
     {
         $order->addStatusHistoryComment($msg);
         $order->setState($status)->setStatus($status);
@@ -132,6 +132,7 @@ class Order extends AbstractHelper
             // update order payment
             $payment = $order->getPayment();
             $payment->setData('vyne_transaction_id', $paymentId);
+            $payment->setData('vyne_status', $vyne_status);
             $payment->setData('last_trans_id', $paymentId);
             $payment->save();
 
@@ -159,7 +160,8 @@ class Order extends AbstractHelper
     public function updateRefundByPaymentId($transaction_id, $refund_id, $amount, $status)
     {
         $order = $this->getOrderByVyneTransactionId($transaction_id);
-        $msg = __('Refund request %1 for Amount ( %2 ) has been processed by Vyne and returned with Status %3', $refund_id, $amount, $status);
+        $currency = "GBP";
+        $msg = __('Refund request %1 for %2 %3 has been processed by Vyne and returned with Status %4', $refund_id, number_format(floatval($amount),2), $currency, $status);
 
         $order->addStatusHistoryComment($msg);
 

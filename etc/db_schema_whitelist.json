@@ -27,7 +27,8 @@
     },
     "sales_order_payment": {
         "column": {
-            "vyne_transaction_id": true
+            "vyne_transaction_id": true,
+            "vyne_status": true
         },
         "index": {
             "SALES_ORDER_PAYMENT_VYNE_TRANSACTION_ID": true
