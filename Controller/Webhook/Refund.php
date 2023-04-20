@@ -34,10 +34,17 @@ class Refund extends AbstractWebhookPost
         try {
             // placeholder to handle webhook request
             $this->vyneLogger->logMixed( ['webhook/refund' => $request->status] );
-            if ($request->status == VyneRefund::GROUP_COMPLETED) {
-                $this->vyneOrder->createCreditmemo($request->paymentId, $request->refundId);
+
+            $order = $this->vyneOrder->getOrderByVyneTransactionId($request->paymentId);
+            $this->vyneOrder->updateRefundByPaymentId($order, $request->refundId, $request->amount, $request->status);
+
+            if ($request->status == VyneRefund::GROUP_COMPLETED
+                && $request->amount) {
+                $this->vyneOrder->createCreditmemo($order, $request->refundId, $request->amount, $request->status);
             }
-            $this->vyneOrder->updateRefundByPaymentId($request->paymentId, $request->refundId, $request->amount, $request->status);
+
+            // save changes to order
+            $order->save();
 
         }
         catch (\Exception $e) {

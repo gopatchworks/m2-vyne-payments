@@ -19,6 +19,9 @@ class Vyne extends \Magento\Payment\Model\Method\AbstractMethod
     const PAYMENT_TYPE_AUCAP = 'capture';
     const PAYMENT_METHOD_CODE = 'vyne';
 
+    const STATUS_PARTIAL_REFUND = 'vyne_partial_refund';
+    const STATUS_REFUND = 'vyne_refund';
+
     /**
      * @var string
      */
