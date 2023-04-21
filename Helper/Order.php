@@ -275,10 +275,8 @@ class Order extends AbstractHelper
         $msg = __('Refund request %1 for %2 %3 has been processed by Vyne and returned with Status %4', $refund_id, number_format(floatval($amount),2), $currency, $status);
 
         $order->addStatusHistoryComment($msg);
-        $order->setTotalRefunded(floatval($amount) + floatval($order->getTotalRefunded()));
-        $payment->setAmountRefunded(floatval($amount) + floatval($payment->getAmountRefunded()));
 
-        // set order refund status
+        // set order status for vyne refund
         if ($amount + $order->getTotalRefunded() == $order->getTotalPaid()) {
             $order->setState(\Vyne\Magento\Model\Payment\Vyne::STATUS_REFUND)
                   ->setStatus(\Vyne\Magento\Model\Payment\Vyne::STATUS_REFUND);
@@ -287,10 +285,9 @@ class Order extends AbstractHelper
             $order->setState(\Vyne\Magento\Model\Payment\Vyne::STATUS_PARTIAL_REFUND)
                   ->setStatus(\Vyne\Magento\Model\Payment\Vyne::STATUS_PARTIAL_REFUND);
         }
-        else {
-            // default status = complete since order was paid
-            $order->setState('complete')->setStatus('complete');
-        }
+
+        $order->setTotalRefunded(floatval($amount) + floatval($order->getTotalRefunded()));
+        $payment->setAmountRefunded(floatval($amount) + floatval($payment->getAmountRefunded()));
     }
 
     /**
@@ -302,7 +299,7 @@ class Order extends AbstractHelper
      *
      * @return void
      */
-    public function createCreditmemo($order, $vyne_refund_id, $amount, $status)
+    public function createCreditmemo($order, $vyne_refund_id, $amount)
     {
         $this->vyneLogger->logMixed(['order_id' => $order->getIncrementId(), 'refund_id' => $vyne_refund_id, 'amount' => $amount]);
 
