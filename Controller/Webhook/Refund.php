@@ -36,7 +36,8 @@ class Refund extends AbstractWebhookPost
             $this->vyneLogger->logMixed( ['webhook/refund' => $request->status] );
 
             $order = $this->vyneOrder->getOrderByVyneTransactionId($request->paymentId);
-            $this->vyneOrder->updateRefundByPaymentId($order, $request->refundId, $request->amount, $request->status);
+            $payment = $order->getPayment();
+            $this->vyneOrder->updateRefundByPayment($order, $payment, $request->refundId, $request->amount, $request->status);
 
             if ($request->status == VyneRefund::GROUP_COMPLETED
                 && $request->amount) {

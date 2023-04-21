@@ -184,6 +184,18 @@ class Order extends AbstractHelper
     }
 
     /**
+     * set order total_refunded
+     *
+     * @param string
+     * @return void
+     */
+    public function updateOrderTotalRefund($order, $amount)
+    {
+        // vyne send webhook to callback webhook/payment with status refund or partial_refund before calling webhook/refund
+        // this is a place holder because refunded amount will be updated in webhook/refund
+    }
+
+    /**
      * change order status by $vyne_transaction_id
      * NOTE: Collection being used because this function need to use Payment model to get Order later
      *
@@ -257,26 +269,21 @@ class Order extends AbstractHelper
      *
      * @return void
      */
-    public function updateRefundByPaymentId($order, $refund_id, $amount, $status)
+    public function updateRefundByPayment($order, $payment, $refund_id, $amount, $status)
     {
         $currency = "GBP";
         $msg = __('Refund request %1 for %2 %3 has been processed by Vyne and returned with Status %4', $refund_id, number_format(floatval($amount),2), $currency, $status);
 
         $order->addStatusHistoryComment($msg);
+        $order->setTotalRefunded(floatval($amount) + floatval($order->getTotalRefunded()));
+        $payment->setAmountRefunded(floatval($amount) + floatval($payment->getAmountRefunded()));
 
         // set order refund status
-        $remaining_total = $order->getTotalPaid() - $order->getTotalRefunded();
-        $this->vyneLogger->logMixed( [
-            'totalpaid' => $order->getTotalPaid(),
-            'totalRefunded' => $order->getTotalRefunded(),
-            'remaining_total' => $remaining_total,
-            'amount' => $amount
-        ]);
-        if ($amount == $remaining_total) {
+        if ($amount + $order->getTotalRefunded() == $order->getTotalPaid()) {
             $order->setState(\Vyne\Magento\Model\Payment\Vyne::STATUS_REFUND)
                   ->setStatus(\Vyne\Magento\Model\Payment\Vyne::STATUS_REFUND);
         }
-        elseif ($amount < $remaining_total) {
+        elseif ($amount +$order->getTotalRefunded() < $order->getTotalPaid()) {
             $order->setState(\Vyne\Magento\Model\Payment\Vyne::STATUS_PARTIAL_REFUND)
                   ->setStatus(\Vyne\Magento\Model\Payment\Vyne::STATUS_PARTIAL_REFUND);
         }
