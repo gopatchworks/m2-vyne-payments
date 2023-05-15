@@ -130,16 +130,21 @@ class Save
         if (is_array($response->errors) && count($response->errors) > 0) {
             $errors = [];
             foreach ($response->errors as $error){
-                if ($error->errorMessage == 'The refund amount cannot be greater than the payment amount'
-                    || $error->errorMessage == 'Insufficient funds for refund') {
+                if ($error->errorMessage == 'The refund amount cannot be greater than the payment amount') {
                     $errors[] = 'Error: Insufficient balance in your Vyne Settlement Account. Please top up your Settlement Account or wait for funds to become available before trying again';
+                }
+                elseif ($error->errorMessage == 'Insufficient funds for refund') {
+                    // do nothing so we have empty errors array
+                    //$errors[] = 'Insufficient funds for refund';
                 }
                 else {
                     $errors[] = "Issue with Payment #{$error->paymentId} : {$error->errorMessage}";
                 }
             }
 
-            throw new \Exception(implode(',' , $errors));
+            if (count($errors) > 0) {
+                throw new \Exception(implode(',' , $errors));
+            }
         }
     }
 }
