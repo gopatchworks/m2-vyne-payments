@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Vyne\Magento\Plugin\Magento\Sales\Controller\Adminhtml\Order\Creditmemo;
 
 use Vyne\Magento\Helper\Data as VyneHelper;
+use Magento\Framework\Pricing\PriceCurrencyInterface;
 
 class Save
 {
@@ -42,12 +43,18 @@ class Save
     protected $vyneHelper;
 
     /**
+     * @var PriceCurrencyInterface
+     */
+    private $priceCurrency;
+
+    /**
      * @param \Magento\Framework\App\Request\Http $request
      * @param \Magento\Framework\Controller\ResultFactory $resultFactory
      * @param \Magento\Sales\Api\OrderRepositoryInterface $orderRepository
      * @param \Magento\Sales\Controller\Adminhtml\Order\CreditmemoLoader $creditmemoLoader
      * @param \Magento\Framework\Message\ManagerInterface $messageManager
      * @param VyneHelper $vyneHelper
+     * @param PriceCurrencyInterface $priceCurrency
      */
     public function __construct(
         \Magento\Framework\App\Request\Http $request,
@@ -55,7 +62,8 @@ class Save
         \Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
         \Magento\Sales\Controller\Adminhtml\Order\CreditmemoLoader $creditmemoLoader,
         \Magento\Framework\Message\ManagerInterface $messageManager,
-        VyneHelper $vyneHelper
+        VyneHelper $vyneHelper,
+        PriceCurrencyInterface $priceCurrency
     ) {
         $this->_request = $request;
         $this->resultFactory = $resultFactory;
@@ -63,6 +71,7 @@ class Save
         $this->creditmemoLoader = $creditmemoLoader;
         $this->messageManager = $messageManager;
         $this->vyneHelper = $vyneHelper;
+        $this->priceCurrency = $priceCurrency;
     }
 
     /**
@@ -91,6 +100,13 @@ class Save
 
             try {
                 $amount = number_format(floatval($creditmemo->getGrandTotal()), 2, '.', '');
+
+                // validate refund amount. consider base refund amount
+                $messages = $this->validateRefundAmount($order, $amount);
+                if (!empty($messages)) {
+                    throw new \Exception(implode(',' , $messages));
+                }
+
                 $this->refund($order->getPayment(), $amount);
                 $msg = __('You have requested Refund Request. Vyne is processing it.');
 
@@ -114,6 +130,27 @@ class Save
     }
 
     /**
+     * check if refund amount is valid, must be less than or equal to order total - refunded amount
+     *
+     * @param $order
+     * @param $refund_amount
+     * @return boolean
+     */
+    public function validateRefundAmount($order, $refund_amount)
+    {
+        $messages = [];
+        $orderRefund = $this->priceCurrency->round($order->getTotalRefunded() + $refund_amount);
+
+        if ($orderRefund > $this->priceCurrency->round($order->getTotalPaid())) {
+            $availableRefund = $order->getTotalPaid() - $order->getTotalRefunded();
+
+            $messages[] = __( 'The most money available to refund is %1.', $order->getBaseCurrency()->formatTxt($availableRefund));
+        }
+
+        return $messages;
+    }
+
+    /**
      * private refund function for custom logic . reference in \Vyne\Magento\Model\Payment\Vyne
      * send refund request to Vyne only
      *
@@ -134,8 +171,7 @@ class Save
                     $errors[] = 'Error: Insufficient balance in your Vyne Settlement Account. Please top up your Settlement Account or wait for funds to become available before trying again';
                 }
                 elseif ($error->errorMessage == 'Insufficient funds for refund') {
-                    // do nothing so we have empty errors array
-                    //$errors[] = 'Insufficient funds for refund';
+                    $errors[] = 'Error: Insufficient balance in your Vyne Settlement Account. Please top up your Settlement Account or wait for funds to become available before trying again';
                 }
                 else {
                     $errors[] = "Issue with Payment #{$error->paymentId} : {$error->errorMessage}";
