@@ -1,22 +1,4 @@
 {
-    "vyne_payouts": {
-        "column": {
-            "id": true,
-            "payment_id": true,
-            "status": true,
-            "amount": true,
-            "currency": true,
-            "created_at": true,
-            "updated_at": true
-        },
-        "index": {
-            "VYNE_PAYOUTS_PAYMENT_ID": true,
-            "VYNE_PAYOUTS_STATUS": true
-        },
-        "constraint": {
-            "PRIMARY": true
-        }
-    },
     "quote_payment": {
         "column": {
             "vyne_transaction_id": true
@@ -32,6 +14,26 @@
         },
         "index": {
             "SALES_ORDER_PAYMENT_VYNE_TRANSACTION_ID": true
+        }
+    },
+    "vyne_token": {
+        "column": {
+            "id": true,
+            "access_token": true,
+            "merchant_id": true,
+            "scope": true,
+            "iss": true,
+            "merchant": true,
+            "mfa_required": true,
+            "token_type": true,
+            "expire_in": true,
+            "created_at": true
+        },
+        "index": {
+            "VYNE_TOKEN_CREATED_AT": true
+        },
+        "constraint": {
+            "PRIMARY": true
         }
     }
 }

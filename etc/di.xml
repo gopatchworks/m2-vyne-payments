@@ -1,5 +1,9 @@
 <?xml version="1.0" ?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Vyne\Magento\Api\TokenRepositoryInterface" type="Vyne\Magento\Model\TokenRepository"/>
+    <preference for="Vyne\Magento\Api\Data\TokenInterface" type="Vyne\Magento\Model\Token"/>
+    <preference for="Vyne\Magento\Api\Data\TokenSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+
     <!--plugins-->
 	<type name="Magento\Quote\Api\CartRepositoryInterface">
 		<plugin name="Vyne_Magento_Plugin_Magento_Quote_Api_CartRepositoryInterface" type="Vyne\Magento\Plugin\Magento\Quote\Api\CartRepositoryInterface" sortOrder="10" disabled="false"/>

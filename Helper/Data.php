@@ -154,7 +154,7 @@ class Data extends AbstractHelper
             $config = $this->getVyneConfig();
 
             $this->paymentApi = new PaymentApi($config);
-            $this->paymentApi->initToken();
+            $this->paymentApi->setToken();
         }
 
         return $this->paymentApi;
@@ -171,7 +171,7 @@ class Data extends AbstractHelper
             $config = $this->getVyneConfig();
 
             $this->refundApi = new RefundApi($config);
-            $this->refundApi->initToken();
+            $this->refundApi->setToken();
         }
 
         return $this->refundApi;
@@ -188,7 +188,7 @@ class Data extends AbstractHelper
             $config = $this->getVyneConfig();
 
             $this->payoutApi = new PayoutApi($config);
-            $this->payoutApi->initToken();
+            $this->payoutApi->setToken();
         }
 
         return $this->payoutApi;

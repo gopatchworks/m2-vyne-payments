@@ -10,6 +10,8 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Vyne\Magento\Gateway\ApiException;
 use Vyne\Magento\Gateway\Configuration;
+use Vyne\Magento\Model\TokenRepository;
+use Vyne\Magento\Model\TokenFactory;
 
 class ApiAbstract
 {
@@ -26,6 +28,16 @@ class ApiAbstract
     protected $config;
 
     /**
+     * @var TokenRepository
+     */
+    protected $tokenRepository;
+
+    /**
+     * @var TokenFactory
+     */
+    protected $tokenFactory;
+
+    /**
      * @param Configuration $config
      * @param String $environment
      * @param ClientInterface $client
@@ -36,6 +48,10 @@ class ApiAbstract
     ) {
         $this->config = $config ?: new Configuration();
         $this->client = $client ?: new Client();
+
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $this->tokenRepository = $objectManager->create('Vyne\Magento\Model\TokenRepository');
+        $this->tokenFactory = $objectManager->create('Vyne\Magento\Model\TokenFactory');
     }
 
     /**
@@ -123,6 +139,38 @@ class ApiAbstract
     }
 
     /**
+     * set token for the next request
+     *
+     * @return this
+     */
+    public function setToken()
+    {
+        $token_model = $this->tokenRepository->getValidToken();
+
+        if (!$token_model) {
+            if ($vyne_token = $this->initToken()) {
+                $token_model = $this->tokenFactory->create();
+                $token_model->setAccessToken($vyne_token->access_token);
+                $token_model->setMerchantId($vyne_token->merchantId);
+                $token_model->setScope($vyne_token->scope);
+                $token_model->setIss($vyne_token->iss);
+                $token_model->setMerchant($vyne_token->merchant);
+                $token_model->setMfaRequired($vyne_token->mfa_required);
+                $token_model->setTokenType($vyne_token->token_type);
+                $token_model->setExpireIn($vyne_token->expires_in);
+                $token_model->setCreatedAt(date('Y-m-d H:i:s'));
+
+                $this->tokenRepository->save($token_model);
+            }
+        }
+
+        $this->getConfig()->setApiKey('Authorization', $token_model->getAccessToken())->setApiKeyPrefix('Authorization', 'Bearer');
+        $this->getConfig()->setApiKey('Content-Type', 'application/json');
+
+        return $this;
+    }
+
+    /**
      * initialize payment token and assign it to the Configuration object
      *
      * @return this
@@ -134,14 +182,12 @@ class ApiAbstract
 
         try {
             $response = $this->sendRequest($request, $options);
-            $this->getConfig()->setApiKey('Authorization', $response->access_token)->setApiKeyPrefix('Authorization', 'Bearer');
-            $this->getConfig()->setApiKey('Content-Type', 'application/json');
+            return $response;
         }
         catch (\Exception $e) {
             // handle exception
+            return false;
         }
-
-        return $this;
     }
 
     /**

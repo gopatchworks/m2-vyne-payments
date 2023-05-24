@@ -79,22 +79,4 @@ abstract class AbstractWebhookGet extends Action
      * @inheritDoc
      */
     abstract public function execute();
-
-
-    /**
-     * initialize paymentApi instance
-     *
-     * @return Vyne\Magento\Gateway\Payment
-     */
-    public function initPayment()
-    {
-        if (!$this->paymentApi) {
-            $config = $this->vyneHelper->getVyneConfig();
-
-            $this->paymentApi = new PaymentApi($config);
-            $this->paymentApi->initToken();
-        }
-
-        return $this->paymentApi;
-    }
 }

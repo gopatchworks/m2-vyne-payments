@@ -1,21 +1,21 @@
 <?xml version="1.0"?>
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
-    <table name="vyne_payouts">
-        <column xsi:type="varchar" name="id" length="30" nullable="false" comment="The unique identifier for this payout."/>
-        <column xsi:type="varchar" name="payment_id" length="30" nullable="false" comment="The unique Vyne ID for this payout."/>
-        <column xsi:type="varchar" name="status" nullable="false" length="50" comment="The status of the payout being processed."/>
-        <column xsi:type="float" name="amount" unsigned="false" nullable="false" comment="The authorized amount for this payout."/>
-        <column xsi:type="varchar" name="currency" nullable="false" length="5" comment="The currency code for this payout."/>
-        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="The date and time when this payout was created in system."/>
-        <column xsi:type="timestamp" name="updated_at" nullable="false" on_update="true" default="CURRENT_TIMESTAMP" comment="Defines when the payout was last updated."/>
+    <table name="vyne_token">
+        <column xsi:type="int" name="id" length="30" unsigned="true" identity="true" nullable="false" comment="The unique identifier for the access token"/>
+        <column xsi:type="text" name="access_token" nullable="false" comment="access token content"/>
+        <column xsi:type="int" name="merchant_id" nullable="false" comment="The unique identifier of merchant"/>
+        <column xsi:type="varchar" name="scope" unsigned="false" nullable="false" length="15" comment="scope of the token"/>
+        <column xsi:type="varchar" name="iss" nullable="false" length="255" comment="iss"/>
+        <column xsi:type="varchar" name="merchant" nullable="false" length="50" comment="merchant code"/>
+        <column xsi:type="boolean" name="mfa_required" nullable="false" default="false" comment="mark if MFA is required for this token"/>
+        <column xsi:type="varchar" name="token_type" nullable="false" length="50" comment="type of token"/>
+        <column xsi:type="int" name="expire_in" nullable="false" comment="token TTL"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Token create timestamp"/>
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="id"/>
         </constraint>
-        <index referenceId="PAYMENT_ID" indexType="btree">
-            <column name="payment_id"/>
-        </index>
-        <index referenceId="STATUS" indexType="btree">
-            <column name="status"/>
+        <index referenceId="CREATED_AT" indexType="btree">
+            <column name="created_at"/>
         </index>
     </table>
     <table name="quote_payment" resource="checkout" engine="innodb" comment="Sales Flat Quote Payment">
