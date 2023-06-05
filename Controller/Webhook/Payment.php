@@ -48,7 +48,8 @@ class Payment extends AbstractWebhookPost
 
                 break;
             case VynePayment::GROUP_CANCEL:
-                $this->vyneOrder->cancelOrderById($order->getId());
+                // logic to send transaction failed email in the vyneOrder helper
+                $this->vyneOrder->cancelOrder($order);
                 break;
             case VynePayment::GROUP_REFUND:
                 $this->vyneOrder->updateOrderTotalRefund($order, $request->refundedAmount);

@@ -7,14 +7,20 @@ declare(strict_types=1);
 
 namespace Vyne\Magento\Helper;
 
-use Vyne\model\Transaction;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Sales\Model\ResourceModel\Order\Payment\CollectionFactory;
 use Magento\Framework\App\ObjectManager;
 use Magento\Sales\Model\Order\Email\Sender\CreditmemoSender;
+use Vyne\Magento\Model\Order\Email\Config as EmailConfig;
+use Magento\Payment\Helper\Data as PaymentHelper;
+use Magento\Sales\Model\Order\Address\Renderer;
+use Magento\Framework\Mail\Template\TransportBuilder;
+use Magento\Framework\Translate\Inline\StateInterface;
+use Magento\Store\Model\StoreManagerInterface;
 
 class Order extends AbstractHelper
 {
+    const VYNE_FAILED_TRANSACTION_TEMPLATE = 'vyne_failed_transaction_template';
     /**
      * @var \Magento\Framework\DB\Transaction
      */
@@ -71,6 +77,36 @@ class Order extends AbstractHelper
     protected $orderSender;
 
     /**
+     * @var EmailConfig
+     */
+    protected $emailConfig;
+
+    /**
+     * @var PaymentHelper
+     */
+    protected $paymentHelper;
+
+    /**
+     * @var Renderer
+     */
+    protected $addressRenderer;
+
+    /**
+     * @var TransportBuilder
+     */
+    protected $transportBuilder;
+
+    /**
+     * @var StoreManagerInterface
+     */
+    protected $storeManager;
+
+    /**
+     * @var StateInterface
+     */
+    protected $inlineTranslation;
+
+    /**
      * @param \Magento\Framework\App\Helper\Context $context
      * @param Data
      * @param Logger
@@ -83,6 +119,12 @@ class Order extends AbstractHelper
      * @param \Magento\Sales\Controller\Adminhtml\Order\CreditmemoLoader
      * @param CreditmemoSender
      * @param \Magento\Sales\Model\Order\Email\Sender\OrderSender
+     * @param EmailConfig $emailConfig
+     * @param PaymentHelper $paymentHelper
+     * @param Renderer $addressRenderer
+     * @param TransportBuilder $transportBuilder
+     * @param StoreManagerInterface $storeManager
+     * @param StateInterface $state
      */
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
@@ -96,7 +138,13 @@ class Order extends AbstractHelper
         \Magento\Sales\Model\Service\InvoiceService $invoiceService,
         \Magento\Sales\Controller\Adminhtml\Order\CreditmemoLoader $creditmemoLoader,
         CreditmemoSender $creditmemoSender,
-        \Magento\Sales\Model\Order\Email\Sender\OrderSender $orderSender
+        \Magento\Sales\Model\Order\Email\Sender\OrderSender $orderSender,
+        EmailConfig $emailConfig,
+        PaymentHelper $paymentHelper,
+        Renderer $addressRenderer,
+        TransportBuilder $transportBuilder,
+        StoreManagerInterface $storeManager,
+        StateInterface $state
     ) {
         parent::__construct($context);
         $this->vyneHelper = $vyneHelper;
@@ -110,6 +158,12 @@ class Order extends AbstractHelper
 	    $this->creditmemoSender = $creditmemoSender;
         $this->creditmemoLoader = $creditmemoLoader;
         $this->orderSender = $orderSender;
+        $this->emailConfig = $emailConfig;
+        $this->paymentHelper = $paymentHelper;
+        $this->addressRenderer = $addressRenderer;
+        $this->transportBuilder = $transportBuilder;
+        $this->storeManager = $storeManager;
+        $this->inlineTranslation = $state;
     }
 
     /**
@@ -178,9 +232,98 @@ class Order extends AbstractHelper
      * @param string
      * @return void
      */
-    public function cancelOrderById($order_id)
+    public function cancelOrder($order)
     {
-        $this->orderManagement->cancel($order_id);
+        $this->sendVyneFailedTransactionEmail($order);
+        $this->orderManagement->cancel($order->getId());
+        
+        // mark order email sent
+    }
+
+    /**
+     * send failed transaction email to customer
+     *
+     * @param \Magento\Sales\Api\Data\OrderInterface
+     * @return void
+     */
+    public function sendVyneFailedTransactionEmail($order)
+    {
+        try {
+            $storeId = $this->storeManager->getStore()->getId();
+
+            $from = ['email' => $this->emailConfig->getSalesSenderEmail(), 'name' => $this->emailConfig->getSalesSenderName()];
+            $this->inlineTranslation->suspend();
+
+            $templateOptions = [
+                'area' => \Magento\Framework\App\Area::AREA_FRONTEND,
+                'store' => $storeId
+            ];
+
+            $templateVars = [
+                'order' => $order,
+                'order_id' => $order->getId(),
+                'billing' => $order->getBillingAddress(),
+                'payment_html' => $this->getPaymentHtml($order, $storeId),
+                'store' => $order->getStore(),
+                'formattedShippingAddress' => $this->getFormattedShippingAddress($order),
+                'formattedBillingAddress' => $this->getFormattedBillingAddress($order),
+                'created_at_formatted' => $order->getCreatedAtFormatted(2),
+                'order_data' => [
+                    'customer_name' => $order->getCustomerName(),
+                    'is_not_virtual' => $order->getIsNotVirtual(),
+                    'email_customer_note' => $order->getEmailCustomerNote(),
+                    'frontend_status_label' => $order->getFrontendStatusLabel()
+                ]
+            ];
+
+            $transport = $this->transportBuilder->setTemplateIdentifier(self::VYNE_FAILED_TRANSACTION_TEMPLATE, \Magento\Store\Model\ScopeInterface::SCOPE_STORE)
+                                                ->setTemplateOptions($templateOptions)
+                                                ->setTemplateVars($templateVars)
+                                                ->setFrom($from)
+                                                ->addTo($order->getCustomerEmail())
+                                                ->getTransport();
+            $transport->sendMessage();
+            $this->inlineTranslation->resume();
+
+            // mark email sent
+        } catch (\Exception $e) {
+            $this->vyneLogger->logException($e);
+        }
+    }
+
+    /**
+     * Get payment info block as html
+     *
+     * @param Order $order
+     * @return string
+     */
+    protected function getPaymentHtml(\Magento\Sales\Model\Order $order, $storeId)
+    {
+        return $this->paymentHelper->getInfoBlockHtml($order->getPayment(), $storeId);
+    }
+
+    /**
+     * Render shipping address into html.
+     *
+     * @param Order $order
+     * @return string|null
+     */
+    protected function getFormattedShippingAddress($order)
+    {
+        return $order->getIsVirtual()
+            ? null
+            : $this->addressRenderer->format($order->getShippingAddress(), 'html');
+    }
+
+    /**
+     * Render billing address into html.
+     *
+     * @param Order $order
+     * @return string|null
+     */
+    protected function getFormattedBillingAddress($order)
+    {
+        return $this->addressRenderer->format($order->getBillingAddress(), 'html');
     }
 
     /**

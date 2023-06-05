@@ -15,4 +15,8 @@
             </argument>
         </arguments>
     </type>
+
+	<type name="Magento\Checkout\Block\Onepage\Success">
+		<plugin name="Vyne_Magento_Plugin_Magento_Checkout_Success" type="Vyne\Magento\Plugin\Magento\Checkout\Block\Onepage\Success" sortOrder="10" disabled="false"/>
+	</type>
 </config>

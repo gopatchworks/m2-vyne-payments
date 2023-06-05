@@ -42,13 +42,11 @@ class Callback extends AbstractWebhookGet
                 // logic to handle vyne pending payment response
             case VynePayment::GROUP_SUCCESS:
                 $this->messageManager->addSuccessMessage(__('Payment processing...'));
-                $this->messageManager->addSuccessMessage(__('Your payment is currently in progress, we’ll let you know as soon as we receive the funds.'));
                 return $this->resultRedirect->setPath('checkout/onepage/success', array('_secure'=>true));
 
                 break;
             case VynePayment::GROUP_CANCEL:
-                $this->messageManager->addErrorMessage(__('Oh, snap! Your payment didn\'t go through.'));
-                $this->messageManager->addErrorMessage(__('It looks you didn\'t authorise this payment. Please try again.'));
+                $this->messageManager->addErrorMessage(__('Oh, snap! Your payment didn\'t go through. It looks you didn\'t authorise this payment. Please try again.'));
                 return $this->failedVynePayment($order_id);
 
                 break;

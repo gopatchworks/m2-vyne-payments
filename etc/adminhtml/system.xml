@@ -69,7 +69,7 @@
 				</field>
                 <!--add promotion content fields-->
                 <field id="pdp_promotion" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="230" translate="label" type="select">
-                    <label>Display Promoton on PDP</label>
+                    <label>Display Promotion on PDP</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <depends>
                         <field id="promotion">1</field>
@@ -90,14 +90,14 @@
                     </depends>
 				</field>
                 <field id="minicart_promotion" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="240" translate="label" type="select">
-                    <label>Display Promoton on Mini Cart</label>
+                    <label>Display Promotion on Mini Cart</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <depends>
                         <field id="promotion">1</field>
                     </depends>
                 </field>
                 <field id="cart_promotion" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="250" translate="label" type="select">
-                    <label>Display Promoton on Basket Page</label>
+                    <label>Display Promotion on Basket Page</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <depends>
                         <field id="promotion">1</field>
