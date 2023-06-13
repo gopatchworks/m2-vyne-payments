@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Vyne\Magento\Controller\Webhook;
+namespace Vyne\Payments\Controller\Webhook;
 
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Sales\Api\OrderRepositoryInterface;
-use Vyne\Magento\Helper\Logger as VyneLogger;
-use Vyne\Magento\Helper\Cart as VyneCart;
-use Vyne\Magento\Helper\Order as VyneOrder;
-use Vyne\Magento\Gateway\Payment as PaymentApi;
+use Vyne\Payments\Helper\Logger as VyneLogger;
+use Vyne\Payments\Helper\Cart as VyneCart;
+use Vyne\Payments\Helper\Order as VyneOrder;
+use Vyne\Payments\Gateway\Payment as PaymentApi;
 
 /**
  * Vyne Payment Webhook Order Controller
  *
- * @package Vyne\Magento\Controller\Decision
+ * @package Vyne\Payments\Controller\Decision
  */
 abstract class AbstractWebhookGet extends Action
 {
@@ -31,12 +31,12 @@ abstract class AbstractWebhookGet extends Action
     protected $orderRepository;
 
     /**
-     * @var \Vyne\Magento\Helper\Data
+     * @var \Vyne\Payments\Helper\Data
      */
     protected $vyneHelper;
 
     /**
-     * @var \Vyne\Magento\Helper\Cart
+     * @var \Vyne\Payments\Helper\Cart
      */
     protected $vyneCart;
 
@@ -59,7 +59,7 @@ abstract class AbstractWebhookGet extends Action
         Context $context,
         \Magento\Checkout\Model\Session $checkoutSession,
         OrderRepositoryInterface $orderRepository,
-        \Vyne\Magento\Helper\Data $vyneHelper,
+        \Vyne\Payments\Helper\Data $vyneHelper,
         VyneCart $vyneCart,
         VyneOrder $vyneOrder,
         VyneLogger $vyneLogger

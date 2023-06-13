@@ -1,11 +1,11 @@
 <?php
 
-namespace Vyne\Magento\Observer;
+namespace Vyne\Payments\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
-use Vyne\Magento\Helper\Data as VyneHelper;
-use Vyne\Magento\Helper\Logger as VyneLogger;
-use Vyne\Magento\Helper\Order as OrderHelper;
+use Vyne\Payments\Helper\Data as VyneHelper;
+use Vyne\Payments\Helper\Logger as VyneLogger;
+use Vyne\Payments\Helper\Order as OrderHelper;
 
 class OrderPlaceAfter implements ObserverInterface
 {

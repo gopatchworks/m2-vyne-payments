@@ -1,4 +1,4 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
-    <template id="vyne_failed_transaction_template" label="Vyne Failed Transaction Template" file="failed_transaction.html" type="html" module="Vyne_Magento" area="frontend"/>
+    <template id="vyne_failed_transaction_template" label="Vyne Failed Transaction Template" file="failed_transaction.html" type="html" module="Vyne_Payments" area="frontend"/>
 </config>

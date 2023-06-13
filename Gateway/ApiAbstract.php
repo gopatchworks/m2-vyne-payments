@@ -1,6 +1,6 @@
 <?php
 
-namespace Vyne\Magento\Gateway;
+namespace Vyne\Payments\Gateway;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -8,10 +8,10 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
-use Vyne\Magento\Gateway\ApiException;
-use Vyne\Magento\Gateway\Configuration;
-use Vyne\Magento\Model\TokenRepository;
-use Vyne\Magento\Model\TokenFactory;
+use Vyne\Payments\Gateway\ApiException;
+use Vyne\Payments\Gateway\Configuration;
+use Vyne\Payments\Model\TokenRepository;
+use Vyne\Payments\Model\TokenFactory;
 
 class ApiAbstract
 {
@@ -50,8 +50,8 @@ class ApiAbstract
         $this->client = $client ?: new Client();
 
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        $this->tokenRepository = $objectManager->create('Vyne\Magento\Model\TokenRepository');
-        $this->tokenFactory = $objectManager->create('Vyne\Magento\Model\TokenFactory');
+        $this->tokenRepository = $objectManager->create('Vyne\Payments\Model\TokenRepository');
+        $this->tokenFactory = $objectManager->create('Vyne\Payments\Model\TokenFactory');
     }
 
     /**

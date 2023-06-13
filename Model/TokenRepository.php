@@ -5,18 +5,18 @@
  */
 declare(strict_types=1);
 
-namespace Vyne\Magento\Model;
+namespace Vyne\Payments\Model;
 
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Vyne\Magento\Api\Data\TokenInterface;
-use Vyne\Magento\Api\Data\TokenInterfaceFactory;
-use Vyne\Magento\Api\Data\TokenSearchResultsInterfaceFactory;
-use Vyne\Magento\Api\TokenRepositoryInterface;
-use Vyne\Magento\Model\ResourceModel\Token as ResourceToken;
-use Vyne\Magento\Model\ResourceModel\Token\CollectionFactory as TokenCollectionFactory;
+use Vyne\Payments\Api\Data\TokenInterface;
+use Vyne\Payments\Api\Data\TokenInterfaceFactory;
+use Vyne\Payments\Api\Data\TokenSearchResultsInterfaceFactory;
+use Vyne\Payments\Api\TokenRepositoryInterface;
+use Vyne\Payments\Model\ResourceModel\Token as ResourceToken;
+use Vyne\Payments\Model\ResourceModel\Token\CollectionFactory as TokenCollectionFactory;
 
 class TokenRepository implements TokenRepositoryInterface
 {

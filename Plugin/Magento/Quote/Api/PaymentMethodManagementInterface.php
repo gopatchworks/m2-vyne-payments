@@ -5,9 +5,9 @@
  */
 declare(strict_types=1);
 
-namespace Vyne\Magento\Plugin\Magento\Quote\Api;
+namespace Vyne\Payments\Plugin\Magento\Quote\Api;
 
-use Vyne\Magento\Helper\Data as VyneHelper;
+use Vyne\Payments\Helper\Data as VyneHelper;
 
 class PaymentMethodManagementInterface
 {

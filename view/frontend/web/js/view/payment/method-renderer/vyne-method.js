@@ -18,7 +18,7 @@ define(
         return Component.extend({
             redirectAfterPlaceOrder: false,
             defaults: {
-                template: 'Vyne_Magento/payment/vyne'
+                template: 'Vyne_Payments/payment/vyne'
             },
             displayMessage: function(msg) {
                 alertModal({

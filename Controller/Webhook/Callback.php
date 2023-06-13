@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Vyne\Magento\Controller\Webhook;
+namespace Vyne\Payments\Controller\Webhook;
 
 use Magento\Framework\Controller\ResultFactory;
-use Vyne\Magento\Gateway\Payment as VynePayment;
+use Vyne\Payments\Gateway\Payment as VynePayment;
 
 class Callback extends AbstractWebhookGet
 {

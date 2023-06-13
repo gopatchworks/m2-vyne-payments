@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Vyne\Magento\Model\ResourceModel;
+namespace Vyne\Payments\Model\ResourceModel;
 
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 

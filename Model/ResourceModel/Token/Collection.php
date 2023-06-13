@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Vyne\Magento\Model\ResourceModel\Token;
+namespace Vyne\Payments\Model\ResourceModel\Token;
 
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 
@@ -23,8 +23,8 @@ class Collection extends AbstractCollection
     protected function _construct()
     {
         $this->_init(
-            \Vyne\Magento\Model\Token::class,
-            \Vyne\Magento\Model\ResourceModel\Token::class
+            \Vyne\Payments\Model\Token::class,
+            \Vyne\Payments\Model\ResourceModel\Token::class
         );
     }
 }

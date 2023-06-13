@@ -1,6 +1,6 @@
 <?php
 
-namespace Vyne\Magento\Controller\Gateway;
+namespace Vyne\Payments\Controller\Gateway;
 
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\App\CsrfAwareActionInterface;

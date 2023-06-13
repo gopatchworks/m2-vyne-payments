@@ -2,7 +2,7 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="checkout.cart.methods">
-            <block class="Magento\Checkout\Block\Onepage\Link" before="checkout.cart.methods.multishipping" name="checkout.cart.vynepromo" template="Vyne_Magento::checkout/promotion.phtml" ifconfig="payment/vyne/promotion"/>
+            <block class="Magento\Checkout\Block\Onepage\Link" before="checkout.cart.methods.multishipping" name="checkout.cart.vynepromo" template="Vyne_Payments::checkout/promotion.phtml" ifconfig="payment/vyne/promotion"/>
         </referenceContainer>
     </body>
 </page>

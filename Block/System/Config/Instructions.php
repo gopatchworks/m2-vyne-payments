@@ -1,5 +1,5 @@
 <?php
-namespace Vyne\Magento\Block\System\Config;
+namespace Vyne\Payments\Block\System\Config;
 
 use Magento\Config\Block\System\Config\Form\Field;
 use Magento\Framework\Data\Form\Element\AbstractElement;
@@ -16,12 +16,12 @@ class Instructions extends Field
     /**
      * Module name
      */
-    const MODULE_NAME = 'Vyne_Magento';
+    const MODULE_NAME = 'Vyne_Payments';
 
     /**
      * @var string
      */
-    protected $_template = 'Vyne_Magento::system/config/instructions.phtml';
+    protected $_template = 'Vyne_Payments::system/config/instructions.phtml';
 
     /**
      * @var ReadFactory

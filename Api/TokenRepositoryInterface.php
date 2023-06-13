@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Vyne\Magento\Api;
+namespace Vyne\Payments\Api;
 
 use Magento\Framework\Api\SearchCriteriaInterface;
 
@@ -10,18 +10,18 @@ interface TokenRepositoryInterface
 
     /**
      * Save Token
-     * @param \Vyne\Magento\Api\Data\TokenInterface $token
-     * @return \Vyne\Magento\Api\Data\TokenInterface
+     * @param \Vyne\Payments\Api\Data\TokenInterface $token
+     * @return \Vyne\Payments\Api\Data\TokenInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function save(
-        \Vyne\Magento\Api\Data\TokenInterface $token
+        \Vyne\Payments\Api\Data\TokenInterface $token
     );
 
     /**
      * Retrieve Token
      * @param string $tokenId
-     * @return \Vyne\Magento\Api\Data\TokenInterface
+     * @return \Vyne\Payments\Api\Data\TokenInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function get($tokenId);
@@ -29,7 +29,7 @@ interface TokenRepositoryInterface
     /**
      * Retrieve Token matching the specified criteria.
      * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
-     * @return \Vyne\Magento\Api\Data\TokenSearchResultsInterface
+     * @return \Vyne\Payments\Api\Data\TokenSearchResultsInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function getList(
@@ -38,12 +38,12 @@ interface TokenRepositoryInterface
 
     /**
      * Delete Token
-     * @param \Vyne\Magento\Api\Data\TokenInterface $token
+     * @param \Vyne\Payments\Api\Data\TokenInterface $token
      * @return bool true on success
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function delete(
-        \Vyne\Magento\Api\Data\TokenInterface $token
+        \Vyne\Payments\Api\Data\TokenInterface $token
     );
 
     /**

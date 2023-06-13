@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Vyne\Magento\Helper;
+namespace Vyne\Payments\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Config\ScopeConfigInterface;
@@ -14,10 +14,10 @@ use Magento\Framework\Encryption\EncryptorInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
-use Vyne\Magento\Gateway\Configuration as VyneConfig;
-use Vyne\Magento\Gateway\Payment as PaymentApi;
-use Vyne\Magento\Gateway\Refund as RefundApi;
-use Vyne\Magento\Helper\Customer as CustomerHelper;
+use Vyne\Payments\Gateway\Configuration as VyneConfig;
+use Vyne\Payments\Gateway\Payment as PaymentApi;
+use Vyne\Payments\Gateway\Refund as RefundApi;
+use Vyne\Payments\Helper\Customer as CustomerHelper;
 
 class Data extends AbstractHelper
 {
@@ -127,7 +127,7 @@ class Data extends AbstractHelper
     /**
      * get Vyne config object
      *
-     * @return Vyne\Magento\Gateway\VyneConfig
+     * @return Vyne\Payments\Gateway\VyneConfig
      */
     public function getVyneConfig()
     {

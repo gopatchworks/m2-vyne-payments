@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Vyne\Magento\Block\Head;
+namespace Vyne\Payments\Block\Head;
 
-use Vyne\Magento\Helper\Data as VyneHelper;
+use Vyne\Payments\Helper\Data as VyneHelper;
 
 class Embed extends \Magento\Framework\View\Element\AbstractBlock
 {

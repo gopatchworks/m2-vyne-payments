@@ -1,6 +1,6 @@
 <?php
 $config = $block->getLayout()->createBlock(\Magento\Config\Block\System\Config\Form::class);
-$colour_scheme = strtolower($config->getConfigValue(\Vyne\Magento\Helper\Data::VYNE_COLOUR_SCHEME));
+$colour_scheme = strtolower($config->getConfigValue(\Vyne\Payments\Helper\Data::VYNE_COLOUR_SCHEME));
 if ($config->getConfigValue('payment/vyne/cart_promotion')):
 ?>
 <a href="<?= $block->escapeUrl($block->getCheckoutUrl()) ?>">

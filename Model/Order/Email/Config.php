@@ -1,6 +1,6 @@
 <?php
 
-namespace Vyne\Magento\Model\Order\Email;
+namespace Vyne\Payments\Model\Order\Email;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;

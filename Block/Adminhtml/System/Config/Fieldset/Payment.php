@@ -1,6 +1,6 @@
 <?php
 
-namespace Vyne\Magento\Block\Adminhtml\System\Config\Fieldset;
+namespace Vyne\Payments\Block\Adminhtml\System\Config\Fieldset;
 
 use Magento\Backend\Block\Context;
 use Magento\Backend\Model\Auth\Session;

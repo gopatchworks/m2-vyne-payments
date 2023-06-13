@@ -1,11 +1,11 @@
 <?php
-namespace Vyne\Magento\Model\Payment;
+namespace Vyne\Payments\Model\Payment;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
 use Magento\Customer\Helper\Session\CurrentCustomer;
 use Magento\Framework\UrlInterface;
 use Magento\Checkout\Model\Cart;
-use Vyne\Magento\Helper\Data as VyneHelper;
+use Vyne\Payments\Helper\Data as VyneHelper;
 
 /**
  * Class BillingAgreementConfigProvider

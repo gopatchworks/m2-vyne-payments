@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Vyne\Magento\Api\Data;
+namespace Vyne\Payments\Api\Data;
 
 interface TokenInterface
 {
@@ -30,7 +30,7 @@ interface TokenInterface
     /**
      * Set id
      * @param int $id
-     * @return \Vyne\Magento\Token\Api\Data\TokenInterface
+     * @return \Vyne\Payments\Token\Api\Data\TokenInterface
      */
     public function setId($id);
 
@@ -43,7 +43,7 @@ interface TokenInterface
     /**
      * Set access_token
      * @param string $access_token
-     * @return \Vyne\Magento\Token\Api\Data\TokenInterface
+     * @return \Vyne\Payments\Token\Api\Data\TokenInterface
      */
     public function setAccessToken($access_token);
 
@@ -56,7 +56,7 @@ interface TokenInterface
     /**
      * Set merchant_id
      * @param string $merchant_id
-     * @return \Vyne\Magento\Token\Api\Data\TokenInterface
+     * @return \Vyne\Payments\Token\Api\Data\TokenInterface
      */
     public function setMerchantId($merchant_id);
 
@@ -69,7 +69,7 @@ interface TokenInterface
     /**
      * Set scope
      * @param string $scope
-     * @return \Vyne\Magento\Token\Api\Data\TokenInterface
+     * @return \Vyne\Payments\Token\Api\Data\TokenInterface
      */
     public function setScope($scope);
 
@@ -82,7 +82,7 @@ interface TokenInterface
     /**
      * Set iss
      * @param string $iss
-     * @return \Vyne\Magento\Token\Api\Data\TokenInterface
+     * @return \Vyne\Payments\Token\Api\Data\TokenInterface
      */
     public function setIss($iss);
 
@@ -95,7 +95,7 @@ interface TokenInterface
     /**
      * Set merchant
      * @param string $merchant
-     * @return \Vyne\Magento\Token\Api\Data\TokenInterface
+     * @return \Vyne\Payments\Token\Api\Data\TokenInterface
      */
     public function setMerchant($merchant);
 
@@ -108,7 +108,7 @@ interface TokenInterface
     /**
      * Set mfa_required
      * @param boolean $mfa_required
-     * @return \Vyne\Magento\Token\Api\Data\TokenInterface
+     * @return \Vyne\Payments\Token\Api\Data\TokenInterface
      */
     public function setMfaRequired($mfa_required);
 
@@ -121,7 +121,7 @@ interface TokenInterface
     /**
      * Set token_type
      * @param string $token_type
-     * @return \Vyne\Magento\Token\Api\Data\TokenInterface
+     * @return \Vyne\Payments\Token\Api\Data\TokenInterface
      */
     public function setTokenType($token_type);
 
@@ -134,7 +134,7 @@ interface TokenInterface
     /**
      * Set expire_in
      * @param int $expire_in
-     * @return \Vyne\Magento\Token\Api\Data\TokenInterface
+     * @return \Vyne\Payments\Token\Api\Data\TokenInterface
      */
     public function setExpireIn($expire_in);
 
@@ -147,7 +147,7 @@ interface TokenInterface
     /**
      * Set created_at
      * @param datetime $created_at
-     * @return \Vyne\Magento\Token\Api\Data\TokenInterface
+     * @return \Vyne\Payments\Token\Api\Data\TokenInterface
      */
     public function setCreatedAt($created_at);
 }

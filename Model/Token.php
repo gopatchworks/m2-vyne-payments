@@ -5,10 +5,10 @@
  */
 declare(strict_types=1);
 
-namespace Vyne\Magento\Model;
+namespace Vyne\Payments\Model;
 
 use Magento\Framework\Model\AbstractModel;
-use Vyne\Magento\Api\Data\TokenInterface;
+use Vyne\Payments\Api\Data\TokenInterface;
 
 class Token extends AbstractModel implements TokenInterface
 {
@@ -18,7 +18,7 @@ class Token extends AbstractModel implements TokenInterface
      */
     public function _construct()
     {
-        $this->_init(\Vyne\Magento\Model\ResourceModel\Token::class);
+        $this->_init(\Vyne\Payments\Model\ResourceModel\Token::class);
     }
 
     /**

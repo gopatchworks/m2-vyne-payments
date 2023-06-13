@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Vyne\Magento\Model\Source;
+namespace Vyne\Payments\Model\Source;
 
 class ColourScheme implements \Magento\Framework\Option\ArrayInterface
 {

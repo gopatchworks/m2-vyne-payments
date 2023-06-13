@@ -7,7 +7,7 @@ Vyne Magento provides integration between Magento 2 / Adobe Commerce and Vyne.
 The Vyne Magento module can be installed via [Composer](https://getcomposer.org/).
 
 ```sh
-composer require vyne/magento
+composer require vyne/payments
 ```
 
 ## Getting Started
@@ -22,4 +22,4 @@ are released by creating a new Git tag.
 
 This library is released under the [MIT License](LICENSE).
 
-[packagist]: https://packagist.org/packages/vyne/magento
+[packagist]: https://packagist.org/packages/vyne/payments

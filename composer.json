@@ -1,5 +1,5 @@
 {
-    "name": "vyne/magento",
+    "name": "vyne/payments",
     "description": "Magento 2 Payment Integration with Vyne",
     "type": "magento2-module",
     "version": "1.0.3",

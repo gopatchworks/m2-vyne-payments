@@ -1,6 +1,6 @@
 <?php
 
-namespace Vyne\Magento\Gateway;
+namespace Vyne\Payments\Gateway;
 
 class Configuration
 {

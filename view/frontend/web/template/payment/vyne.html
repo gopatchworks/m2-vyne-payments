@@ -12,7 +12,7 @@
                data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()"/>
         <label data-bind="attr: {'for': getCode()}" class="label">
             <span class="logo logo-vyne">
-                <img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/logos/logo-violet.svg') }" alt="vyne_logo" width="62"/>
+                <img data-bind="attr: { src: require.toUrl('Vyne_Payments/images/logos/logo-violet.svg') }" alt="vyne_logo" width="62"/>
             </span>
             &nbsp;
             <span style="font-family: 'SofiaPro'; vertical-align: super;"> Pay with bank </span>
@@ -22,21 +22,21 @@
         <div class="vyne-btn">
             <ul>
                 <li class="information">
-                    <img class="light" data-bind="attr: { src: require.toUrl('Vyne_Magento/images/logos/lock-dark.svg') }" alt="padlock"/>
-                    <img class="dark" data-bind="attr: { src: require.toUrl('Vyne_Magento/images/logos/lock-light.svg') }" alt="padlock"/>
+                    <img class="light" data-bind="attr: { src: require.toUrl('Vyne_Payments/images/logos/lock-dark.svg') }" alt="padlock"/>
+                    <img class="dark" data-bind="attr: { src: require.toUrl('Vyne_Payments/images/logos/lock-light.svg') }" alt="padlock"/>
                     <span>Pay with bank</span>
-                    <a class="light" data-bind="click: showPopup()"><img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/logos/info-circle-dark.svg') }" alt="info_circle"/></a>
-                    <a class="dark" data-bind="click: showPopup()"><img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/logos/info-circle-light.svg') }" alt="info_circle"/></a>
+                    <a class="light" data-bind="click: showPopup()"><img data-bind="attr: { src: require.toUrl('Vyne_Payments/images/logos/info-circle-dark.svg') }" alt="info_circle"/></a>
+                    <a class="dark" data-bind="click: showPopup()"><img data-bind="attr: { src: require.toUrl('Vyne_Payments/images/logos/info-circle-light.svg') }" alt="info_circle"/></a>
                 </li>
                 <li class="banks" alt="banks">
-                    <img width="20" height="20" data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Barclays.svg') }" alt="barclays"/>
-                    <img width="20" height="20" class="light" data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Lloyds-Bank.svg') }" alt="lloyds"/>
-                    <img width="20" height="20" class="dark" data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Lloyds-Bank-light.svg') }" alt="lloyds"/>
-                    <img width="20" height="20" data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Halifax.svg') }" alt="halifax"/>
-                    <img width="20" height="20" data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Natwest.svg') }" alt="natwest"/>
-                    <img width="20" height="20" data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Santander.svg') }" alt="santander"/>
-                    <img width="20" height="20" class="light" data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Revolut.svg') }" alt="revolut"/>
-                    <img width="20" height="20" class="dark" data-bind="attr: { src: require.toUrl('Vyne_Magento/images/banks/Revolut-light.svg') }" alt="revolut"/>
+                    <img width="20" height="20" data-bind="attr: { src: require.toUrl('Vyne_Payments/images/banks/Barclays.svg') }" alt="barclays"/>
+                    <img width="20" height="20" class="light" data-bind="attr: { src: require.toUrl('Vyne_Payments/images/banks/Lloyds-Bank.svg') }" alt="lloyds"/>
+                    <img width="20" height="20" class="dark" data-bind="attr: { src: require.toUrl('Vyne_Payments/images/banks/Lloyds-Bank-light.svg') }" alt="lloyds"/>
+                    <img width="20" height="20" data-bind="attr: { src: require.toUrl('Vyne_Payments/images/banks/Halifax.svg') }" alt="halifax"/>
+                    <img width="20" height="20" data-bind="attr: { src: require.toUrl('Vyne_Payments/images/banks/Natwest.svg') }" alt="natwest"/>
+                    <img width="20" height="20" data-bind="attr: { src: require.toUrl('Vyne_Payments/images/banks/Santander.svg') }" alt="santander"/>
+                    <img width="20" height="20" class="light" data-bind="attr: { src: require.toUrl('Vyne_Payments/images/banks/Revolut.svg') }" alt="revolut"/>
+                    <img width="20" height="20" class="dark" data-bind="attr: { src: require.toUrl('Vyne_Payments/images/banks/Revolut-light.svg') }" alt="revolut"/>
                     <a class="light" style="color: #555; text-decoration: none;">+ all major banks</a>
                     <a class="dark" style="color: #eee; text-decoration: none;">+ all major banks</a>
                 </li>
@@ -70,7 +70,7 @@
                 <div class="vyne-popup" style="visibility: hidden">
                     <a class="close" style="cursor: pointer" data-bind="click: hidePopup()">x</a>
                     <div class="description">
-                        <p><img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/popup/vyne2bank.svg') }" alt="vyne2bank"></p>
+                        <p><img data-bind="attr: { src: require.toUrl('Vyne_Payments/images/popup/vyne2bank.svg') }" alt="vyne2bank"></p>
                         <h3>How does it work?</h3>
                         <p>Let us know the bank you'd like to pay with, and we'll redirect you to sign in securely - no card details required.</p>
                     </div>
@@ -90,7 +90,7 @@
                     </div>
                     <div class="control">
                         <a class="button secondary" data-bind="click: hidePopup()">Close</a>
-                        <a class="button primary" href="https://www.payvyne.com/pay-with-vyne#faqs" target="_blank"><span>More about</span> <img  data-bind="attr: { src: require.toUrl('Vyne_Magento/images/popup/btn_logo.svg') }" alt="Vyne"></a>
+                        <a class="button primary" href="https://www.payvyne.com/pay-with-vyne#faqs" target="_blank"><span>More about</span> <img  data-bind="attr: { src: require.toUrl('Vyne_Payments/images/popup/btn_logo.svg') }" alt="Vyne"></a>
                         <div style="clear: both"></div>
                     </div>
                 </div>

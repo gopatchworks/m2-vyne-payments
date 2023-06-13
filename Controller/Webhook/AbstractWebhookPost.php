@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Vyne\Magento\Controller\Webhook;
+namespace Vyne\Payments\Controller\Webhook;
 
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
@@ -11,14 +11,14 @@ use Magento\Framework\App\CsrfAwareActionInterface;
 use Magento\Framework\App\Request\InvalidRequestException;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\ResultFactory;
-use Vyne\Magento\Helper\Logger as VyneLogger;
-use Vyne\Magento\Helper\Order as VyneOrder;
+use Vyne\Payments\Helper\Logger as VyneLogger;
+use Vyne\Payments\Helper\Order as VyneOrder;
 use Magento\Sales\Api\OrderRepositoryInterface;
 
 /**
  * Vyne Payment Webhook Order Controller
  *
- * @package Vyne\Magento\Controller\Decision
+ * @package Vyne\Payments\Controller\Decision
  */
 abstract class AbstractWebhookPost extends Action implements HttpPostActionInterface, CsrfAwareActionInterface
 {

@@ -5,10 +5,10 @@
  */
 declare(strict_types=1);
 
-namespace Vyne\Magento\Plugin\Magento\Sales\Model\Order\Email\Sender;
+namespace Vyne\Payments\Plugin\Magento\Sales\Model\Order\Email\Sender;
 
-use Vyne\Magento\Helper\Data as VyneHelper;
-use Vyne\Magento\Helper\Logger as VyneLogger;
+use Vyne\Payments\Helper\Data as VyneHelper;
+use Vyne\Payments\Helper\Logger as VyneLogger;
 
 class OrderSender
 {
@@ -58,7 +58,7 @@ class OrderSender
         $this->logger->logMixed(['method' => $order->getPayment()->getMethod()]);
         $result = false;
 
-        if ($order->getPayment()->getMethod() == \Vyne\Magento\Model\Payment\Vyne::PAYMENT_METHOD_CODE) {
+        if ($order->getPayment()->getMethod() == \Vyne\Payments\Model\Payment\Vyne::PAYMENT_METHOD_CODE) {
             if (!$order->getEmailSent()
                 && $order->getPayment()
                 && $order->getPayment()->getLastTransId()) {

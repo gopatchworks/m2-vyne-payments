@@ -1,9 +1,9 @@
 <?php
 
-namespace Vyne\Magento\Controller\Gateway;
+namespace Vyne\Payments\Controller\Gateway;
 
 use Magento\Framework\Controller\ResultFactory;
-use Vyne\Magento\Gateway\Payment as PaymentApi;
+use Vyne\Payments\Gateway\Payment as PaymentApi;
 
 abstract class GatewayAbstract extends \Magento\Framework\App\Action\Action
 {
@@ -23,17 +23,17 @@ abstract class GatewayAbstract extends \Magento\Framework\App\Action\Action
     protected $checkoutSession;
 
     /**
-     * @var \Vyne\Magento\Helper\Data
+     * @var \Vyne\Payments\Helper\Data
      */
     protected $vyneHelper;
 
     /**
-     * @var \Vyne\Magento\Helper\Cart
+     * @var \Vyne\Payments\Helper\Cart
      */
     protected $vyneorderHelper;
 
     /**
-     * @var \Vyne\Magento\Helper\Logger
+     * @var \Vyne\Payments\Helper\Logger
      */
     protected $vyneLogger;
 
@@ -51,9 +51,9 @@ abstract class GatewayAbstract extends \Magento\Framework\App\Action\Action
         \Magento\Framework\App\Action\Context $context,
         \Magento\Customer\Model\Session $customerSession,
         \Magento\Checkout\Model\Session $checkoutSession,
-        \Vyne\Magento\Helper\Data $vyneHelper,
-        \Vyne\Magento\Helper\Cart $vynecartHelper,
-        \Vyne\Magento\Helper\Logger $vyneLogger
+        \Vyne\Payments\Helper\Data $vyneHelper,
+        \Vyne\Payments\Helper\Cart $vynecartHelper,
+        \Vyne\Payments\Helper\Logger $vyneLogger
     ) {
         parent::__construct($context);
         $this->resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);

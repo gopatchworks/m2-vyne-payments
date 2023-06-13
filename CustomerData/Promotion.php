@@ -1,5 +1,5 @@
 <?php
-namespace Vyne\Magento\CustomerData;
+namespace Vyne\Payments\CustomerData;
 
 use Magento\Customer\CustomerData\SectionSourceInterface;
 use Magento\Cms\Api\BlockRepositoryInterface;

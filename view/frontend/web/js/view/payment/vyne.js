@@ -11,7 +11,7 @@ define(
         rendererList.push(
             {
                 type: 'vyne',
-                component: 'Vyne_Magento/js/view/payment/method-renderer/vyne-method'
+                component: 'Vyne_Payments/js/view/payment/method-renderer/vyne-method'
             }
         );
         return Component.extend({});

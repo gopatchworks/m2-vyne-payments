@@ -5,9 +5,9 @@
  */
 declare(strict_types=1);
 
-namespace Vyne\Magento\Model\Source;
+namespace Vyne\Payments\Model\Source;
 
-use Vyne\Magento\Model\Payment\Vyne;
+use Vyne\Payments\Model\Payment\Vyne;
 
 class PaymentAction implements \Magento\Framework\Option\ArrayInterface
 {

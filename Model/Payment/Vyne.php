@@ -5,13 +5,13 @@
  */
 declare(strict_types=1);
 
-namespace Vyne\Magento\Model\Payment;
+namespace Vyne\Payments\Model\Payment;
 
-use Vyne\Magento\Helper\Data as VyneHelper;
-use Vyne\Magento\Helper\Logger as VyneLogger;
+use Vyne\Payments\Helper\Data as VyneHelper;
+use Vyne\Payments\Helper\Logger as VyneLogger;
 use Magento\Directory\Helper\Data as DirectoryHelper;
-use Vyne\Magento\Gateway\Payment as PaymentApi;
-use Vyne\Magento\Gateway\Refund as RefundApi;
+use Vyne\Payments\Gateway\Payment as PaymentApi;
+use Vyne\Payments\Gateway\Refund as RefundApi;
 
 class Vyne extends \Magento\Payment\Model\Method\AbstractMethod
 {
@@ -25,7 +25,7 @@ class Vyne extends \Magento\Payment\Model\Method\AbstractMethod
     /**
      * @var string
      */
-    protected $_infoBlockType = \Vyne\Magento\Block\Info::class;
+    protected $_infoBlockType = \Vyne\Payments\Block\Info::class;
 
     /**
      * @var string
@@ -197,7 +197,7 @@ class Vyne extends \Magento\Payment\Model\Method\AbstractMethod
     public function refund(\Magento\Payment\Model\InfoInterface $payment, $amount)
     {
         /*utilizing plugin to refund*/
-        /*see Vyne\Magento\Plugin\Magento\Sales\Controller\Adminhtml\Order\Creditmemo\Save */
+        /*see Vyne\Payments\Plugin\Magento\Sales\Controller\Adminhtml\Order\Creditmemo\Save */
 
         return $this;
     }

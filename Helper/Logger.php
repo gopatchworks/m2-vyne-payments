@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Vyne\Magento\Helper;
+namespace Vyne\Payments\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
 use Psr\Log\LoggerInterface;

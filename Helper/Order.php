@@ -5,13 +5,13 @@
  */
 declare(strict_types=1);
 
-namespace Vyne\Magento\Helper;
+namespace Vyne\Payments\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Sales\Model\ResourceModel\Order\Payment\CollectionFactory;
 use Magento\Framework\App\ObjectManager;
 use Magento\Sales\Model\Order\Email\Sender\CreditmemoSender;
-use Vyne\Magento\Model\Order\Email\Config as EmailConfig;
+use Vyne\Payments\Model\Order\Email\Config as EmailConfig;
 use Magento\Payment\Helper\Data as PaymentHelper;
 use Magento\Sales\Model\Order\Address\Renderer;
 use Magento\Framework\Mail\Template\TransportBuilder;
@@ -421,12 +421,12 @@ class Order extends AbstractHelper
 
         // set order status for vyne refund
         if ($amount + $order->getTotalRefunded() == $order->getTotalPaid()) {
-            $order->setState(\Vyne\Magento\Model\Payment\Vyne::STATUS_REFUND)
-                  ->setStatus(\Vyne\Magento\Model\Payment\Vyne::STATUS_REFUND);
+            $order->setState(\Vyne\Payments\Model\Payment\Vyne::STATUS_REFUND)
+                  ->setStatus(\Vyne\Payments\Model\Payment\Vyne::STATUS_REFUND);
         }
         elseif ($amount +$order->getTotalRefunded() < $order->getTotalPaid()) {
-            $order->setState(\Vyne\Magento\Model\Payment\Vyne::STATUS_PARTIAL_REFUND)
-                  ->setStatus(\Vyne\Magento\Model\Payment\Vyne::STATUS_PARTIAL_REFUND);
+            $order->setState(\Vyne\Payments\Model\Payment\Vyne::STATUS_PARTIAL_REFUND)
+                  ->setStatus(\Vyne\Payments\Model\Payment\Vyne::STATUS_PARTIAL_REFUND);
         }
 
         $order->setTotalRefunded(floatval($amount) + floatval($order->getTotalRefunded()));

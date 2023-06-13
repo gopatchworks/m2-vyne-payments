@@ -5,20 +5,20 @@
  */
 declare(strict_types=1);
 
-namespace Vyne\Magento\Api\Data;
+namespace Vyne\Payments\Api\Data;
 
 interface TokenSearchResultsInterface extends \Magento\Framework\Api\SearchResultsInterface
 {
 
     /**
      * Get Token list.
-     * @return \Vyne\Magento\Api\Data\TokenInterface[]
+     * @return \Vyne\Payments\Api\Data\TokenInterface[]
      */
     public function getItems();
 
     /**
      * Set id list.
-     * @param \Vyne\Magento\Api\Data\TokenInterface[] $items
+     * @param \Vyne\Payments\Api\Data\TokenInterface[] $items
      * @return $this
      */
     public function setItems(array $items);

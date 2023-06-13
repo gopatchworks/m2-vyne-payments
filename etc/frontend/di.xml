@@ -4,19 +4,19 @@
     <type name="Magento\Checkout\Model\CompositeConfigProvider">
         <arguments>
             <argument name="configProviders" xsi:type="array">
-                <item name="vyne" xsi:type="object">Vyne\Magento\Model\Payment\PaymentFormProvider</item>
+                <item name="vyne" xsi:type="object">Vyne\Payments\Model\Payment\PaymentFormProvider</item>
             </argument>
         </arguments>
     </type>
     <type name="Magento\Customer\CustomerData\SectionPoolInterface">
         <arguments>
             <argument name="sectionSourceMap" xsi:type="array">
-                <item name="vyne-promotions" xsi:type="string">Vyne\Magento\CustomerData\Promotion</item>
+                <item name="vyne-promotions" xsi:type="string">Vyne\Payments\CustomerData\Promotion</item>
             </argument>
         </arguments>
     </type>
 
 	<type name="Magento\Checkout\Block\Onepage\Success">
-		<plugin name="Vyne_Magento_Plugin_Magento_Checkout_Success" type="Vyne\Magento\Plugin\Magento\Checkout\Block\Onepage\Success" sortOrder="10" disabled="false"/>
+		<plugin name="Vyne_Payments_Plugin_Magento_Checkout_Success" type="Vyne\Payments\Plugin\Magento\Checkout\Block\Onepage\Success" sortOrder="10" disabled="false"/>
 	</type>
 </config>

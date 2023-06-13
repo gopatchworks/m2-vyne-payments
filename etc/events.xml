@@ -1,9 +1,9 @@
 <?xml version="1.0" ?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
     <event name="sales_order_payment_save_before">
-        <observer name="vyne_order_payment_save_before" instance="Vyne\Magento\Observer\OrderPaymentSaveBefore" />
+        <observer name="vyne_order_payment_save_before" instance="Vyne\Payments\Observer\OrderPaymentSaveBefore" />
     </event>
     <event name="checkout_submit_all_after">
-        <observer name="vyne_place_order_after" instance="Vyne\Magento\Observer\OrderPlaceAfter"/>
+        <observer name="vyne_place_order_after" instance="Vyne\Payments\Observer\OrderPlaceAfter"/>
     </event>
 </config>

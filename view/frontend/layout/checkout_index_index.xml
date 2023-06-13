@@ -3,9 +3,9 @@
 	<body>
         <referenceBlock name="require.js">
             <action method="setTemplate">
-                <argument name="template" xsi:type="string">Vyne_Magento::page/js/require_js.phtml</argument>
+                <argument name="template" xsi:type="string">Vyne_Payments::page/js/require_js.phtml</argument>
             </action>
-            <block class="Vyne\Magento\Block\Head\Embed" name="vyne.embedded.checkout" ifconfig="payment/vyne/active" before="-" />
+            <block class="Vyne\Payments\Block\Head\Embed" name="vyne.embedded.checkout" ifconfig="payment/vyne/active" before="-" />
         </referenceBlock>
 		<referenceBlock name="checkout.root">
 			<arguments>
@@ -22,7 +22,7 @@
 														<item name="renders" xsi:type="array">
 															<item name="children" xsi:type="array">
 																<item name="vyne" xsi:type="array">
-																	<item name="component" xsi:type="string">Vyne_Magento/js/view/payment/vyne</item>
+																	<item name="component" xsi:type="string">Vyne_Payments/js/view/payment/vyne</item>
 																	<item name="methods" xsi:type="array">
 																		<item name="vyne" xsi:type="array">
 																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>

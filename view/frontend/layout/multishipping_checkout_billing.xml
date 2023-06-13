@@ -5,7 +5,7 @@
         <referenceBlock name="checkout_billing">
             <arguments>
                 <argument name="form_templates" xsi:type="array">
-                    <item name="vyne" xsi:type="string">Vyne_Magento::multishipping/vyne_form.phtml</item>
+                    <item name="vyne" xsi:type="string">Vyne_Payments::multishipping/vyne_form.phtml</item>
                 </argument>
             </arguments>
         </referenceBlock>

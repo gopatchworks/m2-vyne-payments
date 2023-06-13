@@ -5,9 +5,9 @@
  */
 declare(strict_types=1);
 
-namespace Vyne\Magento\Plugin\Magento\Sales\Controller\Adminhtml\Order\Creditmemo;
+namespace Vyne\Payments\Plugin\Magento\Sales\Controller\Adminhtml\Order\Creditmemo;
 
-use Vyne\Magento\Helper\Data as VyneHelper;
+use Vyne\Payments\Helper\Data as VyneHelper;
 use Magento\Framework\Pricing\PriceCurrencyInterface;
 
 class Save
@@ -91,7 +91,7 @@ class Save
         $data = $this->_request->getPost('creditmemo');
 
         // if payment method is Vyne, let Vyne server handle credit memo creation via /vyne/webhook/refund
-        if ($order->getPayment()->getMethod() == \Vyne\Magento\Model\Payment\Vyne::PAYMENT_METHOD_CODE) {
+        if ($order->getPayment()->getMethod() == \Vyne\Payments\Model\Payment\Vyne::PAYMENT_METHOD_CODE) {
             $this->creditmemoLoader->setOrderId($this->_request->getParam('order_id'));
             $this->creditmemoLoader->setCreditmemoId($this->_request->getParam('creditmemo_id'));
             $this->creditmemoLoader->setCreditmemo($this->_request->getParam('creditmemo'));
@@ -151,7 +151,7 @@ class Save
     }
 
     /**
-     * private refund function for custom logic . reference in \Vyne\Magento\Model\Payment\Vyne
+     * private refund function for custom logic . reference in \Vyne\Payments\Model\Payment\Vyne
      * send refund request to Vyne only
      *
      * @return void

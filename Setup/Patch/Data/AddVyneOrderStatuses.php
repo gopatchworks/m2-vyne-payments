@@ -1,6 +1,6 @@
 <?php
 
-namespace Vyne\Magento\Setup\Patch\Data;
+namespace Vyne\Payments\Setup\Patch\Data;
 
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
@@ -8,7 +8,7 @@ use Magento\Framework\Setup\Patch\PatchVersionInterface;
 
 /**
  * Class AddVyneOrderStates
- * @package Vyne\Magento\Setup\Patch
+ * @package Vyne\Payments\Setup\Patch
  */
 class AddVyneOrderStatuses implements DataPatchInterface, PatchVersionInterface
 {

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Vyne\Magento\Controller\Webhook;
+namespace Vyne\Payments\Controller\Webhook;
 
 use Magento\Framework\Controller\ResultFactory;
-use Vyne\Magento\Gateway\Refund as VyneRefund;
+use Vyne\Payments\Gateway\Refund as VyneRefund;
 
 class Refund extends AbstractWebhookPost
 {

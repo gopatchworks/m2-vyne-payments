@@ -1,39 +1,39 @@
 <?xml version="1.0" ?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="Vyne\Magento\Api\TokenRepositoryInterface" type="Vyne\Magento\Model\TokenRepository"/>
-    <preference for="Vyne\Magento\Api\Data\TokenInterface" type="Vyne\Magento\Model\Token"/>
-    <preference for="Vyne\Magento\Api\Data\TokenSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+    <preference for="Vyne\Payments\Api\TokenRepositoryInterface" type="Vyne\Payments\Model\TokenRepository"/>
+    <preference for="Vyne\Payments\Api\Data\TokenInterface" type="Vyne\Payments\Model\Token"/>
+    <preference for="Vyne\Payments\Api\Data\TokenSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
 
     <!--plugins-->
 	<type name="Magento\Quote\Api\CartRepositoryInterface">
-		<plugin name="Vyne_Magento_Plugin_Magento_Quote_Api_CartRepositoryInterface" type="Vyne\Magento\Plugin\Magento\Quote\Api\CartRepositoryInterface" sortOrder="10" disabled="false"/>
+		<plugin name="Vyne_Payments_Plugin_Magento_Quote_Api_CartRepositoryInterface" type="Vyne\Payments\Plugin\Magento\Quote\Api\CartRepositoryInterface" sortOrder="10" disabled="false"/>
 	</type>
 	<type name="Magento\Quote\Api\PaymentMethodManagementInterface">
-		<plugin name="Vyne_Magento_Plugin_Magento_Quote_Api_PaymentMethodManagementInterface" type="Vyne\Magento\Plugin\Magento\Quote\Api\PaymentMethodManagementInterface" sortOrder="10" disabled="false"/>
+		<plugin name="Vyne_Payments_Plugin_Magento_Quote_Api_PaymentMethodManagementInterface" type="Vyne\Payments\Plugin\Magento\Quote\Api\PaymentMethodManagementInterface" sortOrder="10" disabled="false"/>
 	</type>
     <type name="Magento\Sales\Model\Order\Email\Sender\OrderSender">
-        <plugin name="Vyne_webhook_notification_email" type="Vyne\Magento\Plugin\Magento\Sales\Model\Order\Email\Sender\OrderSender" sortOrder="10" disabled="false"/>
+        <plugin name="Vyne_webhook_notification_email" type="Vyne\Payments\Plugin\Magento\Sales\Model\Order\Email\Sender\OrderSender" sortOrder="10" disabled="false"/>
     </type>
 
     <!--logger-->
-    <virtualType name="Vyne\Magento\Logger\Handler" type="Magento\Framework\Logger\Handler\Base">
+    <virtualType name="Vyne\Payments\Logger\Handler" type="Magento\Framework\Logger\Handler\Base">
         <arguments>
             <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
             <argument name="fileName" xsi:type="string">/var/log/vyne_debug.log</argument>
         </arguments>
     </virtualType>
-    <virtualType name="Vyne\Magento\Logger\Logger" type="Magento\Framework\Logger\Monolog">
+    <virtualType name="Vyne\Payments\Logger\Logger" type="Magento\Framework\Logger\Monolog">
         <arguments>
             <argument name="name" xsi:type="string">Vyne Payment Logger</argument>
             <argument name="handlers" xsi:type="array">
-                <item name="system" xsi:type="object">Vyne\Magento\Logger\Handler</item>
+                <item name="system" xsi:type="object">Vyne\Payments\Logger\Handler</item>
             </argument>
         </arguments>
     </virtualType>
 
-    <type name="Vyne\Magento\Helper\Logger">
+    <type name="Vyne\Payments\Helper\Logger">
         <arguments>
-            <argument name="logger" xsi:type="object">Vyne\Magento\Logger\Logger</argument>
+            <argument name="logger" xsi:type="object">Vyne\Payments\Logger\Logger</argument>
         </arguments>
     </type>
 </config>

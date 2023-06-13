@@ -5,10 +5,10 @@
  */
 declare(strict_types=1);
 
-namespace Vyne\Magento\Plugin\Magento\Checkout\Block\Onepage;
+namespace Vyne\Payments\Plugin\Magento\Checkout\Block\Onepage;
 
-use Vyne\Magento\Helper\Data as VyneHelper;
-use Vyne\Magento\Helper\Logger as VyneLogger;
+use Vyne\Payments\Helper\Data as VyneHelper;
+use Vyne\Payments\Helper\Logger as VyneLogger;
 
 class Success
 {
@@ -66,9 +66,9 @@ class Success
         $order_id = $this->checkoutSession->getLastOrderId();
         $order = $this->orderRepository->get($order_id);
         $payment = $order->getPayment();
-        if ($payment && $payment->getMethod() == \Vyne\Magento\Model\Payment\Vyne::PAYMENT_METHOD_CODE && in_array($template, $templates_to_override)) {
+        if ($payment && $payment->getMethod() == \Vyne\Payments\Model\Payment\Vyne::PAYMENT_METHOD_CODE && in_array($template, $templates_to_override)) {
             $this->logger->logMixed(['Vyne aroundSetTemplate - Vyne payment method detected', $template]);
-            $template = 'Vyne_Magento::checkout/success.phtml';
+            $template = 'Vyne_Payments::checkout/success.phtml';
         }
 
         // default behavior

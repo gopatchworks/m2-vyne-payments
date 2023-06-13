@@ -1,6 +1,6 @@
 <?php
 $config = $block->getLayout()->createBlock(\Magento\Config\Block\System\Config\Form::class);
-$colour_scheme = strtolower($config->getConfigValue(\Vyne\Magento\Helper\Data::VYNE_COLOUR_SCHEME)) == 'dark' ? 'dark' : 'light';
+$colour_scheme = strtolower($config->getConfigValue(\Vyne\Payments\Helper\Data::VYNE_COLOUR_SCHEME)) == 'dark' ? 'dark' : 'light';
 $reverse_colour_scheme = $colour_scheme == 'dark' ? 'light' : 'dark';
 if ($config->getConfigValue('payment/vyne/pdp_promotion')):
 ?>
@@ -14,8 +14,8 @@ function hidePopup() {
 </script>
 <span class="vyne-banner promo-pdp-<?=$colour_scheme?>">
     <span class="promo_logo">
-        <img src="<?php echo $this->getViewFileUrl('Vyne_Magento::images/logos/logo-'.$colour_scheme.'-alt1.svg'); ?>" />
-        <a data-bind="click: showPopup()"><img style="width: 20px; height:20px; padding-bottom: 5px; margin-right: -10px;" data-bind="attr: { src: require.toUrl('Vyne_Magento/images/logos/info-circle-<?=$reverse_colour_scheme?>.svg') }" alt="info_circle"/></a>
+        <img src="<?php echo $this->getViewFileUrl('Vyne_Payments::images/logos/logo-'.$colour_scheme.'-alt1.svg'); ?>" />
+        <a data-bind="click: showPopup()"><img style="width: 20px; height:20px; padding-bottom: 5px; margin-right: -10px;" data-bind="attr: { src: require.toUrl('Vyne_Payments/images/logos/info-circle-<?=$reverse_colour_scheme?>.svg') }" alt="info_circle"/></a>
     </span>
     <span class="promo_text_1">
         <?= $block->escapeHtml($config->getConfigValue('payment/vyne/promo_text_1'))?>
@@ -29,7 +29,7 @@ function hidePopup() {
 <div class="vyne-popup" style="visibility: hidden">
     <a class="close" style="cursor: pointer" data-bind="click: hidePopup()">x</a>
     <div class="description">
-        <p><img data-bind="attr: { src: require.toUrl('Vyne_Magento/images/popup/vyne2bank.svg') }" alt="vyne2bank"></p>
+        <p><img data-bind="attr: { src: require.toUrl('Vyne_Payments/images/popup/vyne2bank.svg') }" alt="vyne2bank"></p>
         <h3>How does it work?</h3>
         <p>Let us know the bank you'd like to pay with, and we'll redirect you to sign in securely - no card details required.</p>
     </div>
@@ -49,7 +49,7 @@ function hidePopup() {
     </div>
     <div class="control">
         <a class="button secondary" data-bind="click: hidePopup()">Close</a>
-        <a class="button primary" href="https://www.payvyne.com/pay-with-vyne#faqs" target="_blank"><span>More about</span> <img  data-bind="attr: { src: require.toUrl('Vyne_Magento/images/popup/btn_logo.svg') }" alt="Vyne"></a>
+        <a class="button primary" href="https://www.payvyne.com/pay-with-vyne#faqs" target="_blank"><span>More about</span> <img  data-bind="attr: { src: require.toUrl('Vyne_Payments/images/popup/btn_logo.svg') }" alt="Vyne"></a>
         <div style="clear: both"></div>
     </div>
 </div>

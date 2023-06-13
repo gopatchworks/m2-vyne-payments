@@ -5,10 +5,10 @@
  */
 declare(strict_types=1);
 
-namespace Vyne\Magento\Helper;
+namespace Vyne\Payments\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
-use Vyne\Magento\Helper\Logger as VyneLogger;
+use Vyne\Payments\Helper\Logger as VyneLogger;
 use Magento\Customer\Model\Session as CustomerSession;
 use Magento\Customer\Api\CustomerRepositoryInterface;
 use Magento\Checkout\Model\Cart as CustomerCart;

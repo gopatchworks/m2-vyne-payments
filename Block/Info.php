@@ -5,12 +5,12 @@
  */
 declare(strict_types=1);
 
-namespace Vyne\Magento\Block;
+namespace Vyne\Payments\Block;
 
 class Info extends \Magento\Payment\Block\Info\Cc
 {
     /**
-     * @var \Vyne\Magento\Helper\Data
+     * @var \Vyne\Payments\Helper\Data
      */
     protected $_vyneHelper;
 
@@ -24,13 +24,13 @@ class Info extends \Magento\Payment\Block\Info\Cc
      *
      * @param \Magento\Framework\View\Element\Template\Context  $context
      * @param \Magento\Payment\Model\Config $paymentConfig
-     * @param \Vyne\Magento\Helper\Data $vyneHelper
+     * @param \Vyne\Payments\Helper\Data $vyneHelper
      * @param array $data
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Payment\Model\Config $paymentConfig,
-        \Vyne\Magento\Helper\Data $vyneHelper,
+        \Vyne\Payments\Helper\Data $vyneHelper,
         \Magento\Framework\App\State $state,
         array $data = []
     ) {
