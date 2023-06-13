@@ -1,10 +1,10 @@
 # Vyne Payment integration for Magento
 
-Vyne Magento provides integration between Magento 2 / Adobe Commerce and Vyne.
+Vyne Payments provides integration between Magento 2 / Adobe Commerce and Vyne.
 
 ## Installation
 
-The Vyne Magento module can be installed via [Composer](https://getcomposer.org/).
+The Vyne Payments module can be installed via [Composer](https://getcomposer.org/).
 
 ```sh
 composer require vyne/payments
