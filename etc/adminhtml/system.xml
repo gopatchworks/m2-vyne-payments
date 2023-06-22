@@ -3,7 +3,7 @@
 	<system>
 		<section id="payment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1000" translate="label">
 			<group id="vyne" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
-                <comment><![CDATA[<div class="vyne-payment-logo"></div><div class="vyne-payment-text">Vyne Payment integration.<br/>Vyne is the safest and most secure Payment approach for your Magento Store.<div class="bank-logo"></div></div>]]></comment>
+                <comment><![CDATA[<div class="vyne-payment-logo"></div><div class="vyne-payment-text">Vyne Payment integration.<br/>Offer customers a fast, secure, cardless payment method. In as little as three taps customers pay directly from their own banking app.<br/>Powered by Open Banking, Vyne Pay with bank enables e-commerce businesses to save costs on transaction fees, boost cash flow through instant settlement and refunds, and reduce the risk of fraud.<div class="bank-logo"></div></div>]]></comment>
                 <fieldset_css>complex vyne-section</fieldset_css>
                 <frontend_model>Vyne\Payments\Block\Adminhtml\System\Config\Fieldset\Payment</frontend_model>
                 <field id="webhook_instructions" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
