@@ -32,8 +32,9 @@ class Payment extends AbstractWebhookPost
         }
 
         try {
+            $this->vyneLogger->logMixed(['increment_id' => $request->merchantReference]);
             $order = $this->getOrderByIncrementId($request->merchantReference);
-            $this->vyneLogger->logMixed($order->getData());
+            $this->vyneLogger->logMixed(['webhook/payment/order' => $order->getData()]);
             $vyne_status = $request->status;
             $order_status = VynePayment::getTransactionAction($vyne_status);
             $this->vyneLogger->logMixed( ['webhook/payment' => $order_status] );
@@ -80,10 +81,10 @@ class Payment extends AbstractWebhookPost
             ->create();
 
         $orderList = $this->orderRepository->getList($searchCriteria)->getItems();
-        if ($orderList->getTotalCount() < 1 ) {
+        if (count($orderList) === 0) {
             throw new \Exception(__('Order not found'));
         }
 
-        return $orderList->getFirstItem();
+        return array_shift($orderList);
     }
 }
