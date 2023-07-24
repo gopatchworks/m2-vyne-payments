@@ -32,7 +32,8 @@ class Payment extends AbstractWebhookPost
         }
 
         try {
-            $order = $this->orderRepository->get($request->merchantReference);
+            $order = $this->getOrderByIncrementId($request->merchantReference);
+            $this->vyneLogger->logMixed($order->getData());
             $vyne_status = $request->status;
             $order_status = VynePayment::getTransactionAction($vyne_status);
             $this->vyneLogger->logMixed( ['webhook/payment' => $order_status] );
@@ -64,5 +65,25 @@ class Payment extends AbstractWebhookPost
         $result->setHttpResponseCode(200);
 
         return $result;
+    }
+
+    /**
+     * retrieve Magento order using increment id (merchantReference) using search criteriaBuilder
+     *
+     * @param string $incrementId
+     * @return \Magento\Sales\Api\Data\OrderInterface
+     */
+    public function getOrderByIncrementId($incrementId)
+    {
+        $searchCriteria = $this->searchCriteriaBuilder
+            ->addFilter('increment_id', $incrementId)
+            ->create();
+
+        $orderList = $this->orderRepository->getList($searchCriteria)->getItems();
+        if ($orderList->getTotalCount() < 1 ) {
+            throw new \Exception(__('Order not found'));
+        }
+
+        return $orderList->getFirstItem();
     }
 }

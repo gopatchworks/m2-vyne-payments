@@ -11,9 +11,10 @@ use Magento\Framework\App\CsrfAwareActionInterface;
 use Magento\Framework\App\Request\InvalidRequestException;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\ResultFactory;
+use Magento\Sales\Api\OrderRepositoryInterface;
+use Magento\Framework\Api\SearchCriteriaBuilder;
 use Vyne\Payments\Helper\Logger as VyneLogger;
 use Vyne\Payments\Helper\Order as VyneOrder;
-use Magento\Sales\Api\OrderRepositoryInterface;
 
 /**
  * Vyne Payment Webhook Order Controller
@@ -32,6 +33,11 @@ abstract class AbstractWebhookPost extends Action implements HttpPostActionInter
      */
     protected $orderRepository;
 
+    /*
+     * @var SearchCriteriaBuilder
+     */
+    protected $searchCriteriaBuilder;
+
     /**
      * @var VyneLogger
      */
@@ -39,14 +45,16 @@ abstract class AbstractWebhookPost extends Action implements HttpPostActionInter
 
     public function __construct(
         Context $context,
-        VyneOrder $vyneOrder,
         OrderRepositoryInterface $orderRepository,
+        SearchCriteriaBuilder $searchCriteriaBuilder,
+        VyneOrder $vyneOrder,
         VyneLogger $vyneLogger
     ) {
         parent::__construct($context);
 
-        $this->vyneOrder = $vyneOrder;
         $this->orderRepository = $orderRepository;
+        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->vyneOrder = $vyneOrder;
         $this->vyneLogger = $vyneLogger;
     }
 
