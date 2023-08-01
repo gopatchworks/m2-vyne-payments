@@ -21,6 +21,7 @@ class Vyne extends \Magento\Payment\Model\Method\AbstractMethod
 
     const STATUS_PARTIAL_REFUND = 'vyne_partial_refund';
     const STATUS_REFUND = 'vyne_refund';
+    const STATUS_PAYMENT_RECEIVED = 'vyne_payment_received';
 
     /**
      * @var string

@@ -2,6 +2,8 @@
 namespace Vyne\Payments\Gateway;
 
 use GuzzleHttp\Psr7\Request;
+use Vyne\Payments\Model\Payment\Vyne as VynePayment;
+use Magento\Sales\Model\Order;
 
 class Payment extends ApiAbstract
 {
@@ -67,10 +69,11 @@ class Payment extends ApiAbstract
      */
     const STATUS_REFUNDED = 'Refunded';
 
-    const GROUP_PROCESSING = 'processing';
-    const GROUP_CANCEL = 'cancel';
-    const GROUP_SUCCESS = 'complete';
-    const GROUP_PENDING_PAYMENT = 'pending_payment';
+    const GROUP_PROCESSING = Order::STATE_PROCESSING;
+    const GROUP_CANCEL = Order::STATE_CANCELED;
+    const GROUP_SUCCESS = Order::STATE_COMPLETE;
+    const GROUP_PENDING_PAYMENT = Order::STATE_PENDING_PAYMENT;
+    const GROUP_RECEIVED_PAYMENT = VynePayment::STATUS_PAYMENT_RECEIVED;
     const GROUP_REFUND = 'refund';
 
     /**
@@ -81,14 +84,16 @@ class Payment extends ApiAbstract
     public static function getTransactionStatuses()
     {
         $processing_statuses = [
-            'CREATED' => self::STATUS_CREATED,
-            'PROCESSING' => self::STATUS_PROCESSING
         ];
         $pending_payment_statuses = [
+            'CREATED' => self::STATUS_CREATED,
             'COMPLETED' => self::STATUS_COMPLETED,
+            'PROCESSING' => self::STATUS_PROCESSING
+        ];
+        $received_payment_statuses = [
+            'SETTLED' => self::STATUS_SETTLED
         ];
         $success_statuses = [
-            'SETTLED' => self::STATUS_SETTLED
         ];
         $cancel_statuses = [
             'NO_CONSENT' => self::STATUS_NO_CONSENT,
@@ -104,6 +109,7 @@ class Payment extends ApiAbstract
         return [
             self::GROUP_PROCESSING => $processing_statuses,
             self::GROUP_PENDING_PAYMENT => $pending_payment_statuses,
+            self::GROUP_RECEIVED_PAYMENT => $received_payment_statuses,
             self::GROUP_SUCCESS => $success_statuses,
             self::GROUP_CANCEL => $cancel_statuses,
             self::GROUP_REFUND => $refund_statuses

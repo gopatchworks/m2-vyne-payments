@@ -5,12 +5,13 @@ namespace Vyne\Payments\Setup\Patch\Data;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Framework\Setup\Patch\PatchVersionInterface;
+use Vyne\Payments\Model\Payment\Vyne as VynePayment;
 
 /**
  * Class AddVyneOrderStates
  * @package Vyne\Payments\Setup\Patch
  */
-class AddVyneOrderStatuses implements DataPatchInterface, PatchVersionInterface
+class AddVyneRefundStatuses implements DataPatchInterface, PatchVersionInterface
 {
     /**
      * @var \Magento\Framework\Setup\ModuleDataSetupInterface
@@ -36,17 +37,22 @@ class AddVyneOrderStatuses implements DataPatchInterface, PatchVersionInterface
 
         $data = [];
         $statuses = [
-            'vyne_refund'  => __('Refunded By Vyne'),
-            'vyne_partial_refund'  => __('Partially Refunded By Vyne'),
+            VynePayment::STATUS_REFUND => __('Refunded By Vyne'),
+            VynePayment::STATUS_PARTIAL_REFUND => __('Partially Refunded By Vyne'),
         ];
         foreach ($statuses as $code => $info) {
             $data[] = ['status' => $code, 'label' => $info];
         }
-        $this->moduleDataSetup->getConnection()->insertArray(
-            $this->moduleDataSetup->getTable('sales_order_status'),
-            ['status', 'label'],
-            $data
-        );
+        try {
+            $this->moduleDataSetup->getConnection()->insertArray(
+                $this->moduleDataSetup->getTable('sales_order_status'),
+                ['status', 'label'],
+                $data
+            );
+        }
+        catch (\Exception $e) {
+            // do nothing
+        }
         /**
          * Prepare database after install
          */
