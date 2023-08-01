@@ -46,7 +46,8 @@ class Payment extends AbstractWebhookPost
 
                 break;
             case VynePayment::GROUP_SUCCESS:
-                $this->vyneOrder->updateOrderHistory($order, __('Order Completed by Vyne'), $order_status, $request->paymentId, $vyne_status);
+            case VynePayment::GROUP_RECEIVED_PAYMENT:
+                $this->vyneOrder->updateOrderHistory($order, __('Transaction Completed by Vyne'), $order_status, $request->paymentId, $vyne_status);
 
                 break;
             case VynePayment::GROUP_CANCEL:

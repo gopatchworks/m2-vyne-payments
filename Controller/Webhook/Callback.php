@@ -41,6 +41,7 @@ class Callback extends AbstractWebhookGet
             case VynePayment::GROUP_PENDING_PAYMENT:
                 // logic to handle vyne pending payment response
             case VynePayment::GROUP_SUCCESS:
+            case VynePayment::GROUP_RECEIVED_PAYMENT:
                 $this->messageManager->addSuccessMessage(__('Payment processing...'));
                 return $this->resultRedirect->setPath('checkout/onepage/success', array('_secure'=>true));
 
