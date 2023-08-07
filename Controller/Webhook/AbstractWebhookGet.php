@@ -51,9 +51,9 @@ abstract class AbstractWebhookGet extends Action
     protected $vyneLogger;
 
     /**
-     * @var PaymentApi
+     * @var ResultFactory
      */
-    protected $paymentApi = false;
+    protected $resultRedirect;
 
     public function __construct(
         Context $context,
