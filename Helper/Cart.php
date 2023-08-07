@@ -23,7 +23,7 @@ class Cart extends AbstractHelper
     /**
      * @var \Magento\Sales\Api\OrderManagementInterface 
      */
-    protected $orderManagement;
+    protected $_orderManagement;
 
     /**
      * @var Magento\Sales\Model\Order\Config
