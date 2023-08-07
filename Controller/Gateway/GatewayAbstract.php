@@ -30,7 +30,7 @@ abstract class GatewayAbstract extends \Magento\Framework\App\Action\Action
     /**
      * @var \Vyne\Payments\Helper\Cart
      */
-    protected $vyneorderHelper;
+    protected $vynecartHelper;
 
     /**
      * @var \Vyne\Payments\Helper\Logger
