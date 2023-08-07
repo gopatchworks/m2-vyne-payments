@@ -35,7 +35,7 @@ abstract class GatewayAbstract extends \Magento\Framework\App\Action\Action
     /**
      * @var \Vyne\Payments\Helper\Logger
      */
-    protected $vyneLogger;
+    protected $logger;
 
     /**
      * @var PaymentApi
