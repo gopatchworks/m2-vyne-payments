@@ -178,7 +178,7 @@ class Order extends AbstractHelper
     public function updateOrderHistory($order, $msg, $status, $paymentId = null, $vyne_status = null)
     {
         $order->addStatusHistoryComment($msg);
-        $order->setState($status)->setStatus($status);
+        $order->setState(\Magento\Sales\Model\Order::STATE_PROCESSING)->setStatus($status);
 
         if ($paymentId) {
             $this->generatePaidInvoice($order, $paymentId);

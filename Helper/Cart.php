@@ -15,6 +15,7 @@ use Magento\Checkout\Model\Cart as CustomerCart;
 
 class Cart extends AbstractHelper
 {
+    const ORDER_STATE_PENDING = 'pending';
     /**
      * @var CustomerSession
      */
@@ -127,7 +128,7 @@ class Cart extends AbstractHelper
             return;
         }
         $order->addStatusHistoryComment(__("Order #%1 cancelled.", $order->getIncrementId()));
-        $order->setState('pending')->setStatus('pending')->save();
+        $order->setState(self::ORDER_STATE_PENDING)->setStatus(self::ORDER_STATE_PENDING)->save();
 
         $this->_orderManagement->cancel($order->getId());
 
